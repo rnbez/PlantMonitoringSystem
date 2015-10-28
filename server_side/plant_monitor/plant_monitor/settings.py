@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,8 +77,13 @@ WSGI_APPLICATION = 'plant_monitor.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'python_plantmonitor',
+        # The following settings are not used with sqlite3:
+        'USER': 'root',
+        'PASSWORD': 'usbw',
+        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or   '127.0.0.1' for localhost through TCP.
+        'PORT': '3307',                      # Set to empty string for default.
     }
 }
 
@@ -87,7 +93,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/NewYork'
 
 USE_I18N = True
 
@@ -100,3 +106,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
