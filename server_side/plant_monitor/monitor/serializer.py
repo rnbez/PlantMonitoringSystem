@@ -28,11 +28,13 @@ class SensorReadingSerializer(serializers.ModelSerializer):
         #field = ('id', 'reading', 'reading_date')
 
     def create(self, validated_data):
-        print '\n\nDEBUG\n\n'
         sensor = validated_data.pop('sensor')
         sensor = Sensor.objects.get(sensor_name=sensor['sensor_name'])
-        print sensor
         reading = SensorReading.objects.create(sensor=sensor, **validated_data)
-        print reading
-        sensor.readings.add(reading)
+         sensor.readings.add(reading)
         return reading
+    def update(self, instance, validated_data):
+        instance.reading = validated_data.get('reading', instance.reading)
+        instance.reading_date = validated_data.get('reading_date', instance.reading_date)
+        instance.save()
+        return instance
