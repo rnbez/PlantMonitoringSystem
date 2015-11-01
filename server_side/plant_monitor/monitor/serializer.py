@@ -31,7 +31,7 @@ class SensorReadingSerializer(serializers.ModelSerializer):
         sensor = validated_data.pop('sensor')
         sensor = Sensor.objects.get(sensor_name=sensor['sensor_name'])
         reading = SensorReading.objects.create(sensor=sensor, **validated_data)
-         sensor.readings.add(reading)
+        sensor.readings.add(reading)
         return reading
     def update(self, instance, validated_data):
         instance.reading = validated_data.get('reading', instance.reading)
