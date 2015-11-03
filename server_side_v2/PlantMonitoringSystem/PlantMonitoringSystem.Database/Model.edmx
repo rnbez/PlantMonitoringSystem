@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="behavior">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="node">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="physical_address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="behavior_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sensor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sensor_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="measurement_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="measurement_unit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="node_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sensorreading">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reading" Type="int" Nullable="false" />
+          <Property Name="reading_date" Type="datetime" Precision="6" Nullable="false" />
+          <Property Name="sensor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="node_behavior_id_6cc5183d_fk_behavior_id">
+          <End Role="behavior" Type="Self.behavior" Multiplicity="1" />
+          <End Role="node" Type="Self.node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="behavior">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="node">
+              <PropertyRef Name="behavior_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sensor_node_id_114bea95_fk_node_id">
+          <End Role="node" Type="Self.node" Multiplicity="1" />
+          <End Role="sensor" Type="Self.sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sensor">
+              <PropertyRef Name="node_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sensorreading_sensor_id_4413c3ee_fk_sensor_id">
+          <End Role="sensor" Type="Self.sensor" Multiplicity="1" />
+          <End Role="sensorreading" Type="Self.sensorreading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sensor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sensorreading">
+              <PropertyRef Name="sensor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="behavior" EntityType="Self.behavior" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <EntitySet Name="node" EntityType="Self.node" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <EntitySet Name="sensor" EntityType="Self.sensor" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <EntitySet Name="sensorreading" EntityType="Self.sensorreading" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <AssociationSet Name="node_behavior_id_6cc5183d_fk_behavior_id" Association="Self.node_behavior_id_6cc5183d_fk_behavior_id">
+            <End Role="behavior" EntitySet="behavior" />
+            <End Role="node" EntitySet="node" />
+          </AssociationSet>
+          <AssociationSet Name="sensor_node_id_114bea95_fk_node_id" Association="Self.sensor_node_id_114bea95_fk_node_id">
+            <End Role="node" EntitySet="node" />
+            <End Role="sensor" EntitySet="sensor" />
+          </AssociationSet>
+          <AssociationSet Name="sensorreading_sensor_id_4413c3ee_fk_sensor_id" Association="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id">
+            <End Role="sensor" EntitySet="sensor" />
+            <End Role="sensorreading" EntitySet="sensorreading" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="behavior">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="nodes" Relationship="Self.node_behavior_id_6cc5183d_fk_behavior_id" FromRole="behavior" ToRole="node" />
+        </EntityType>
+        <EntityType Name="node">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="physical_address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="behavior_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="behavior" Relationship="Self.node_behavior_id_6cc5183d_fk_behavior_id" FromRole="node" ToRole="behavior" />
+          <NavigationProperty Name="sensors" Relationship="Self.sensor_node_id_114bea95_fk_node_id" FromRole="node" ToRole="sensor" />
+        </EntityType>
+        <EntityType Name="sensor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sensor_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="measurement_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="measurement_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="node_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="node" Relationship="Self.sensor_node_id_114bea95_fk_node_id" FromRole="sensor" ToRole="node" />
+          <NavigationProperty Name="sensorreadings" Relationship="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id" FromRole="sensor" ToRole="sensorreading" />
+        </EntityType>
+        <EntityType Name="sensorreading">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reading" Type="Int32" Nullable="false" />
+          <Property Name="reading_date" Type="DateTime" Nullable="false" />
+          <Property Name="sensor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sensor" Relationship="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id" FromRole="sensorreading" ToRole="sensor" />
+        </EntityType>
+        <Association Name="node_behavior_id_6cc5183d_fk_behavior_id">
+          <End Role="behavior" Type="Self.behavior" Multiplicity="1" />
+          <End Role="node" Type="Self.node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="behavior">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="node">
+              <PropertyRef Name="behavior_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sensor_node_id_114bea95_fk_node_id">
+          <End Role="node" Type="Self.node" Multiplicity="1" />
+          <End Role="sensor" Type="Self.sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sensor">
+              <PropertyRef Name="node_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sensorreading_sensor_id_4413c3ee_fk_sensor_id">
+          <End Role="sensor" Type="Self.sensor" Multiplicity="1" />
+          <End Role="sensorreading" Type="Self.sensorreading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sensor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sensorreading">
+              <PropertyRef Name="sensor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="behaviors" EntityType="Self.behavior" />
+          <EntitySet Name="nodes" EntityType="Self.node" />
+          <EntitySet Name="sensors" EntityType="Self.sensor" />
+          <EntitySet Name="sensorreadings" EntityType="Self.sensorreading" />
+          <AssociationSet Name="node_behavior_id_6cc5183d_fk_behavior_id" Association="Self.node_behavior_id_6cc5183d_fk_behavior_id">
+            <End Role="behavior" EntitySet="behaviors" />
+            <End Role="node" EntitySet="nodes" />
+          </AssociationSet>
+          <AssociationSet Name="sensor_node_id_114bea95_fk_node_id" Association="Self.sensor_node_id_114bea95_fk_node_id">
+            <End Role="node" EntitySet="nodes" />
+            <End Role="sensor" EntitySet="sensors" />
+          </AssociationSet>
+          <AssociationSet Name="sensorreading_sensor_id_4413c3ee_fk_sensor_id" Association="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id">
+            <End Role="sensor" EntitySet="sensors" />
+            <End Role="sensorreading" EntitySet="sensorreadings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="behaviors">
+            <EntityTypeMapping TypeName="Model.behavior">
+              <MappingFragment StoreEntitySet="behavior">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nodes">
+            <EntityTypeMapping TypeName="Model.node">
+              <MappingFragment StoreEntitySet="node">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="physical_address" ColumnName="physical_address" />
+                <ScalarProperty Name="behavior_id" ColumnName="behavior_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sensors">
+            <EntityTypeMapping TypeName="Model.sensor">
+              <MappingFragment StoreEntitySet="sensor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sensor_name" ColumnName="sensor_name" />
+                <ScalarProperty Name="measurement_name" ColumnName="measurement_name" />
+                <ScalarProperty Name="measurement_unit" ColumnName="measurement_unit" />
+                <ScalarProperty Name="node_id" ColumnName="node_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sensorreadings">
+            <EntityTypeMapping TypeName="Model.sensorreading">
+              <MappingFragment StoreEntitySet="sensorreading">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="reading" ColumnName="reading" />
+                <ScalarProperty Name="reading_date" ColumnName="reading_date" />
+                <ScalarProperty Name="sensor_id" ColumnName="sensor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
