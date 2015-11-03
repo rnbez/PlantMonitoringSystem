@@ -5,33 +5,46 @@ def __get_formtated_datetime():
     return datetime.datetime.now().isoformat()
 
 def __post_to_server(data):
-    path = "/api/monitor/reading/"
-    print "\n##DEBUG##\n"
-    print json.dumps(data.__dict__)
-    body = json.dumps(data.__dict__)
+    host = "localhost"
+    port = 85
+    path = "/api/readings/"
+    reading = str(data)
+    body = json.dumps(data)
     headers = {"Content-type": "application/json", "Accept": "application/json"}
-    conn = httplib.HTTPConnection("http://127.0.0.1:8000")
+    #print "\n##DEBUG##\n"
+    #print host, ":", str(port), path
+    #print body
+    conn = httplib.HTTPConnection(host, port)
     conn.request("POST", path, body, headers)
     response = conn.getresponse()
-    print response.status, response.reason
+    #print response.status, response.reason
 
     data = response.read()
-    data
-    'Redirecting to <a href="http://bugs.python.org/issue12524">http://bugs.python.org/issue12524</a>'
+    #print data
+    #'Redirecting to <a href="http://bugs.python.org/issue12524">http://bugs.python.org/issue12524</a>'
     conn.close()
 # serialize -> json.dumps(f.__dict__)
 # deserialize -> json.loads('')
 
 while True:
-    
-    #__post_to_server()
 
     try:
-        print "Soil: Temp.: {} & Moisture:{}".format(str(SensorReader.read_air_temperature()), str(SensorReader.read_moisture()))
-        print "Env: Temp.: {} & Luminosity:{}".format(str(SensorReader.read_soil_temperature()), str(SensorReader.read_luminosity()))
+        air_temp = SensorReader.read_air_temperature()
+        __post_to_server({"reading":air_temp,"date": __get_formtated_datetime(),"sensor": 1})
+        air_hum = SensorReader.read_air_humidity()
+        __post_to_server({"reading":air_hum,"date": __get_formtated_datetime(),"sensor": 2})
+        air_lum = SensorReader.read_luminosity()
+        __post_to_server({"reading":air_lum,"date": __get_formtated_datetime(),"sensor": 3})
+        print "Env: Temp.: {}C  Humidity: {}%  &  Luminosity:{}%".format(str(air_temp), str(air_hum), str(air_lum))
+
+        soil_temp = SensorReader.read_soil_temperature()
+        __post_to_server({"reading":soil_temp,"date": __get_formtated_datetime(),"sensor": 4})
+        moisture = SensorReader.read_moisture()
+        __post_to_server({"reading":moisture,"date": __get_formtated_datetime(),"sensor": 5})
+        print "Soil: Temp.: {}C  &  Moisture:{}".format(str(soil_temp), str(moisture))
         print "\n"
 
 
-        time.sleep(10)
+        time.sleep(2)
     except KeyboardInterrupt:
         exit()
