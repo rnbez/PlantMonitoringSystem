@@ -11,9 +11,13 @@ class SensorReader:
         return random.randint(15, 40)
 
     @staticmethod
+    def read_air_humidity():
+        return random.randint(20, 80)
+
+    @staticmethod
     def read_moisture():
-        return random.randint(0, 1023)
+        return random.randint(0, 100)
 
     @staticmethod
     def read_luminosity():
-        return random.randint(0, 1023)
+        return random.randint(0, 100)
