@@ -1,6 +1,14 @@
 import random
+import datetime
 
 class SensorReader:
+
+    @staticmethod
+    def build_reading(sensor, reading):
+        date = datetime.datetime.now().isoformat()
+        return {"reading":reading,
+                "date": date,
+                "sensor": sensor}
 
     @staticmethod
     def read_soil_temperature():

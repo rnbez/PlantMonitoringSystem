@@ -16,10 +16,16 @@ namespace PlantMonitoringSystem.Model
         [DataMember(Name = "sensorName")]
         public string SensorName { get; set; }
 
+        [DataMember(Name = "friendlyName")]
+        public string FriendlyName { get; set; }
+
         [DataMember(Name = "measurementName")]
         public string MeasurementName { get; set; }
 
         [DataMember(Name = "measurementUnit")]
         public string MeasurementUnit { get; set; }
+
+        [DataMember(Name = "node")]
+        public int NodeId { get; set; }
     }
 }

@@ -21,6 +21,6 @@ namespace PlantMonitoringSystem.Model
 
         [DataMember(Name = "sensor")]
         public int SensorId { get; set; }
-
+        
     }
 }

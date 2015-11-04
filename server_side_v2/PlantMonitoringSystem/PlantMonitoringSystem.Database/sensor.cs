@@ -24,6 +24,7 @@ namespace PlantMonitoringSystem.Database
         public string measurement_name { get; set; }
         public string measurement_unit { get; set; }
         public int node_id { get; set; }
+        public string friendly_name { get; set; }
     
         public virtual node node { get; set; }
         public virtual ICollection<sensorreading> sensorreadings { get; set; }

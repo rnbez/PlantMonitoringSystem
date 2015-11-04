@@ -22,6 +22,7 @@ namespace PlantMonitoringSystem.Database
         public int id { get; set; }
         public string physical_address { get; set; }
         public int behavior_id { get; set; }
+        public string friendly_name { get; set; }
     
         public virtual behavior behavior { get; set; }
         public virtual ICollection<sensor> sensors { get; set; }

@@ -31,16 +31,21 @@ while True:
     try:
         air_temp = SensorReader.read_air_temperature()
         __post_to_server({"reading":air_temp,"date": __get_formtated_datetime(),"sensor": 1})
+
         air_hum = SensorReader.read_air_humidity()
         __post_to_server({"reading":air_hum,"date": __get_formtated_datetime(),"sensor": 2})
+
         air_lum = SensorReader.read_luminosity()
         __post_to_server({"reading":air_lum,"date": __get_formtated_datetime(),"sensor": 3})
+
         print "Env: Temp.: {}C  Humidity: {}%  &  Luminosity:{}%".format(str(air_temp), str(air_hum), str(air_lum))
 
         soil_temp = SensorReader.read_soil_temperature()
         __post_to_server({"reading":soil_temp,"date": __get_formtated_datetime(),"sensor": 4})
+
         moisture = SensorReader.read_moisture()
         __post_to_server({"reading":moisture,"date": __get_formtated_datetime(),"sensor": 5})
+
         print "Soil: Temp.: {}C  &  Moisture:{}".format(str(soil_temp), str(moisture))
         print "\n"
 

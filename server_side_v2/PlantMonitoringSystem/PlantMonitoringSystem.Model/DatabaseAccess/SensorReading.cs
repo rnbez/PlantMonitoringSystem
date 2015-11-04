@@ -8,7 +8,7 @@ namespace PlantMonitoringSystem.Model
 {
     public partial class SensorReading
     {
-        public static SensorReading Build(Database.sensorreading raw)
+        public static explicit operator SensorReading(Database.sensorreading raw)
         {
             if (raw != null)
             {
@@ -42,19 +42,19 @@ namespace PlantMonitoringSystem.Model
             return raw;
         }
 
-        public static List<SensorReading> List()
-        {
-            var result = Context.GetInstance().sensorreadings
-                .OrderByDescending(x => x.reading_date)
-                .Take(1000)
-                .ToList();
-            return result.Select(x => Build(x)).ToList();
-        }
+        //public static List<SensorReading> List()
+        //{
+        //    var result = Context.GetInstance().sensorreadings
+        //        .OrderByDescending(x => x.reading_date)
+        //        .Take(1000)
+        //        .ToList();
+        //    return result.Select(x => (SensorReading)x).ToList();
+        //}
 
         public static SensorReading Get(int id)
         {
             var result = Context.GetInstance().sensorreadings.FirstOrDefault(x => x.id == id);
-            return Build(result);
+            return (SensorReading)result;
         }
 
         public static async Task<SensorReading> Insert(SensorReading data)
@@ -64,8 +64,17 @@ namespace PlantMonitoringSystem.Model
             ctx.sensorreadings.Add(toRaw(data));
 
             await ctx.SaveChangesAsync();
-            return Build(ctx.sensorreadings.OrderByDescending(x => x.id).FirstOrDefault());
+            return (SensorReading)ctx.sensorreadings.OrderByDescending(x => x.id).FirstOrDefault();
+        }
+        
+        public static Task<object> Update(SensorReading reading)
+        {
+            throw new NotImplementedException();
         }
 
+        public static Task<object> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
