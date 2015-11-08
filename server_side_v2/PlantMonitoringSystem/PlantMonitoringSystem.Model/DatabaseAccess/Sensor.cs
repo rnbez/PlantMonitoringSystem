@@ -64,14 +64,48 @@ namespace PlantMonitoringSystem.Model
         
         public static async Task<Sensor> Update(Sensor data)
         {
-            throw new NotImplementedException();
+            var ctx = Context.GetInstance();
+
+            var raw = toRaw(data);
+            ctx.sensors.Attach(raw);
+            System.Data.Entity.Infrastructure.DbEntityEntry<Database.sensor> entry = ctx.Entry(raw);
+            entry.State = System.Data.Entity.EntityState.Modified;
+
+            await ctx.SaveChangesAsync();
+
+            return Get((int)data.Id);
+        }
+
+        public static async Task<List<Sensor>> Update(List<Sensor> list)
+        {
+            var ctx = Context.GetInstance();
+
+            foreach (var data in list)
+            {
+                var raw = toRaw(data);
+                ctx.sensors.Attach(raw);
+                System.Data.Entity.Infrastructure.DbEntityEntry<Database.sensor> entry = ctx.Entry(raw);
+                entry.State = System.Data.Entity.EntityState.Modified; 
+            }
+
+            await ctx.SaveChangesAsync();
+
+            return List();
         }
         
         public static async Task<Sensor> Delete(int id)
         {
             throw new NotImplementedException();
         }
-        
+
+        public static List<Sensor> List()
+        {
+            var result = Context.GetInstance().sensors
+                .Take(100)
+                .ToList();
+            return result.Select(x => (Sensor)x).ToList();
+        }
+
         public static List<SensorReading> ListReadings(int id)
         {
             var result = Context.GetInstance().sensorreadings

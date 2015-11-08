@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E372274-D5A6-4A7C-8537-AC80E6FC7BE2}</ProjectGuid>
+    <ProjectGuid>{968C7890-9B36-43A1-9060-351311D64B31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlantMonitoringSystem.Model</RootNamespace>
-    <AssemblyName>PlantMonitoringSystem.Model</AssemblyName>
+    <RootNamespace>PlantMonitoringSystem.Core</RootNamespace>
+    <AssemblyName>PlantMonitoringSystem.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -40,14 +40,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,26 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Behavior.cs" />
-    <Compile Include="Classes\Node.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="DatabaseAccess\Node.cs" />
+    <Compile Include="NodeGreeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\Sensor.cs" />
-    <Compile Include="Classes\SensorReading.cs" />
-    <Compile Include="DatabaseAccess\SensorReading.cs" />
-    <Compile Include="DatabaseAccess\Sensor.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlantMonitoringSystem.Database\PlantMonitoringSystem.Database.csproj">
-      <Project>{cf4abb28-3a96-4cf2-bbd0-0dc1054289bb}</Project>
-      <Name>PlantMonitoringSystem.Database</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlantMonitoringSystem.Model\PlantMonitoringSystem.Model.csproj">
+      <Project>{2e372274-d5a6-4a7c-8537-ac80e6fc7be2}</Project>
+      <Name>PlantMonitoringSystem.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

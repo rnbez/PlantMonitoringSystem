@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B9FF2C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3B562F02-B3B5-4EA6-968E-54DEA4B06355}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantMonitoringSystem.Core", "PlantMonitoringSystem.Core\PlantMonitoringSystem.Core.csproj", "{968C7890-9B36-43A1-9060-351311D64B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{802849C9-DFFC-4C70-8B6F-A15C36FA55A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{802849C9-DFFC-4C70-8B6F-A15C36FA55A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{802849C9-DFFC-4C70-8B6F-A15C36FA55A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968C7890-9B36-43A1-9060-351311D64B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968C7890-9B36-43A1-9060-351311D64B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968C7890-9B36-43A1-9060-351311D64B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968C7890-9B36-43A1-9060-351311D64B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,9 +16,13 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         // GET api/<controller>/5
         [HttpGet]
         [Route("{id}")]
-        public HttpResponseMessage Get(int id)
+        public HttpResponseMessage Get(int id, bool includeSensors = false)
         {
             var result = Model.Node.Get(id);
+            if (includeSensors)
+            {
+                result.Sensors = Model.Node.ListSensors(id);
+            }
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

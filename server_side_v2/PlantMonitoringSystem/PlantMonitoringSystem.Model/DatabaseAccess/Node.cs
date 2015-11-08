@@ -30,13 +30,21 @@ namespace PlantMonitoringSystem.Model
             var raw = new Database.node()
             {
                 physical_address = data.PhysicalAddress,
-                friendly_name = data.PhysicalAddress,
-                behavior_id = data.BehaviorId
+                friendly_name = data.FriendlyName,
+                behavior_id = data.BehaviorId,
             };
 
             if (data.Id != null)
             {
                 raw.id = (int)data.Id;
+            }
+
+            if (data.Sensors != null)
+            {
+                foreach (var sensor in data.Sensors)
+                {
+                    raw.sensors.Add(Sensor.toRaw(sensor));
+                }
             }
 
             return raw;
@@ -51,16 +59,31 @@ namespace PlantMonitoringSystem.Model
         public static async Task<Node> Insert(Node data)
         {
             var ctx = Context.GetInstance();
-
+                        
             ctx.nodes.Add(toRaw(data));
 
             await ctx.SaveChangesAsync();
+
             return (Node)ctx.nodes.OrderByDescending(x => x.id).FirstOrDefault();
         }
 
         public static async Task<Node> Update(Node data)
         {
-            throw new NotImplementedException();
+            if (data.Sensors != null)
+            {
+                await Sensor.Update(data.Sensors);
+            }
+
+            var ctx = Context.GetInstance();
+
+            var raw = toRaw(data);
+            ctx.nodes.Attach(raw);
+            System.Data.Entity.Infrastructure.DbEntityEntry<Database.node> entry = ctx.Entry(raw);
+            entry.State = System.Data.Entity.EntityState.Modified;
+            
+            await ctx.SaveChangesAsync();
+                        
+            return Get((int)data.Id);
         }
 
         public static async Task<Node> Delete(int id)
@@ -72,8 +95,7 @@ namespace PlantMonitoringSystem.Model
         {
             var result = Context.GetInstance().sensors
                 .Where(x => x.node_id == id)
-                .OrderByDescending(x => x.friendly_name)
-                .Take(1000)
+                .Take(100)
                 .ToList();
             return result.Select(x => (Sensor)x).ToList();
         }

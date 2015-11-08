@@ -11,7 +11,7 @@ namespace PlantMonitoringSystem.Model
     public partial class Node
     {
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [DataMember(Name = "physicalAddress")]
         public string PhysicalAddress { get; set; }
@@ -21,6 +21,10 @@ namespace PlantMonitoringSystem.Model
 
         [DataMember(Name = "behaviorId")]
         public int BehaviorId { get; set; }
+
+        [DataMember(Name = "sensors", EmitDefaultValue=false)]
+        public List<Sensor> Sensors { get; set; }
+
 
     }
 }

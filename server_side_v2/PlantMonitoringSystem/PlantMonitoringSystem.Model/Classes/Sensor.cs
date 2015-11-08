@@ -11,7 +11,7 @@ namespace PlantMonitoringSystem.Model
     public partial class Sensor
     {
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [DataMember(Name = "sensorName")]
         public string SensorName { get; set; }
