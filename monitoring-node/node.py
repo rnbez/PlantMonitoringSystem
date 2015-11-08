@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, json
 
 physical_addess = ''
 
@@ -15,59 +15,22 @@ def getMacAddress():
                         break
     return mac
 
-
 def get():
     global physical_addess
     if not physical_addess:
         physical_addess = getMacAddress()
-    return {
-                "id": 1,
-                "physicalAddress": physical_addess,
-                "friendlyName": "Raspberry PI 2",
-                "behaviorId": 1,
-                "sensors": [
-                    {
-                        "id": 4,
-                        "sensorName": "ds18b20",
-                        "friendlyName": "Soil Temperature Sensor",
-                        "measurementName": "temperature",
-                        "measurementUnit": "celsius",
-                        "node": 1
-                    },
-                    {
-                        "id": 5,
-                        "sensorName": "moisture_sensor",
-                        "friendlyName": "Moisture Sensor",
-                        "measurementName": "moisture",
-                        "measurementUnit": "%",
-                        "node": 1
-                    },
-                    {
-                        "id": 3,
-                        "sensorName": "ldr",
-                        "friendlyName": "Luminosity Sensor",
-                        "measurementName": "luminosity",
-                        "measurementUnit": "%",
-                        "node": 1
-                    },
-                    {
-                        "id": 1,
-                        "sensorName": "dht_11_temp",
-                        "friendlyName": "Air Temperature",
-                        "measurementName": "temperature",
-                        "measurementUnit": "celsius",
-                        "node": 1
-                    },
-                    {
-                        "id": 2,
-                        "sensorName": "dht_11_humidity",
-                        "friendlyName": "Air Humidity Sensor",
-                        "measurementName": "humidity",
-                        "measurementUnit": "%",
-                        "node": 1
-                    }
-                ]
-            }
 
-def update():
+    f = open('node.json', 'r')
+    node_info = json.loads(f.read())
+    f.close()
+
+    node_info['physicalAddress'] = physical_addess
+
+    return node_info
+
+def update(node):
+    f = open('node.json', 'w')
+    serialized = json.dumps(node, sort_keys=True, indent=4, separators=(',', ': '))
+    f.write(serialized)
+    f.close()
     return 1

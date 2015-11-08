@@ -1,11 +1,4 @@
-import json, httplib, urllib
-
-#constants
-host = "localhost"
-port = 85
-
-#paths
-PATH_READING = "/api/reading/"
+import json, httplib, urllib, api
 
 def post(path, data):
     reading = str(data)
@@ -14,12 +7,11 @@ def post(path, data):
     #print "\n##DEBUG##\n"
     #print host, ":", str(port), path
     #print body
-    conn = httplib.HTTPConnection(host, port)
+    conn = httplib.HTTPConnection(api.__host__, api.__port__)
     conn.request("POST", path, body, headers)
     response = conn.getresponse()
     #print response.status, response.reason
-    #print data
-    #'Redirecting to <a href="http://bugs.python.org/issue12524">http://bugs.python.org/issue12524</a>'
+    response.body = response.read()
     conn.close()
     return response
 # serialize -> json.dumps(f.__dict__)

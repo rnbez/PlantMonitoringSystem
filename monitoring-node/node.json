@@ -1,0 +1,24 @@
+{
+    "behaviorId": 1,
+    "friendlyName": "Raspberry PI 2 (newer)",
+    "id": 2,
+    "physicalAddress": "E4:F8:9C:18:BA:B0",
+    "sensors": [
+        {
+            "friendlyName": "Air Humidity Sensor",
+            "id": 6,
+            "measurementName": "Humidity",
+            "measurementUnit": "%",
+            "node": 2,
+            "sensorName": "dht_11_humidity"
+        },
+        {
+            "friendlyName": "Air Temperature Sensor",
+            "id": 7,
+            "measurementName": "Temperature",
+            "measurementUnit": "celsius",
+            "node": 2,
+            "sensorName": "dht_11_temp"
+        }
+    ]
+}
