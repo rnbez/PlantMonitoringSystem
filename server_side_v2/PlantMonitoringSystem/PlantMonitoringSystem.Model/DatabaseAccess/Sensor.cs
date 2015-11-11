@@ -15,7 +15,7 @@ namespace PlantMonitoringSystem.Model
                 return new Sensor()
                 {
                     Id = raw.id,
-                    SensorName = raw.sensor_name,
+                    SensorType = raw.sensor_type,
                     FriendlyName = raw.friendly_name,
                     MeasurementName = raw.measurement_name,
                     MeasurementUnit = raw.measurement_unit,
@@ -31,7 +31,7 @@ namespace PlantMonitoringSystem.Model
         {
             var raw = new Database.sensor()
             {
-                sensor_name = data.SensorName,
+                sensor_type = data.SensorType,
                 friendly_name = data.FriendlyName,
                 measurement_name = data.MeasurementName,
                 measurement_unit = data.MeasurementUnit,

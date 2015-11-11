@@ -11,25 +11,25 @@ class SensorReader:
 
     @staticmethod
     def read_air_temperature():
-        data = random.randint(15, 40)
+        data = 15 + (random.random() % 40)
         return SensorReader.build_reading(1, data)
 
     @staticmethod
     def read_air_humidity():
-        data = random.randint(20, 80)
+        data = 20 + (random.random() % 80)
         return SensorReader.build_reading(2, data)
 
     @staticmethod
     def read_luminosity():
-        data = random.randint(0, 100)
+        data = (random.random() % 100)
         return SensorReader.build_reading(3, data)
 
     @staticmethod
     def read_moisture():
-        data = random.randint(0, 100)
+        data = (random.random() % 100)
         return SensorReader.build_reading(4, data)
 
     @staticmethod
     def read_soil_temperature():
-        data = random.randint(10, 50)
+        data = 10 + (random.random() % 100)
         return SensorReader.build_reading(5, data)

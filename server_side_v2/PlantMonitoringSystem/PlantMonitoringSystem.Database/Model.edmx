@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="behavior">
           <Key>
             <PropertyRef Name="id" />
@@ -26,7 +26,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="sensor_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sensor_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="friendly_name" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="measurement_name" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="measurement_unit" Type="varchar" MaxLength="50" Nullable="false" />
@@ -95,7 +95,8 @@
             <End Role="sensorreading" EntitySet="sensorreading" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -112,24 +113,24 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="physical_address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="physical_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="friendly_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="behavior_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="behavior" Relationship="Self.node_behavior_id_6cc5183d_fk_behavior_id" FromRole="node" ToRole="behavior" />
           <NavigationProperty Name="sensors" Relationship="Self.sensor_node_id_114bea95_fk_node_id" FromRole="node" ToRole="sensor" />
-          <Property Name="friendly_name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sensor">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sensor_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sensor_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="friendly_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="measurement_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="measurement_unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="node_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="node" Relationship="Self.sensor_node_id_114bea95_fk_node_id" FromRole="sensor" ToRole="node" />
           <NavigationProperty Name="sensorreadings" Relationship="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id" FromRole="sensor" ToRole="sensorreading" />
-          <Property Name="friendly_name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sensorreading">
           <Key>
@@ -212,9 +213,9 @@
           <EntitySetMapping Name="nodes">
             <EntityTypeMapping TypeName="Model.node">
               <MappingFragment StoreEntitySet="node">
-                <ScalarProperty Name="friendly_name" ColumnName="friendly_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="physical_address" ColumnName="physical_address" />
+                <ScalarProperty Name="friendly_name" ColumnName="friendly_name" />
                 <ScalarProperty Name="behavior_id" ColumnName="behavior_id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -222,9 +223,9 @@
           <EntitySetMapping Name="sensors">
             <EntityTypeMapping TypeName="Model.sensor">
               <MappingFragment StoreEntitySet="sensor">
-                <ScalarProperty Name="friendly_name" ColumnName="friendly_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="sensor_name" ColumnName="sensor_name" />
+                <ScalarProperty Name="sensor_type" ColumnName="sensor_type" />
+                <ScalarProperty Name="friendly_name" ColumnName="friendly_name" />
                 <ScalarProperty Name="measurement_name" ColumnName="measurement_name" />
                 <ScalarProperty Name="measurement_unit" ColumnName="measurement_unit" />
                 <ScalarProperty Name="node_id" ColumnName="node_id" />
@@ -257,7 +258,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

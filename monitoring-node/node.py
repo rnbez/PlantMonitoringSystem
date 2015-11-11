@@ -1,6 +1,7 @@
 import sys, os, json
 
 physical_addess = ''
+node_info = None
 
 def getMacAddress():
     if sys.platform == 'win32':
@@ -17,6 +18,7 @@ def getMacAddress():
 
 def get():
     global physical_addess
+    global node_info
     if not physical_addess:
         physical_addess = getMacAddress()
 
