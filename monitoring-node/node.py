@@ -9,11 +9,11 @@ def getMacAddress():
             if line.lstrip().startswith('Physical Address'):
                 mac = line.split(':')[1].strip().replace('-',':')
                 break
-            else:
-                for line in os.popen("/sbin/ifconfig"):
-                    if line.find('Ether') > -1:
-                        mac = line.split()[4]
-                        break
+    else:
+        for line in os.popen("/sbin/ifconfig"):
+	    if line.find('Ether') > -1:
+                mac = line.split()[4]
+                break
     return mac
 
 def get():

@@ -23,7 +23,9 @@ class DHT11TemperatureSensor:
 
     @staticmethod
     def read():
+	sensor = DHT11TemperatureSensor.sensor
         sensor_type = DHT11TemperatureSensor.sensor_type
+	pin =  DHT11TemperatureSensor.pin
         sensors = node.node_info['sensors']
         found = [sen['id'] for sen in sensors if sen['sensorType'] == sensor_type]
 
@@ -40,7 +42,9 @@ class DHT11HumiditySensor:
 
     @staticmethod
     def read():
+	sensor = DHT11TemperatureSensor.sensor
         sensor_type = DHT11HumiditySensor.sensor_type
+	pin =  DHT11TemperatureSensor.pin
         sensors = node.node_info['sensors']
         found = [sen['id'] for sen in sensors if sen['sensorType'] == sensor_type]
 
@@ -64,12 +68,11 @@ class DS18B20TemperatureSensor:
         else:
             thermSensor = W1ThermSensor()
             temperature = thermSensor.get_temperature(W1ThermSensor.DEGREES_C)
-            temperature = 1
             return ReadingBuilder.get(found[0], temperature)
 
 
 class LDR:
-    sensor_type = 'ds18b20'
+    sensor_type = 'ldr'
     # channel on the ADC MPC8003
     light_channel = 0
 
@@ -78,7 +81,7 @@ class LDR:
     spi.open(0,0)
     @staticmethod
     def ReadChannel(channel):
-        adc = spi.xfer2([1,(8+channel)<<4,0])
+        adc = LDR.spi.xfer2([1,(8+channel)<<4,0])
         data = ((adc[1]&3) << 8) + adc[2]
         #scaling from 0-1023 to 1-100
         data = ((data * 100) / float(1023)) + 1
@@ -86,12 +89,11 @@ class LDR:
 
     @staticmethod
     def read():
-        sensor_type = DS18B20TemperatureSensor.sensor_type
         sensors = node.node_info['sensors']
-        found = [sen['id'] for sen in sensors if sen['sensorType'] == sensor_type]
+        found = [sen['id'] for sen in sensors if sen['sensorType'] == LDR.sensor_type]
 
         if not found:
             return None
         else:
-            light_level = ReadChannel(light_channel)
+            light_level = LDR.ReadChannel(LDR.light_channel)
             return ReadingBuilder.get(found[0], light_level)
