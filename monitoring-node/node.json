@@ -1,24 +1,40 @@
 {
     "behaviorId": 1,
-    "friendlyName": "Raspberry PI 2 (newer)",
+    "friendlyName": "Raspberry PI 2 (test)",
     "id": 2,
     "physicalAddress": "E4:F8:9C:18:BA:B0",
     "sensors": [
         {
-            "friendlyName": "Air Humidity Sensor",
+            "friendlyName": "Air Temperature",
             "id": 6,
-            "measurementName": "Humidity",
-            "measurementUnit": "%",
-            "node": 2,
-            "sensorName": "dht_11_humidity"
-        },
-        {
-            "friendlyName": "Air Temperature Sensor",
-            "id": 7,
-            "measurementName": "Temperature",
+            "measurementName": "temperature",
             "measurementUnit": "celsius",
             "node": 2,
-            "sensorName": "dht_11_temp"
+            "sensorType": "dht11_temperature"
+        },
+        {
+            "friendlyName": "Air Humidity Sensor",
+            "id": 7,
+            "measurementName": "humidity",
+            "measurementUnit": "%",
+            "node": 2,
+            "sensorType": "dht11_humidity"
+        },
+        {
+            "friendlyName": "Luminosity Sensor",
+            "id": 8,
+            "measurementName": "luminosity",
+            "measurementUnit": "%",
+            "node": 2,
+            "sensorType": "ldr"
+        },
+        {
+            "friendlyName": "Soil Temperature Sensor",
+            "id": 9,
+            "measurementName": "temperature",
+            "measurementUnit": "celsius",
+            "node": 2,
+            "sensorType": "ds18b20"
         }
     ]
 }

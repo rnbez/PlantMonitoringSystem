@@ -31,6 +31,7 @@ def get():
     return node_info
 
 def update(node):
+    node_info = node
     f = open('node.json', 'w')
     serialized = json.dumps(node, sort_keys=True, indent=4, separators=(',', ': '))
     f.write(serialized)
