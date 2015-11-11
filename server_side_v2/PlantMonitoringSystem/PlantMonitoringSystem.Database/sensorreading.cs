@@ -15,7 +15,7 @@ namespace PlantMonitoringSystem.Database
     public partial class sensorreading
     {
         public int id { get; set; }
-        public int reading { get; set; }
+        public decimal reading { get; set; }
         public System.DateTime reading_date { get; set; }
         public int sensor_id { get; set; }
     

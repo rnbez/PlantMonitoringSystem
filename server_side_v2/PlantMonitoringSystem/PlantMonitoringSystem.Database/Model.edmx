@@ -37,7 +37,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="reading" Type="int" Nullable="false" />
+          <Property Name="reading" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="reading_date" Type="datetime" Precision="6" Nullable="false" />
           <Property Name="sensor_id" Type="int" Nullable="false" />
         </EntityType>
@@ -136,7 +136,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="reading" Type="Int32" Nullable="false" />
+          <Property Name="reading" Type="Decimal" Nullable="false" />
           <Property Name="reading_date" Type="DateTime" Nullable="false" />
           <Property Name="sensor_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="sensor" Relationship="Self.sensorreading_sensor_id_4413c3ee_fk_sensor_id" FromRole="sensorreading" ToRole="sensor" />
