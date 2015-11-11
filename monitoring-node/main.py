@@ -6,12 +6,15 @@ if __name__ == '__main__':
 
     #handshake
 
-    response = httpclient.post(api.__handshake__, node.get())
-    print response.status, response.reason
-    if response.status == 200:
-        print response.body
-        body = json.loads(response.body)
-        node.update(body)
+    try:
+        response = httpclient.post(api.__handshake__, node.get())
+        print response.status, response.reason
+        if response.status == 200:
+            print response.body
+            body = json.loads(response.body)
+            node.update(body)
+    except:
+        print 'handshake fail'
 
     while True:
         try:
