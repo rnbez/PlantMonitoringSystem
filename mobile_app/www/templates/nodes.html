@@ -1,0 +1,47 @@
+<ion-view view-title="Monitoring Nodes">
+  <ion-content>
+    <!--
+    <ion-list>
+      <ion-item ng-repeat="node in nodes" href="#/app/node/{{node.id}}">
+        {{node.friendlyName}}
+      </ion-item>
+    </ion-list>
+    -->
+    <div class="list card" ng-repeat="node in nodes">
+
+      <div class="item item-divider">
+        <h2>{{node.friendlyName}}</h2>
+        <p>{{node.physicalAddress}}</p>
+      </div>
+
+      <div class="item item-body">
+
+        <div ng-show="node.sensors == null || node.sensors.length < 0">
+          <h2>No Sensor Detected</h2>
+        </div>
+
+        <div class="list">
+
+          <a class="item item-icon-right"  ng-repeat="sensor in node.sensors" href="#/app/sensor/{{sensor.id}}">
+            <i class="icon ion-chevron-right"></i>
+            {{sensor.friendlyName}}
+            <span class="item-note">
+              {{sensor.lastReading}}{{sensor.measurementUnit}}
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="item item-divider tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="#">
+          <i class="icon ion-refresh"></i>
+        </a>
+        <a class="tab-item" href="#">
+          <i class="icon ion-android-options"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
