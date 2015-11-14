@@ -42,11 +42,15 @@ angular.module('starter.controllers', [])
   console.log nodes
   $scope.nodes = nodes
 
+  $scope.onRefresh = () ->
+    _.delay (->
+      $scope.$broadcast('scroll.refreshComplete')
+      return
+    ), 5000
 
-  return
 
 .controller 'SensorController', ($scope, sensor, readings) ->
-  
+
   $scope.sensor = sensor
   $scope.readings = _.map readings, (r) ->
     return {
@@ -60,10 +64,11 @@ angular.module('starter.controllers', [])
   $scope.onClick = (points, evt) ->
     console.log points, evt
 
-  $scope.getData = (reading) ->
-    [ _.values(reading.values) ]
-  $scope.getLabels = (reading) ->
-    _.keys(reading.values)
+  $scope.onRefresh = () ->
+    _.delay (->
+      $scope.$broadcast('scroll.refreshComplete')
+      return
+    ), 5000
 
 
 
