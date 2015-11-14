@@ -16,28 +16,19 @@ angular.module('starter.services', []).service("NodeService", function($http) {
             measurementUnit: "°C"
           }, {
             id: 15,
-            sensorType: "dht11_humidity",
             friendlyName: "Air Humidity Sensor",
-            measurementName: "humidity",
             lastReading: 38,
-            measurementUnit: "%",
-            node: 4
+            measurementUnit: "%"
           }, {
             id: 16,
-            sensorType: "ldr",
             friendlyName: "Luminosity Sensor",
-            measurementName: "luminosity",
             lastReading: 45,
-            measurementUnit: "%",
-            node: 4
+            measurementUnit: "%"
           }, {
             id: 17,
-            sensorType: "ds18b20",
             friendlyName: "Soil Temperature Sensor",
-            measurementName: "temperature",
             lastReading: 18,
-            measurementUnit: "°C",
-            node: 4
+            measurementUnit: "°C"
           }
         ]
       }, {
@@ -68,32 +59,32 @@ angular.module('starter.services', []).service("NodeService", function($http) {
       {
         period: "Last Readings",
         values: {
-          "14:26": 25,
-          "14:28": 48,
-          "14:29": 12,
-          "14:33": 34,
-          "14:34": 80,
-          "14:35": 60
+          "14:26": Math.floor((Math.random() * 40) + 10),
+          "14:28": Math.floor((Math.random() * 40) + 10),
+          "14:29": Math.floor((Math.random() * 40) + 10),
+          "14:33": Math.floor((Math.random() * 40) + 10),
+          "14:34": Math.floor((Math.random() * 40) + 10),
+          "14:35": Math.floor((Math.random() * 40) + 10)
         }
       }, {
         period: "Last Hours",
         values: {
-          "09h": 30,
-          "10h": 28,
-          "11h": 30,
-          "12h": 34,
-          "13h": 32,
-          "14h": 38
+          "09h": Math.floor((Math.random() * 40) + 18),
+          "10h": Math.floor((Math.random() * 40) + 18),
+          "11h": Math.floor((Math.random() * 40) + 18),
+          "12h": Math.floor((Math.random() * 40) + 18),
+          "13h": Math.floor((Math.random() * 40) + 18),
+          "14h": Math.floor((Math.random() * 40) + 18)
         }
       }, {
         period: "Last Days",
         values: {
-          "11/08": 25,
-          "11/09": 23,
-          "11/10": 18,
-          "11/12": 20,
-          "11/13": 26,
-          "11/14": 21
+          "11/08": Math.floor((Math.random() * 40) + 25),
+          "11/09": Math.floor((Math.random() * 40) + 25),
+          "11/10": Math.floor((Math.random() * 40) + 25),
+          "11/12": Math.floor((Math.random() * 40) + 25),
+          "11/13": Math.floor((Math.random() * 40) + 25),
+          "11/14": Math.floor((Math.random() * 40) + 25)
         }
       }
     ];

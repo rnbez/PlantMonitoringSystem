@@ -49,8 +49,11 @@ angular.module('starter.controllers', [])
     ), 5000
 
 
-.controller 'SensorController', ($scope, sensor, readings) ->
+.controller 'SensorController', ($scope, $stateParams, sensor, readings, SensorService) ->
 
+  $scope.options = {
+    animation: false
+  }
   $scope.sensor = sensor
   $scope.readings = _.map readings, (r) ->
     return {
@@ -67,6 +70,17 @@ angular.module('starter.controllers', [])
   $scope.onRefresh = () ->
     _.delay (->
       $scope.$broadcast('scroll.refreshComplete')
+      #query = SensorService.getReadings($stateParams)
+      #query.then (response) ->
+      #  console.log response
+
+      response = SensorService.getReadings($stateParams)
+      $scope.readings = _.map response, (r) ->
+        return {
+          period: r.period
+          labels: _.keys(r.values)
+          data: [ _.values(r.values) ]
+        }
       return
     ), 5000
 

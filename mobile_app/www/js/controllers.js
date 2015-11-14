@@ -26,7 +26,10 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
       $scope.$broadcast('scroll.refreshComplete');
     }), 5000);
   };
-}).controller('SensorController', function($scope, sensor, readings) {
+}).controller('SensorController', function($scope, $stateParams, sensor, readings, SensorService) {
+  $scope.options = {
+    animation: false
+  };
   $scope.sensor = sensor;
   $scope.readings = _.map(readings, function(r) {
     return {
@@ -41,7 +44,16 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
   };
   $scope.onRefresh = function() {
     return _.delay((function() {
+      var response;
       $scope.$broadcast('scroll.refreshComplete');
+      response = SensorService.getReadings($stateParams);
+      $scope.readings = _.map(response, function(r) {
+        return {
+          period: r.period,
+          labels: _.keys(r.values),
+          data: [_.values(r.values)]
+        };
+      });
     }), 5000);
   };
 });
