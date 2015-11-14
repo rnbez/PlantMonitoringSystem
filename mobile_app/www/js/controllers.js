@@ -18,15 +18,13 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
       $scope.closeLogin();
     }), 1000);
   };
-}).controller('NodesController', function($scope, $timeout, nodes) {
+}).controller('NodesController', function($scope, nodes) {
   console.log(nodes);
   $scope.nodes = nodes;
-  return $scope.refresh = function(node) {
-    node.isRefreshing = true;
-    console.log(node);
-    return $timeout((function() {
-      node.isRefreshing = false;
-    }), 3000);
+  return $scope.onRefresh = function() {
+    return _.delay((function() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }), 5000);
   };
 }).controller('SensorController', function($scope, sensor, readings) {
   $scope.sensor = sensor;
@@ -41,10 +39,9 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
   $scope.onClick = function(points, evt) {
     return console.log(points, evt);
   };
-  $scope.getData = function(reading) {
-    return [_.values(reading.values)];
-  };
-  $scope.getLabels = function(reading) {
-    return _.keys(reading.values);
+  $scope.onRefresh = function() {
+    return _.delay((function() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }), 5000);
   };
 });

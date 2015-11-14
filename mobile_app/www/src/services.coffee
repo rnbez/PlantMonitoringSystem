@@ -10,16 +10,13 @@ angular.module('starter.services', [])
         id: 4
         physicalAddress: "b8:27:eb:b4:17:4a"
         friendlyName: "Raspberry PI 2"
-        behaviorId: 1,
+        online: true
         sensors: [
           {
             id: 14
-            sensorType: "dht11_temperature"
             friendlyName: "Air Temperature"
-            measurementName: "temperature"
             lastReading: 24
             measurementUnit: "°C"
-            node: 4
           }
           {
             id: 15
@@ -54,6 +51,7 @@ angular.module('starter.services', [])
         physicalAddress: "E4-F8-9C-18-BA-B0"
         friendlyName: "Arduino Uno"
         behaviorId: 1
+        online: false
       }]
 
   return this

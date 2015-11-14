@@ -36,20 +36,17 @@ angular.module('starter.controllers', [])
 
   return
 
-.controller 'NodesController', ($scope, $timeout, nodes) ->
+.controller 'NodesController', ($scope, nodes) ->
 
   #console.log "I'm inside NodesController"
   console.log nodes
   $scope.nodes = nodes
 
-  $scope.refresh = (node) ->
-    node.isRefreshing = true
-    console.log node
-
-    $timeout (->
-      node.isRefreshing = false
+  $scope.onRefresh = () ->
+    _.delay (->
+      $scope.$broadcast('scroll.refreshComplete')
       return
-    ), 3000
+    ), 5000
 
 
 .controller 'SensorController', ($scope, sensor, readings) ->
@@ -67,10 +64,11 @@ angular.module('starter.controllers', [])
   $scope.onClick = (points, evt) ->
     console.log points, evt
 
-  $scope.getData = (reading) ->
-    [ _.values(reading.values) ]
-  $scope.getLabels = (reading) ->
-    _.keys(reading.values)
+  $scope.onRefresh = () ->
+    _.delay (->
+      $scope.$broadcast('scroll.refreshComplete')
+      return
+    ), 5000
 
 
 

@@ -1,17 +1,18 @@
 <ion-view view-title="Monitoring Nodes">
   <ion-content>
-    <!--
-    <ion-list>
-      <ion-item ng-repeat="node in nodes" href="#/app/node/{{node.id}}">
-        {{node.friendlyName}}
-      </ion-item>
-    </ion-list>
-    -->
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="onRefresh()">
+    </ion-refresher>
     <div class="list card node-list" ng-repeat="node in nodes">
 
       <div class="item item-divider">
         <h2>{{node.friendlyName}}</h2>
-        <p>{{node.physicalAddress}}</p>
+        <p>{{node.physicalAddress}} -
+          <span class="node-status-{{node.online ? 'online' : 'offline'}}">
+            {{node.online ? "online" : "offline"}}
+          </span>
+        </p>
       </div>
 
       <div class="item item-body">
@@ -21,7 +22,6 @@
         </div>
 
         <div class="list">
-
           <a class="item item-icon-right"  ng-repeat="sensor in node.sensors" href="#/app/sensor/{{sensor.id}}">
             <i class="icon ion-chevron-right"></i>
             {{sensor.friendlyName}}
@@ -33,14 +33,6 @@
       </div>
 
       <div class="item item-divider tabs tabs-secondary tabs-icon-left">
-
-        <a class="tab-item" href="#">
-          <i class="icon ion-refresh" ng-hide="node.isRefreshing" ng-click="refresh(node)"></i>
-          <ion-spinner ng-show="node.isRefreshing"></ion-spinner>
-          <!--
-          <ion-spinner></ion-spinner>
-          -->
-        </a>
         <a class="tab-item" href="#">
           <i class="icon ion-android-options"></i>
         </a>
