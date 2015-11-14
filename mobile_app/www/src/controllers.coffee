@@ -36,17 +36,24 @@ angular.module('starter.controllers', [])
 
   return
 
-.controller 'NodesController', ($scope, nodes) ->
+.controller 'NodesController', ($scope, $timeout, nodes) ->
 
   #console.log "I'm inside NodesController"
   console.log nodes
   $scope.nodes = nodes
 
+  $scope.refresh = (node) ->
+    node.isRefreshing = true
+    console.log node
 
-  return
+    $timeout (->
+      node.isRefreshing = false
+      return
+    ), 3000
+
 
 .controller 'SensorController', ($scope, sensor, readings) ->
-  
+
   $scope.sensor = sensor
   $scope.readings = _.map readings, (r) ->
     return {
