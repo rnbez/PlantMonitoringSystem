@@ -37,7 +37,10 @@ if __name__ == '__main__':
             print "\n"
 
 
-	    
+
             time.sleep(60)
         except KeyboardInterrupt:
             exit()
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            time.sleep(60)
