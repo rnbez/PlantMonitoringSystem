@@ -84,6 +84,10 @@
       <Project>{968c7890-9b36-43a1-9060-351311d64b31}</Project>
       <Name>PlantMonitoringSystem.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PlantMonitoringSystem.Model\PlantMonitoringSystem.Model.csproj">
+      <Project>{2e372274-d5a6-4a7c-8537-ac80e6fc7be2}</Project>
+      <Name>PlantMonitoringSystem.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

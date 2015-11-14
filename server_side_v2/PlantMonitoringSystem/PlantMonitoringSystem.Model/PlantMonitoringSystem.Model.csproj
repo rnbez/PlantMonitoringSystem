@@ -64,6 +64,7 @@
     <Compile Include="Classes\SensorReading.cs" />
     <Compile Include="DatabaseAccess\SensorReading.cs" />
     <Compile Include="DatabaseAccess\Sensor.cs" />
+    <Compile Include="ViewModels\ViewReadings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PlantMonitoringSystem.Database\PlantMonitoringSystem.Database.csproj">

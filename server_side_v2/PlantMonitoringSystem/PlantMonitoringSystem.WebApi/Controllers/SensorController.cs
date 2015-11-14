@@ -1,4 +1,6 @@
-﻿using PlantMonitoringSystem.Model;
+﻿using PlantMonitoringSystem.Core;
+using PlantMonitoringSystem.Model;
+using PlantMonitoringSystem.Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +78,17 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         public HttpResponseMessage ListReadings(int id)
         {
             var result = Model.Sensor.ListReadings(id);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/view/readings")]
+        public HttpResponseMessage ViewSensorReadings(int id)
+        {
+            var result = new List<ViewReadings>();
+            result.Add(ViewReadingsBuilder.GetLastHour(id));
+            result.Add(ViewReadingsBuilder.GetLast24Hours(id));
+            result.Add(ViewReadingsBuilder.GetLast7Days(id));
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }

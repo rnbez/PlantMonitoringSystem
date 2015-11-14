@@ -45,7 +45,7 @@ namespace PlantMonitoringSystem.Model
 
             return raw;
         }
-        
+
         public static Sensor Get(int id)
         {
             var result = Context.GetInstance().sensors.FirstOrDefault(x => x.id == id);
@@ -61,7 +61,7 @@ namespace PlantMonitoringSystem.Model
             await ctx.SaveChangesAsync();
             return (Sensor)ctx.sensors.OrderByDescending(x => x.id).FirstOrDefault();
         }
-        
+
         public static async Task<Sensor> Update(Sensor data)
         {
             var ctx = Context.GetInstance();
@@ -85,14 +85,14 @@ namespace PlantMonitoringSystem.Model
                 var raw = toRaw(data);
                 ctx.sensors.Attach(raw);
                 System.Data.Entity.Infrastructure.DbEntityEntry<Database.sensor> entry = ctx.Entry(raw);
-                entry.State = System.Data.Entity.EntityState.Modified; 
+                entry.State = System.Data.Entity.EntityState.Modified;
             }
 
             await ctx.SaveChangesAsync();
 
             return List();
         }
-        
+
         public static async Task<Sensor> Delete(int id)
         {
             throw new NotImplementedException();
@@ -104,6 +104,14 @@ namespace PlantMonitoringSystem.Model
                 .Take(100)
                 .ToList();
             return result.Select(x => (Sensor)x).ToList();
+        }
+        public static SensorReading LastReadings(int id)
+        {
+            var result = Context.GetInstance().sensorreadings
+                .Where(x => x.sensor_id == id)
+                .OrderByDescending(x => x.reading_date)
+                .FirstOrDefault();
+            return (SensorReading)result;
         }
 
         public static List<SensorReading> ListReadings(int id)
@@ -118,11 +126,20 @@ namespace PlantMonitoringSystem.Model
         public static List<SensorReading> ListReadings(int id, DateTime startDate, DateTime endDate)
         {
             var result = Context.GetInstance().sensorreadings
-                .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate )
+                .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate)
                 .OrderBy(x => x.reading_date)
                 .Take(1000)
                 .ToList();
             return result.Select(x => (SensorReading)x).ToList();
+        }
+
+        public static decimal AverageReadings(int id, DateTime startDate, DateTime endDate)
+        {
+            return Context.GetInstance().sensorreadings
+                .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate)
+                .Select(x => x.reading)
+                .DefaultIfEmpty(0)
+                .Average();
         }
     }
 }
