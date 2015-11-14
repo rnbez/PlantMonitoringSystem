@@ -37,6 +37,7 @@ if __name__ == '__main__':
             print "\n"
 
 
-            time.sleep(2)
+	    
+            time.sleep(30)
         except KeyboardInterrupt:
             exit()
