@@ -83,8 +83,8 @@ class LDR:
     def ReadChannel(channel):
         adc = LDR.spi.xfer2([1,(8+channel)<<4,0])
         data = ((adc[1]&3) << 8) + adc[2]
-        #scaling from 0-1023 to 1-100
-        data = ((data * 100) / float(1023)) + 1
+        #scaling from 0-1023 to 0-100
+        data = 100 - ((data * 100) / float(1023))
         return data
 
     @staticmethod
