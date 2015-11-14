@@ -7,7 +7,7 @@
 
     <div class="card sensor-graph" ng-repeat="reading in readings">
       <div class="item item-divider">
-        {{reading.period}}
+        {{reading.name}}
       </div>
       <div class="item item-text-wrap">
         <canvas id="line{{$index + 1}}"

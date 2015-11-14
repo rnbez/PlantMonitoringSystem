@@ -33,7 +33,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
   $scope.sensor = sensor;
   $scope.readings = _.map(readings, function(r) {
     return {
-      period: r.period,
+      name: r.name,
       labels: _.keys(r.values),
       data: [_.values(r.values)]
     };
@@ -49,7 +49,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
       response = SensorService.getReadings($stateParams);
       $scope.readings = _.map(response, function(r) {
         return {
-          period: r.period,
+          name: r.name,
           labels: _.keys(r.values),
           data: [_.values(r.values)]
         };

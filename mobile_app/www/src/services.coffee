@@ -63,28 +63,31 @@ angular.module('starter.services', [])
   @getReadings = (params) ->
     readings = [
       {
-        period: "Last Readings"
+        name: "Last Hour"
         values:
-          "14:26": Math.floor (Math.random() * 40) + 10
-          "14:28": Math.floor (Math.random() * 40) + 10
-          "14:29": Math.floor (Math.random() * 40) + 10
-          "14:33": Math.floor (Math.random() * 40) + 10
-          "14:34": Math.floor (Math.random() * 40) + 10
-          "14:35": Math.floor (Math.random() * 40) + 10
+          "00:00": Math.floor (Math.random() * 40) + 10
+          "00:10": Math.floor (Math.random() * 40) + 10
+          "00:20": Math.floor (Math.random() * 40) + 10
+          "00:30": Math.floor (Math.random() * 40) + 10
+          "00:40": Math.floor (Math.random() * 40) + 10
+          "00:50": Math.floor (Math.random() * 40) + 10
+          "01:00": Math.floor (Math.random() * 40) + 10
       }
       {
-        period: "Last Hours"
+        name: "Last 24 Hours"
         values:
-          "09h": Math.floor (Math.random() * 40) + 18
-          "10h": Math.floor (Math.random() * 40) + 18
-          "11h": Math.floor (Math.random() * 40) + 18
-          "12h": Math.floor (Math.random() * 40) + 18
-          "13h": Math.floor (Math.random() * 40) + 18
-          "14h": Math.floor (Math.random() * 40) + 18
+          "Fri 07h": Math.floor (Math.random() * 40) + 18
+          "Fri 11h": Math.floor (Math.random() * 40) + 18
+          "Fri 15h": Math.floor (Math.random() * 40) + 18
+          "Fri 19h": Math.floor (Math.random() * 40) + 18
+          "Fri 23h": Math.floor (Math.random() * 40) + 18
+          "Sat 03h": Math.floor (Math.random() * 40) + 18
+          "Sat 04h": Math.floor (Math.random() * 40) + 18
       }
       {
-        period: "Last Days"
+        name: "Last 7 Days"
         values:
+          "11/07": Math.floor (Math.random() * 40) + 25
           "11/08": Math.floor (Math.random() * 40) + 25
           "11/09": Math.floor (Math.random() * 40) + 25
           "11/10": Math.floor (Math.random() * 40) + 25
