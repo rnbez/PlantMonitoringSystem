@@ -90,6 +90,16 @@ namespace PlantMonitoringSystem.Model
         {
             throw new NotImplementedException();
         }
+        
+        public static List<Node> List()
+        {
+            var result = Context.GetInstance().nodes
+                .ToList();
+            return result
+                    .Select(x => (Node)x)
+                    .DefaultIfEmpty(new Node())
+                    .ToList();
+        }
 
         public static List<Sensor> ListSensors(int id)
         {

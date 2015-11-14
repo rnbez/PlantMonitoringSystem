@@ -105,7 +105,8 @@ namespace PlantMonitoringSystem.Model
                 .ToList();
             return result.Select(x => (Sensor)x).ToList();
         }
-        public static SensorReading LastReadings(int id)
+
+        public static SensorReading LastReading(int id)
         {
             var result = Context.GetInstance().sensorreadings
                 .Where(x => x.sensor_id == id)
@@ -123,6 +124,7 @@ namespace PlantMonitoringSystem.Model
                 .ToList();
             return result.Select(x => (SensorReading)x).ToList();
         }
+
         public static List<SensorReading> ListReadings(int id, DateTime startDate, DateTime endDate)
         {
             var result = Context.GetInstance().sensorreadings
@@ -140,6 +142,14 @@ namespace PlantMonitoringSystem.Model
                 .Select(x => x.reading)
                 .DefaultIfEmpty(0)
                 .Average();
+        }
+        public static bool IsOnline(int id)
+        {
+            DateTime startDate = DateTime.Now.AddMinutes(-5);
+            DateTime endDate = DateTime.Now;
+            var result = Context.GetInstance().sensorreadings
+                .Count(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate);
+            return result > 0;
         }
     }
 }

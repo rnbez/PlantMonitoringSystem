@@ -8,12 +8,19 @@ namespace PlantMonitoringSystem.Core.Test
     public class ReadingsUnitTest
     {
         [TestMethod]
+        public void GetNodesTest()
+        {
+
+            var result = Core.NodesView.GetNodeList();
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void GetReadingsTest()
         {
-            var lastHour = ViewReadingsBuilder.GetLastHour(20);
-            var last24h = ViewReadingsBuilder.GetLast24Hours(20);
-            var last7days = ViewReadingsBuilder.GetLast7Days(20);
-            Assert.IsTrue(true);
+
+            var result = Core.SensorViewReadings.GetLastReadings(20);
+            Assert.IsNotNull(result);
         }
     }
 }

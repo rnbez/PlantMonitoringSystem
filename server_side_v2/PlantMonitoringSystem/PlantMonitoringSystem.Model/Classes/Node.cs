@@ -25,6 +25,5 @@ namespace PlantMonitoringSystem.Model
         [DataMember(Name = "sensors", EmitDefaultValue=false)]
         public List<Sensor> Sensors { get; set; }
 
-
     }
 }

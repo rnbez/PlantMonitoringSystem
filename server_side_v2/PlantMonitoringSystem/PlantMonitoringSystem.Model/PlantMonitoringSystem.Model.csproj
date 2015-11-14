@@ -64,6 +64,7 @@
     <Compile Include="Classes\SensorReading.cs" />
     <Compile Include="DatabaseAccess\SensorReading.cs" />
     <Compile Include="DatabaseAccess\Sensor.cs" />
+    <Compile Include="ViewModels\ViewNode.cs" />
     <Compile Include="ViewModels\ViewReadings.cs" />
   </ItemGroup>
   <ItemGroup>

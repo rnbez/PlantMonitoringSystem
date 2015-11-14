@@ -56,14 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeGreeting.cs" />
+    <Compile Include="NodesView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewReadings.cs" />
+    <Compile Include="SensorViewReadings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PlantMonitoringSystem.Database\PlantMonitoringSystem.Database.csproj">
+      <Project>{cf4abb28-3a96-4cf2-bbd0-0dc1054289bb}</Project>
+      <Name>PlantMonitoringSystem.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlantMonitoringSystem.Model\PlantMonitoringSystem.Model.csproj">
       <Project>{2e372274-d5a6-4a7c-8537-ac80e6fc7be2}</Project>
       <Name>PlantMonitoringSystem.Model</Name>

@@ -7,9 +7,18 @@ using System.Threading.Tasks;
 
 namespace PlantMonitoringSystem.Core
 {
-    public static class ViewReadingsBuilder
+    public static class SensorViewReadings
     {
-        public static ViewReadings GetLastHour(int sensorId)
+        public static List<ViewReadings> GetLastReadings(int id)
+        {
+            var result = new List<ViewReadings>();
+            result.Add(GetLastHour(id));
+            result.Add(GetLast24Hours(id));
+            result.Add(GetLast7Days(id));
+            return result;
+        }
+
+        private static ViewReadings GetLastHour(int sensorId)
         {
             ViewReadings view = new ViewReadings("Last Hour", new Dictionary<string, decimal>());
             var now = DateTime.Now;
@@ -43,7 +52,7 @@ namespace PlantMonitoringSystem.Core
 
         }
 
-        public static ViewReadings GetLast24Hours(int sensorId)
+        private static ViewReadings GetLast24Hours(int sensorId)
         {
             ViewReadings view = new ViewReadings("Last 24 Hours", new Dictionary<string, decimal>());
             var now = DateTime.Now;
@@ -76,7 +85,7 @@ namespace PlantMonitoringSystem.Core
 
         }
 
-        public static ViewReadings GetLast7Days(int sensorId)
+        private static ViewReadings GetLast7Days(int sensorId)
         {
             ViewReadings view = new ViewReadings("Last 7 Days", new Dictionary<string, decimal>());
             var now = DateTime.Now;
@@ -108,6 +117,6 @@ namespace PlantMonitoringSystem.Core
             }
 
         }
-
+        
     }
 }
