@@ -115,5 +115,14 @@ namespace PlantMonitoringSystem.Model
                 .ToList();
             return result.Select(x => (SensorReading)x).ToList();
         }
+        public static List<SensorReading> ListReadings(int id, DateTime startDate, DateTime endDate)
+        {
+            var result = Context.GetInstance().sensorreadings
+                .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate )
+                .OrderBy(x => x.reading_date)
+                .Take(1000)
+                .ToList();
+            return result.Select(x => (SensorReading)x).ToList();
+        }
     }
 }
