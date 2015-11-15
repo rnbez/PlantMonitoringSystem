@@ -36,17 +36,18 @@ angular.module('starter.controllers', [])
 
   return
 
-.controller 'NodesController', ($scope, nodes) ->
+.controller 'NodesController', ($scope, nodes, NodeService) ->
 
   #console.log "I'm inside NodesController"
   console.log nodes
   $scope.nodes = nodes
 
   $scope.onRefresh = () ->
-    _.delay (->
+    query = NodeService.getNodes()
+    query.then (response) ->
+      $scope.nodes = response
+      console.log $scope.nodes
       $scope.$broadcast('scroll.refreshComplete')
-      return
-    ), 5000
 
 
 .controller 'SensorController', ($scope, $stateParams, sensor, readings, SensorService) ->
@@ -67,22 +68,18 @@ angular.module('starter.controllers', [])
   $scope.onClick = (points, evt) ->
     console.log points, evt
 
-  $scope.onRefresh = () ->
-    _.delay (->
-      $scope.$broadcast('scroll.refreshComplete')
-      #query = SensorService.getReadings($stateParams)
-      #query.then (response) ->
-      #  console.log response
 
-      response = SensorService.getReadings($stateParams)
-      $scope.readings = _.map response, (r) ->
+  $scope.onRefresh = () ->
+    query = SensorService.getReadings($stateParams)
+    query.then (response) ->
+      $scope.readings = _.map readings, (response) ->
         return {
-          name: r.name
-          labels: _.keys(r.values)
-          data: [ _.values(r.values) ]
+          name: response.name
+          labels: _.keys(response.values)
+          data: [ _.values(response.values) ]
         }
-      return
-    ), 5000
+      console.log $scope.readings
+      $scope.$broadcast('scroll.refreshComplete')
 
 
 

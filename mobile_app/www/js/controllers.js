@@ -18,13 +18,17 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
       $scope.closeLogin();
     }), 1000);
   };
-}).controller('NodesController', function($scope, nodes) {
+}).controller('NodesController', function($scope, nodes, NodeService) {
   console.log(nodes);
   $scope.nodes = nodes;
   return $scope.onRefresh = function() {
-    return _.delay((function() {
-      $scope.$broadcast('scroll.refreshComplete');
-    }), 5000);
+    var query;
+    query = NodeService.getNodes();
+    return query.then(function(response) {
+      $scope.nodes = response;
+      console.log($scope.nodes);
+      return $scope.$broadcast('scroll.refreshComplete');
+    });
   };
 }).controller('SensorController', function($scope, $stateParams, sensor, readings, SensorService) {
   $scope.options = {
@@ -43,17 +47,18 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
     return console.log(points, evt);
   };
   $scope.onRefresh = function() {
-    return _.delay((function() {
-      var response;
-      $scope.$broadcast('scroll.refreshComplete');
-      response = SensorService.getReadings($stateParams);
-      $scope.readings = _.map(response, function(r) {
+    var query;
+    query = SensorService.getReadings($stateParams);
+    return query.then(function(response) {
+      $scope.readings = _.map(readings, function(response) {
         return {
-          name: r.name,
-          labels: _.keys(r.values),
-          data: [_.values(r.values)]
+          name: response.name,
+          labels: _.keys(response.values),
+          data: [_.values(response.values)]
         };
       });
-    }), 5000);
+      console.log($scope.readings);
+      return $scope.$broadcast('scroll.refreshComplete');
+    });
   };
 });

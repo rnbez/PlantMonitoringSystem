@@ -17,7 +17,9 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("nodes")]
         public HttpResponseMessage ViewNodes()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, NodesView.GetNodeList());
+            var resposne = Request.CreateResponse(HttpStatusCode.OK, NodesView.GetNodeList());
+            resposne.Headers.Add("Access-Control-Allow-Origin", "*");
+            return resposne;
         }
 
 
@@ -25,7 +27,9 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("sensor/{id}/readings")]
         public HttpResponseMessage ViewSensorReadings(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, SensorViewReadings.GetLastReadings(id));
+            var resposne = Request.CreateResponse(HttpStatusCode.OK, SensorViewReadings.GetLastReadings(id));
+            resposne.Headers.Add("Access-Control-Allow-Origin", "*");
+            return resposne;
         }
     }
 }

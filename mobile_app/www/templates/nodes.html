@@ -4,7 +4,24 @@
       pulling-text="Pull to refresh..."
       on-refresh="onRefresh()">
     </ion-refresher>
-    <div class="list card node-list" ng-repeat="node in nodes">
+    <!--
+    <div class="item item-checkbox">
+       <label class="checkbox">
+         <input type="checkbox" ng-model="q">
+       </label>
+       Display Only Online Nodes
+    </div>
+  -->
+    <div class="item item-toggle">
+      Display Only Online Nodes
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="q">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+   </div>
+    <div class="list card node-list" ng-repeat="node in nodes | filter:q as online">
 
       <div class="item item-divider">
         <h2>{{node.friendlyName}}</h2>
