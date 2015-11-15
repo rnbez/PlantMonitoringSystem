@@ -13,8 +13,8 @@ namespace PlantMonitoringSystem.Model
         [DataMember(Name = "id")]
         public int? Id { get; set; }
 
-        [DataMember(Name = "sensorName")]
-        public string SensorName { get; set; }
+        [DataMember(Name = "sensorType")]
+        public string SensorType { get; set; }
 
         [DataMember(Name = "friendlyName")]
         public string FriendlyName { get; set; }

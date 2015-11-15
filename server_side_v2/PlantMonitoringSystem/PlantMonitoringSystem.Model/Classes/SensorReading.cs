@@ -14,7 +14,7 @@ namespace PlantMonitoringSystem.Model
         public int? Id { get; set; }
 
         [DataMember(Name = "reading")]
-        public int Reading { get; set; }
+        public decimal Reading { get; set; }
 
         [DataMember(Name = "date")]
         public DateTime ReadingDate { get; set; }

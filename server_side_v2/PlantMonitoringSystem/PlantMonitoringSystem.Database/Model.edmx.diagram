@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="791b9ab3ffba4fae83af658e308aeecd" Name="Diagram1">
+      <Diagram DiagramId="0611d813e1b14ba1bb4108e7f0b0a899" Name="Diagram1">
         <EntityTypeShape EntityType="Model.behavior" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.node" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.sensor" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.sensorreading" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sensorreading" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="Model.node_behavior_id_6cc5183d_fk_behavior_id" ManuallyRouted="false" />
         <AssociationConnector Association="Model.sensor_node_id_114bea95_fk_node_id" ManuallyRouted="false" />
         <AssociationConnector Association="Model.sensorreading_sensor_id_4413c3ee_fk_sensor_id" ManuallyRouted="false" />

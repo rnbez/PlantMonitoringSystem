@@ -1,0 +1,61 @@
+<ion-view view-title="Monitoring Nodes">
+  <ion-content>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="onRefresh()">
+    </ion-refresher>
+    <!--
+    <div class="item item-checkbox">
+       <label class="checkbox">
+         <input type="checkbox" ng-model="q">
+       </label>
+       Display Only Online Nodes
+    </div>
+  -->
+    <div class="item item-toggle">
+      Display Only Online Nodes
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="q">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+   </div>
+    <div class="list card node-list" ng-repeat="node in nodes | filter:q as online">
+
+      <div class="item item-divider">
+        <h2>{{node.friendlyName}}</h2>
+        <p>{{node.physicalAddress}} -
+          <span class="node-status-{{node.online ? 'online' : 'offline'}}">
+            {{node.online ? "online" : "offline"}}
+          </span>
+        </p>
+      </div>
+
+      <div class="item item-body">
+
+        <div ng-show="node.sensors == null || node.sensors.length < 0">
+          <h2>No Sensor Detected</h2>
+        </div>
+
+        <div class="list">
+          <a class="item item-icon-right"  ng-repeat="sensor in node.sensors" href="#/app/sensor/{{sensor.id}}">
+            <i class="icon ion-chevron-right"></i>
+            {{sensor.friendlyName}}
+            <span class="item-note">
+              {{sensor.lastReading}}{{sensor.measurementUnit}}
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="item item-divider tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="#">
+          <i class="icon ion-android-options"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

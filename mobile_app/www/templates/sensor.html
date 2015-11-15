@@ -1,0 +1,25 @@
+<ion-view view-title="{{sensor.friendlyName}}">
+  <ion-content>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="onRefresh()">
+    </ion-refresher>
+
+    <div class="card sensor-graph" ng-repeat="reading in readings">
+      <div class="item item-divider">
+        {{reading.name}}
+      </div>
+      <div class="item item-text-wrap">
+        <canvas id="line{{$index + 1}}"
+                class="chart chart-line"
+                chart-options="options"
+                chart-data="reading.data"
+                chart-labels="reading.labels"
+                chart-legend="true"
+                chart-series="series"
+                chart-click="onClick" >
+        </canvas>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
