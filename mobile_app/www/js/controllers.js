@@ -50,11 +50,11 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
     var query;
     query = SensorService.getReadings($stateParams);
     return query.then(function(response) {
-      $scope.readings = _.map(readings, function(response) {
+      $scope.readings = _.map(response, function(r) {
         return {
-          name: response.name,
-          labels: _.keys(response.values),
-          data: [_.values(response.values)]
+          name: r.name,
+          labels: _.keys(r.values),
+          data: [_.values(r.values)]
         };
       });
       console.log($scope.readings);

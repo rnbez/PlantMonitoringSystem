@@ -2,7 +2,7 @@
 angular.module('starter.services', []).service("NodeService", function($http) {
   var endpoints;
   endpoints = {
-    host: 'http://ec2-52-33-255-233.us-west-2.compute.amazonaws.com',
+    host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com',
     getNodes: function() {
       return endpoints.host + "/api/view/nodes";
     }
@@ -18,7 +18,7 @@ angular.module('starter.services', []).service("NodeService", function($http) {
 }).service("SensorService", function($http) {
   var endpoints;
   endpoints = {
-    host: 'http://ec2-52-33-255-233.us-west-2.compute.amazonaws.com',
+    host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com',
     getSensor: function(params) {
       return endpoints.host + "/api/sensor/" + params.sensorId;
     },

@@ -1,7 +1,8 @@
 angular.module('starter.services', [])
 .service "NodeService", ($http) ->
   endpoints =
-    host: 'http://ec2-52-33-255-233.us-west-2.compute.amazonaws.com'
+    host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
+    #host: 'http://localhost:85'
     getNodes: () -> "#{endpoints.host}/api/view/nodes"
 
   #API
@@ -54,7 +55,8 @@ angular.module('starter.services', [])
 
 .service "SensorService", ($http) ->
   endpoints =
-    host: 'http://ec2-52-33-255-233.us-west-2.compute.amazonaws.com'
+    host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
+    #host: 'http://localhost:85'
     getSensor: (params) -> "#{endpoints.host}/api/sensor/#{params.sensorId}"
     getReadings: (params) -> "#{endpoints.host}/api/view/sensor/#{params.sensorId}/readings"
 

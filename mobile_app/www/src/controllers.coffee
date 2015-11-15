@@ -72,11 +72,11 @@ angular.module('starter.controllers', [])
   $scope.onRefresh = () ->
     query = SensorService.getReadings($stateParams)
     query.then (response) ->
-      $scope.readings = _.map readings, (response) ->
+      $scope.readings = _.map response, (r) ->
         return {
-          name: response.name
-          labels: _.keys(response.values)
-          data: [ _.values(response.values) ]
+          name: r.name
+          labels: _.keys(r.values)
+          data: [ _.values(r.values) ]
         }
       console.log $scope.readings
       $scope.$broadcast('scroll.refreshComplete')
