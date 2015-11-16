@@ -22,6 +22,12 @@ namespace PlantMonitoringSystem.Model
         [DataMember(Name = "behaviorId")]
         public int BehaviorId { get; set; }
 
+        [DataMember(Name = "waterOn")]
+        public bool IsWaterOn { get; set; }
+
+        [DataMember(Name = "lightOn")]
+        public bool IsLightOn { get; set; }
+
         [DataMember(Name = "sensors", EmitDefaultValue=false)]
         public List<Sensor> Sensors { get; set; }
 

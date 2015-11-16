@@ -17,6 +17,8 @@ namespace PlantMonitoringSystem.Model
                     Id = raw.id,
                     PhysicalAddress = raw.physical_address,
                     FriendlyName = raw.friendly_name,
+                    IsWaterOn = (bool)raw.water_on,
+                    IsLightOn = (bool)raw.light_on,
                     BehaviorId = raw.behavior_id,
                 };
             }
@@ -31,6 +33,8 @@ namespace PlantMonitoringSystem.Model
             {
                 physical_address = data.PhysicalAddress,
                 friendly_name = data.FriendlyName,
+                water_on = data.IsWaterOn,
+                light_on = data.IsLightOn,
                 behavior_id = data.BehaviorId,
             };
 
