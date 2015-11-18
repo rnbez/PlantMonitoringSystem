@@ -28,20 +28,21 @@ def sendReadings(nextRun):
 
     return nextRun
 
-def getNodeFromServer():
-    return json.loads(httpclient.get(api.__get_node__(node.node_info['id'])).body)
+def nextNodeUpdate(nextRun):
+    if datetime.now() >= nextRun:
+        response = httpclient.get(api.__get_node__(node.node_info['id']))
+        body = json.loads(response.body)
+        node.update(body)
+        nextRun = datetime.now() + timedelta(seconds=60)
+
+    return nextRun
 
 def doActions(_node):
-    #print 'lightOn', _node['lightOn'], '\n'
-    #print 'waterOn', _node['waterOn'], '\n'
+    response = httpclient.get(api.__get_node__(node.node_info['id']))
+    _node = json.loads(response.body)
     actions.setPin(actions.__light_pin__, _node['lightOn'])
     actions.setPin(actions.__water_pin__, _node['waterOn'])
-
-    return 1
-    # check if the light property
-    # in the param node is True
-    #     if true turn on the light
-    #     if not turn off the light
+    return
 
 if __name__ == '__main__':
 
@@ -66,17 +67,18 @@ if __name__ == '__main__':
     print "GPIO Setup"
     print "\n----------------------\n"
 
-    nextRun = datetime.now()
+    nextSensorReading = datetime.now()
+    nextNodeUpdate = datetime.now()
     while True:
         try:
 
-            nextRun = sendReadings(nextRun)
-            updatedNode = getNodeFromServer()
-            doActions(updatedNode)
+            nextSensorReading = sendReadings(nextSensorReading)
+            nextNodeUpdate = updateNode(nextNodeUpdate)
+            doActions()
 
 
 
-            time.sleep(2)
+            time.sleep(0.5)
         except KeyboardInterrupt:
             actions.clean()
             log.log_info("GPIO CleanUp")

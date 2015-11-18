@@ -2,7 +2,7 @@ import json, httplib, urllib, api
 
 def get(path):
     headers = {"Content-type": "application/json", "Accept": "application/json"}
-    conn = httplib.HTTPConnection(api.__host__, api.__port__)
+    conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=2)
     conn.request("GET", path)
     response = conn.getresponse()
     response.body = response.read()
@@ -16,7 +16,7 @@ def post(path, data):
     #print "\n##DEBUG##\n"
     #print host, ":", str(port), path
     #print body
-    conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=2)
+    conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=4)
     conn.request("POST", path, body, headers)
     response = conn.getresponse()
     #print response.status, response.reason
