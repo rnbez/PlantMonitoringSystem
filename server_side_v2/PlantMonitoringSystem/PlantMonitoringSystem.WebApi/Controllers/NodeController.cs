@@ -23,7 +23,9 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             {
                 result.Sensors = Model.Node.ListSensors(id);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            var response = Request.CreateResponse(HttpStatusCode.OK, result);
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
         }
 
         // POST api/<controller>
@@ -42,20 +44,24 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             }
         }
 
-        // PUT api/<controller>/5
+        // PUT api/<controller>/
         [HttpPut]
         [Route("")]
         public async Task<HttpResponseMessage> Put([FromBody]Node node)
         {
+            HttpResponseMessage response = null;
             try
             {
                 var result = await Model.Node.Update(node);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
+                response = Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
+
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
         }
 
         // DELETE api/<controller>/5
@@ -74,7 +80,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             }
         }
 
-        
+
         // GET api/<controller>/5/sensors
         [HttpGet]
         [Route("{id}/sensors")]
@@ -82,6 +88,66 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         {
             var result = Model.Node.ListSensors(id);
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+        // POST api/<controller>/5/water
+        [HttpPost]
+        [Route("{id}/water/{status}")]
+        public async Task<HttpResponseMessage> SetWater(int id, bool status)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                var node = Model.Node.Get(id);
+                if (node.IsWaterOn != status)
+                {
+                    node.IsWaterOn = status;
+                    var result = await Model.Node.Update(node);
+                    response = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    response = Request.CreateResponse(HttpStatusCode.NotModified, node);
+                }
+            }
+            catch (Exception ex)
+            {
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
+        }
+        
+
+        // POST api/<controller>/5/water
+        [HttpPost]
+        [Route("{id}/light/{status}")]
+        public async Task<HttpResponseMessage> SetLight(int id, bool status)
+        {
+            HttpResponseMessage response = null;
+            try
+            {
+                var node = Model.Node.Get(id);
+                if (node.IsLightOn != status)
+                {
+                    node.IsLightOn = status;
+                    var result = await Model.Node.Update(node);
+                    response = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    response = Request.CreateResponse(HttpStatusCode.NotModified, node);
+                }
+            }
+            catch (Exception ex)
+            {
+                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
         }
     }
 }

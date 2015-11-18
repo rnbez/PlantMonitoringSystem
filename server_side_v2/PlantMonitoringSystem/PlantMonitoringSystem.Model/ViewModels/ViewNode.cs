@@ -20,7 +20,9 @@ namespace PlantMonitoringSystem.Model.ViewModels
                     FriendlyName = node.FriendlyName,
                     PhysicalAddress = node.PhysicalAddress,
                     Online = false,                  
-                     Sensors = new List<Sensor>(),                                  
+                    IsLightOn = node.IsLightOn,
+                    IsWaterOn = node.IsWaterOn,
+                    Sensors = new List<Sensor>(),                                  
                 };
 
                 if (node.Sensors != null && node.Sensors.Count > 0)
@@ -81,6 +83,12 @@ namespace PlantMonitoringSystem.Model.ViewModels
 
         [DataMember(Name = "online")]
         public bool Online { get; set; }
+
+        [DataMember(Name = "waterOn")]
+        public bool IsWaterOn { get; set; }
+
+        [DataMember(Name = "lightOn")]
+        public bool IsLightOn { get; set; }
 
         [DataMember(Name = "sensors")]
         public List<Sensor> Sensors { get; set; }

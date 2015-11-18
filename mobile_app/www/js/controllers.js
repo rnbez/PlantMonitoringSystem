@@ -21,18 +21,21 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
 }).controller('NodesController', function($scope, nodes, NodeService) {
   console.log(nodes);
   $scope.nodes = nodes;
+  $scope.onlyOnlineNodes = true;
   return $scope.onRefresh = function() {
     var query;
     query = NodeService.getNodes();
     return query.then(function(response) {
       $scope.nodes = response;
       console.log($scope.nodes);
-      return $scope.$broadcast('scroll.refreshComplete');
+      return _.delay((function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }), 1000);
     });
   };
 }).controller('SensorController', function($scope, $stateParams, sensor, readings, SensorService) {
   $scope.options = {
-    animation: false
+    animation: true
   };
   $scope.sensor = sensor;
   $scope.readings = _.map(readings, function(r) {
@@ -58,7 +61,28 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         };
       });
       console.log($scope.readings);
-      return $scope.$broadcast('scroll.refreshComplete');
+      return _.delay((function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }), 1000);
+    });
+  };
+}).controller('NodeDetailsController', function($scope, node, NodeService) {
+  console.log(node);
+  $scope.node = node;
+  $scope.toggleLight = function() {
+    var query;
+    console.log("toggle");
+    query = NodeService.toggleLight(node.id, node.lightOn);
+    return query.then(function(response) {
+      return console.log(response);
+    });
+  };
+  return $scope.toggleWater = function() {
+    var query;
+    console.log("toggle");
+    query = NodeService.toggleWater(node.id, node.waterOn);
+    return query.then(function(response) {
+      return console.log(response);
     });
   };
 });

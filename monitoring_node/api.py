@@ -4,3 +4,6 @@ __port__ = 80
 # ROUTES
 __handshake__       = '/api/handshake/'
 __send_readings__   = '/api/reading/'
+
+def __get_lightwater__(nodeId):
+    return '/api/node/' + str(nodeId) + '?light=true&water=true'

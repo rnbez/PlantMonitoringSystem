@@ -41,13 +41,17 @@ angular.module('starter.controllers', [])
   #console.log "I'm inside NodesController"
   console.log nodes
   $scope.nodes = nodes
+  $scope.onlyOnlineNodes = true
 
   $scope.onRefresh = () ->
     query = NodeService.getNodes()
     query.then (response) ->
       $scope.nodes = response
       console.log $scope.nodes
-      $scope.$broadcast('scroll.refreshComplete')
+      _.delay (->
+        $scope.$broadcast('scroll.refreshComplete')
+        return
+      ), 1000
 
 
 .controller 'SensorController', ($scope, $stateParams, sensor, readings, SensorService) ->
@@ -79,8 +83,32 @@ angular.module('starter.controllers', [])
           data: [ _.values(r.values) ]
         }
       console.log $scope.readings
-      $scope.$broadcast('scroll.refreshComplete')
+      _.delay (->
+        $scope.$broadcast('scroll.refreshComplete')
+        return
+      ), 1000
+
 
 
 
   return
+
+
+.controller 'NodeDetailsController', ($scope, node, NodeService) ->
+
+  console.log node
+  $scope.node = node
+
+  $scope.toggleLight = ->
+    console.log "toggle"
+    query = NodeService.toggleLight(node.id, node.lightOn)
+    query.then (response) ->
+      #$scope.node = response
+      console.log response
+
+  $scope.toggleWater = ->
+    console.log "toggle"
+    query = NodeService.toggleWater(node.id, node.waterOn)
+    query.then (response) ->
+      #$scope.node = response
+      console.log response

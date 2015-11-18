@@ -45,7 +45,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             try
             {
                 var result = await Model.SensorReading.Update(reading);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {

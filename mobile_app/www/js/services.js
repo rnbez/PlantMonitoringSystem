@@ -5,11 +5,41 @@ angular.module('starter.services', []).service("NodeService", function($http) {
     host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com',
     getNodes: function() {
       return endpoints.host + "/api/view/nodes";
+    },
+    getNodeDetails: function(params) {
+      return endpoints.host + "/api/node/" + params.nodeId;
+    },
+    toggleLight: function(id, status) {
+      return endpoints.host + "/api/node/" + id + "/light/" + status;
+    },
+    toggleWater: function(id, status) {
+      return endpoints.host + "/api/node/" + id + "/water/" + status;
     }
   };
   this.getNodes = function() {
     var req;
     req = $http.get(endpoints.getNodes());
+    return req.then(function(result) {
+      return result.data;
+    });
+  };
+  this.getNodeDetails = function(params) {
+    var req;
+    req = $http.get(endpoints.getNodeDetails(params));
+    return req.then(function(result) {
+      return result.data;
+    });
+  };
+  this.toggleLight = function(id, status) {
+    var req;
+    req = $http.post(endpoints.toggleLight(id, status));
+    return req.then(function(result) {
+      return result.data;
+    });
+  };
+  this.toggleWater = function(id, status) {
+    var req;
+    req = $http.post(endpoints.toggleWater(id, status));
     return req.then(function(result) {
       return result.data;
     });

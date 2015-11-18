@@ -4,7 +4,9 @@ angular.module('starter.services', [])
     host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
     #host: 'http://localhost:85'
     getNodes: () -> "#{endpoints.host}/api/view/nodes"
-
+    getNodeDetails: (params) -> "#{endpoints.host}/api/node/#{params.nodeId}"
+    toggleLight: (id, status) -> "#{endpoints.host}/api/node/#{id}/light/#{status}"
+    toggleWater: (id, status) -> "#{endpoints.host}/api/node/#{id}/water/#{status}"
   #API
   @getNodes = () ->
     req = $http.get(endpoints.getNodes())
@@ -49,6 +51,21 @@ angular.module('starter.services', [])
   #      behaviorId: 1
   #      online: false
   #    }]
+
+  @getNodeDetails = (params) ->
+    req = $http.get(endpoints.getNodeDetails(params))
+    req.then (result) ->
+      result.data
+
+  @toggleLight = (id, status) ->
+    req = $http.post(endpoints.toggleLight(id, status))
+    req.then (result) ->
+      result.data
+
+  @toggleWater = (id, status) ->
+    req = $http.post(endpoints.toggleWater(id, status))
+    req.then (result) ->
+      result.data
 
   return this
 
