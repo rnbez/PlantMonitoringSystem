@@ -14,15 +14,15 @@ def setup():
     GPIO.setup(__water_pin__, GPIO.OUT)
     __pin_status__[__light_pin__] = False
     __pin_status__[__water_pin__] = False
-    setPin(__light_pin__, __pin_status__[__light_pin__])
-    setPin(__water_pin__, __pin_status__[__water_pin__])
+    GPIO.output(__light_pin__, __pin_status__[__light_pin__])
+    GPIO.output(__water_pin__, __pin_status__[__water_pin__])
     return
 
 def setPin(pin, value):
     global __pin_status__
 
-    if pin in __pin_status__ and __pin_status__[pin] != value:
-        GPIO.output(pin, value)
+    #if pin in __pin_status__ and __pin_status__[pin] != value:
+    GPIO.output(pin, value)
 
     return
 

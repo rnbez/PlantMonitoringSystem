@@ -28,20 +28,28 @@ def sendReadings(nextRun):
 
     return nextRun
 
-def nextNodeUpdate(nextRun):
+def updateNode(nextRun):
     if datetime.now() >= nextRun:
+	print 'Start updating the node...'
         response = httpclient.get(api.__get_node__(node.node_info['id']))
         body = json.loads(response.body)
         node.update(body)
         nextRun = datetime.now() + timedelta(seconds=60)
+	print 'Node update finised\n'
 
     return nextRun
 
-def doActions(_node):
-    response = httpclient.get(api.__get_node__(node.node_info['id']))
-    _node = json.loads(response.body)
-    actions.setPin(actions.__light_pin__, _node['lightOn'])
-    actions.setPin(actions.__water_pin__, _node['waterOn'])
+def doActions():
+    try:
+        response = httpclient.get(api.__get_lightwater__(node.node_info['id']))
+        _node = json.loads(response.body)
+        actions.setPin(actions.__light_pin__, _node['lightOn'])
+        actions.setPin(actions.__water_pin__, _node['waterOn'])
+    except TimeoutError:
+	error_msg = "HTTP Timeout - main.py @ doActions()"
+	print error_msg, "\n"
+	log.log_error(error_msg)
+	return
     return
 
 if __name__ == '__main__':
@@ -59,7 +67,7 @@ if __name__ == '__main__':
         error_msg = "handshake fail"
         e = sys.exc_info()[0]
         print error_msg
-        error_msg = error_msg + str(e)
+        error_msg = error_msg + "\n" + str(e)
         log.log_error(error_msg)
 
     print "\n----------------------\n"
@@ -69,16 +77,16 @@ if __name__ == '__main__':
 
     nextSensorReading = datetime.now()
     nextNodeUpdate = datetime.now()
+    delay = 0.1
     while True:
         try:
-
             nextSensorReading = sendReadings(nextSensorReading)
+            doActions()
+	    time.sleep(delay)
+
             nextNodeUpdate = updateNode(nextNodeUpdate)
             doActions()
-
-
-
-            time.sleep(0.5)
+	    time.sleep(delay)
         except KeyboardInterrupt:
             actions.clean()
             log.log_info("GPIO CleanUp")
@@ -90,4 +98,4 @@ if __name__ == '__main__':
             print error_msg
             error_msg = error_msg + str(e)
             log.log_error(error_msg)
-            time.sleep(60)
+            time.sleep(15)
