@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 
 
-            time.sleep(1)
+            time.sleep(2)
         except KeyboardInterrupt:
             actions.clean()
             log.log_info("GPIO CleanUp")

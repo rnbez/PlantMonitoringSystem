@@ -9,10 +9,12 @@ def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(__light_pin__, GPIO.OUT)
     GPIO.setup(__water_pin__, GPIO.OUT)
+    setPin(__light_pin__, False)
+    setPin(__water_pin__, False)
     return
 
 def setPin(pin, value):
-    GPIO.output(18, value)
+    GPIO.output(pin, value)
     return
 
 def clean():
