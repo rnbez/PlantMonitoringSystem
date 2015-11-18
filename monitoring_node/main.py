@@ -28,9 +28,11 @@ def sendReadings(nextRun):
     return nextRun
 
 def getNodeFromServer():
-    return node
+    return httpclient.__get_node__(node.node_info).body
 
-def doActions(node):
+def doActions(_node):
+    print 'lightOn', _node['lightOn'], '\n'
+    print 'waterOn', _node['waterOn'], '\n'
     return 1
     # check if the light property
     # in the param node is True
@@ -62,8 +64,8 @@ if __name__ == '__main__':
         try:
 
             nextRun = sendReadings(nextRun)
-            #node = getNodeFromServer()
-            #doActions(node)
+            updatedNode = getNodeFromServer()
+            doActions(updatedNode)
 
 
 

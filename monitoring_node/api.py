@@ -4,4 +4,6 @@ __port__ = 80
 # ROUTES
 __handshake__       = '/api/handshake/'
 __send_readings__   = '/api/reading/'
-__get_node__        = '/api/node/5?includeSensors=true'
+
+def __get_node__(nodeId):
+    return '/api/node/' + str(nodeId) + '?includeSensors=true'

@@ -35,7 +35,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
   };
 }).controller('SensorController', function($scope, $stateParams, sensor, readings, SensorService) {
   $scope.options = {
-    animation: false
+    animation: true
   };
   $scope.sensor = sensor;
   $scope.readings = _.map(readings, function(r) {
