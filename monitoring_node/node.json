@@ -1,40 +1,42 @@
 {
-  "id": 5,
-  "physicalAddress": "b8:27:eb:b4:17:4a",
-  "friendlyName": "Raspberry PI 2",
-  "behaviorId": 1,
-  "sensors": [
-    {
-      "id": 18,
-      "sensorType": "dht11_temperature",
-      "friendlyName": "Air Temperature",
-      "measurementName": "temperature",
-      "measurementUnit": "°C",
-      "node": 5
-    },
-    {
-      "id": 19,
-      "sensorType": "dht11_humidity",
-      "friendlyName": "Air Humidity Sensor",
-      "measurementName": "humidity",
-      "measurementUnit": "%",
-      "node": 5
-    },
-    {
-      "id": 20,
-      "sensorType": "ldr",
-      "friendlyName": "Luminosity Sensor",
-      "measurementName": "luminosity",
-      "measurementUnit": "%",
-      "node": 5
-    },
-    {
-      "id": 21,
-      "sensorType": "ds18b20",
-      "friendlyName": "Soil Temperature Sensor",
-      "measurementName": "temperature",
-      "measurementUnit": "°C",
-      "node": 5
-    }
-  ]
+    "behaviorId": 1,
+    "friendlyName": "Raspberry PI 2",
+    "id": 5,
+    "lightOn": false,
+    "physicalAddress": "b8:27:eb:b4:17:4a",
+    "sensors": [
+        {
+            "friendlyName": "Air Temperature",
+            "id": 18,
+            "measurementName": "temperature",
+            "measurementUnit": "\u00b0C",
+            "node": 5,
+            "sensorType": "dht11_temperature"
+        },
+        {
+            "friendlyName": "Air Humidity Sensor",
+            "id": 19,
+            "measurementName": "humidity",
+            "measurementUnit": "%",
+            "node": 5,
+            "sensorType": "dht11_humidity"
+        },
+        {
+            "friendlyName": "Luminosity Sensor",
+            "id": 20,
+            "measurementName": "luminosity",
+            "measurementUnit": "%",
+            "node": 5,
+            "sensorType": "ldr"
+        },
+        {
+            "friendlyName": "Soil Temperature Sensor",
+            "id": 21,
+            "measurementName": "temperature",
+            "measurementUnit": "\u00b0C",
+            "node": 5,
+            "sensorType": "ds18b20"
+        }
+    ],
+    "waterOn": false
 }
