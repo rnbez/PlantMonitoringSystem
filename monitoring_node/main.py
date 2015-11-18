@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 def sendReadings(nextRun):
 
-    if datetime.now() >= nextRun
+    if datetime.now() >= nextRun:
         air_temp = DHT11TemperatureSensor.read()
         httpclient.post(api.__send_readings__, air_temp)
 
@@ -31,6 +31,7 @@ def getNodeFromServer():
     return node
 
 def doActions(node):
+    return 1
     # check if the light property
     # in the param node is True
     #     if true turn on the light
