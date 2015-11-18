@@ -16,13 +16,25 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         // GET api/<controller>/5
         [HttpGet]
         [Route("{id}")]
-        public HttpResponseMessage Get(int id, bool includeSensors = false)
+        public HttpResponseMessage Get(int id, bool includeSensors = false, bool light = false, bool water = false)
         {
             var result = Model.Node.Get(id);
             if (includeSensors)
             {
                 result.Sensors = Model.Node.ListSensors(id);
             }
+
+            if (light || water)
+            {
+                Dictionary<string, bool> dic = new Dictionary<string, bool>();
+                if (light) dic.Add("lightOn", result.IsLightOn);
+                if (water) dic.Add("waterOn", result.IsWaterOn);
+
+                var r = Request.CreateResponse(HttpStatusCode.OK, dic);
+                r.Headers.Add("Access-Control-Allow-Origin", "*");
+                return r;
+            }
+
             var response = Request.CreateResponse(HttpStatusCode.OK, result);
             response.Headers.Add("Access-Control-Allow-Origin", "*");
             return response;
@@ -119,7 +131,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             response.Headers.Add("Access-Control-Allow-Origin", "*");
             return response;
         }
-        
+
 
         // POST api/<controller>/5/water
         [HttpPost]
@@ -149,5 +161,6 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             response.Headers.Add("Access-Control-Allow-Origin", "*");
             return response;
         }
+
     }
 }
