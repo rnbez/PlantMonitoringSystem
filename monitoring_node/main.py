@@ -1,6 +1,7 @@
 from sensors import *
-import sys, time, httpclient, node, api, json, log
 from datetime import datetime, timedelta
+import sys, time, httpclient, node, api, json, log, actions
+
 
 def sendReadings(nextRun):
 
@@ -28,12 +29,14 @@ def sendReadings(nextRun):
     return nextRun
 
 def getNodeFromServer():
-    return httpclient.get(api.__get_node__(node.node_info['id'])).body
+    return json.loads(httpclient.get(api.__get_node__(node.node_info['id'])).body)
 
 def doActions(_node):
-    print 'lightOn', _node['lightOn'], '\n'
-    print 'waterOn', _node['waterOn'], '\n'
-    
+    #print 'lightOn', _node['lightOn'], '\n'
+    #print 'waterOn', _node['waterOn'], '\n'
+    actions.setPin(actions.__light_pin__, _node['lightOn'])
+    actions.setPin(actions.__water_pin__, _node['waterOn'])
+
     return 1
     # check if the light property
     # in the param node is True
@@ -59,19 +62,24 @@ if __name__ == '__main__':
         log.log_error(error_msg)
 
     print "\n----------------------\n"
+    actions.setup()
+    print "GPIO Setup"
+    print "\n----------------------\n"
 
     nextRun = datetime.now()
     while True:
         try:
 
             nextRun = sendReadings(nextRun)
-            updatedNode = json.loads(getNodeFromServer())
+            updatedNode = getNodeFromServer()
             doActions(updatedNode)
 
 
 
             time.sleep(1)
         except KeyboardInterrupt:
+            actions.clean()
+            log.log_info("GPIO CleanUp")
             log.log_info("User Interrupt")
             exit()
         except:
