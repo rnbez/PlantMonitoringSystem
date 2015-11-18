@@ -1,6 +1,40 @@
 from sensors import *
 import sys, time, httpclient, node, api, json, log
+from datetime import datetime, timedelta
 
+def sendReadings(nextRun):
+
+    if datetime.now() >= nextRun
+        air_temp = DHT11TemperatureSensor.read()
+        httpclient.post(api.__send_readings__, air_temp)
+
+        air_hum = DHT11HumiditySensor.read()
+        httpclient.post(api.__send_readings__, air_hum)
+
+        air_lum = LDR.read()
+        httpclient.post(api.__send_readings__, air_lum)
+
+        soil_temp = DS18B20TemperatureSensor.read()
+        httpclient.post(api.__send_readings__, soil_temp)
+
+        print air_lum["date"]
+        print "Env: Temp.: {0:0.2f}C  Humidity: {1:0.2f}%  &  Luminosity:{2:0.2f}%".format(air_temp['reading'], air_hum['reading'], air_lum['reading'])
+        print "Soil: Temp.: {0:0.2f}C  &  Moisture: 0%".format(soil_temp['reading'])
+        print "\n"
+        log.log_info("System Ok")
+
+        nextRun = datetime.now() + timedelta(seconds=60)
+
+    return nextRun
+
+def getNodeFromServer():
+    return node
+
+def doActions(node):
+    # check if the light property
+    # in the param node is True
+    #     if true turn on the light
+    #     if not turn off the light
 
 if __name__ == '__main__':
 
@@ -22,27 +56,17 @@ if __name__ == '__main__':
 
     print "\n----------------------\n"
 
+    nextRun = datetime.now()
     while True:
         try:
-            air_temp = DHT11TemperatureSensor.read()
-            httpclient.post(api.__send_readings__, air_temp)
 
-            air_hum = DHT11HumiditySensor.read()
-            httpclient.post(api.__send_readings__, air_hum)
+            nextRun = sendReadings(nextRun)
+            #node = getNodeFromServer()
+            #doActions(node)
 
-            air_lum = LDR.read()
-            httpclient.post(api.__send_readings__, air_lum)
 
-            soil_temp = DS18B20TemperatureSensor.read()
-            httpclient.post(api.__send_readings__, soil_temp)
 
-            print air_lum["date"]
-            print "Env: Temp.: {0:0.2f}C  Humidity: {1:0.2f}%  &  Luminosity:{2:0.2f}%".format(air_temp['reading'], air_hum['reading'], air_lum['reading'])
-            print "Soil: Temp.: {0:0.2f}C  &  Moisture: 0%".format(soil_temp['reading'])
-            print "\n"
-
-            log.log_info("System Ok")
-            time.sleep(60)
+            time.sleep(1)
         except KeyboardInterrupt:
             log.log_info("User Interrupt")
             exit()

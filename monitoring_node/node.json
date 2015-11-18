@@ -1,7 +1,7 @@
 {
   "id": 5,
   "physicalAddress": "b8:27:eb:b4:17:4a",
-  "friendlyName": "Raspberry PI 2 (test)",
+  "friendlyName": "Raspberry PI 2",
   "behaviorId": 1,
   "sensors": [
     {
