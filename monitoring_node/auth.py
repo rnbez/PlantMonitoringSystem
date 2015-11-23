@@ -10,6 +10,5 @@ def authenticate():
     response = httpclient.post(api.__authenticate__, getUserAndPass())
     if response.status == 200:
         usr = json.loads(response.body)
-        print usr
         api.AUTH_TOKEN = usr['token']
     return response

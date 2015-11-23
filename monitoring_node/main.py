@@ -57,6 +57,7 @@ if __name__ == '__main__':
     # authentication
     try:
         auth.authenticate()
+        print "authentication succeeded"
     except:
         error_msg = "authentication fail"
         e = sys.exc_info()[0]
@@ -70,9 +71,10 @@ if __name__ == '__main__':
         response = httpclient.post(api.__handshake__, node.get())
         print response.status, response.reason
         if response.status == 200:
-            print response.body
+            #print response.body
             body = json.loads(response.body)
             node.update(body)
+            print "handshake succeeded"
     except:
         error_msg = "handshake fail"
         e = sys.exc_info()[0]
