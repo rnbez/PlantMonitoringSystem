@@ -1,11 +1,10 @@
 angular.module('starter.services', [])
-.service "UserService", ($http, $rootScope, EVENTS) ->
+.service "UserService", ($http, $rootScope, EVENTS, API) ->
   LOCAL_TOKEN_KEY = "TEST_LOCAL_KEY"
   currentUser =
     isAuthenticated = false
   endpoints =
-    #host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
-    host: 'http://localhost:85'
+    host: API.host
     authenticate: () -> "#{endpoints.host}/api/user/authenticate"
     removeAuthenticatedUser: () -> "#{endpoints.host}/api/user/authenticate/remove"
     create: () -> "#{endpoints.host}/api/user/create"
@@ -65,10 +64,9 @@ angular.module('starter.services', [])
   return this
 
 
-.service "NodeService", ($http) ->
+.service "NodeService", ($http, API) ->
   endpoints =
-    #host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
-    host: 'http://localhost:85'
+    host: API.host
     getNodes: () -> "#{endpoints.host}/api/view/nodes"
     getNodeDetails: (params) -> "#{endpoints.host}/api/node/#{params.nodeId}"
     toggleLight: (id, status) -> "#{endpoints.host}/api/node/#{id}/light/#{status}"
@@ -96,10 +94,9 @@ angular.module('starter.services', [])
 
   return this
 
-.service "SensorService", ($http) ->
+.service "SensorService", ($http, API) ->
   endpoints =
-    #host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
-    host: 'http://localhost:85'
+    host: API.host
     getSensor: (params) -> "#{endpoints.host}/api/sensor/#{params.sensorId}"
     getReadings: (params) -> "#{endpoints.host}/api/view/sensor/#{params.sensorId}/readings"
 
