@@ -4,6 +4,10 @@ __port__ = 80
 # ROUTES
 __handshake__       = '/api/handshake/'
 __send_readings__   = '/api/reading/'
+__authenticate__   = '/api/user/authenticate'
+
+# TOKEN
+AUTH_TOKEN = ''
 
 def __get_node__(nodeId):
     return '/api/node/' + str(nodeId) + '?includeSensors=true'

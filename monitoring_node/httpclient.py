@@ -1,7 +1,9 @@
 import json, httplib, urllib, api
 
 def get(path):
-    headers = {"Content-type": "application/json", "Accept": "application/json"}
+    headers = {"Content-type": "application/json",
+               "Accept": "application/json",
+               "X-Auth-Token": api.AUTH_TOKEN}
     conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=2)
     conn.request("GET", path)
     response = conn.getresponse()
@@ -12,7 +14,9 @@ def get(path):
 def post(path, data):
     reading = str(data)
     body = json.dumps(data)
-    headers = {"Content-type": "application/json", "Accept": "application/json"}
+    headers = {"Content-type": "application/json",
+               "Accept": "application/json",
+               "X-Auth-Token": api.AUTH_TOKEN}
     #print "\n##DEBUG##\n"
     #print host, ":", str(port), path
     #print body
