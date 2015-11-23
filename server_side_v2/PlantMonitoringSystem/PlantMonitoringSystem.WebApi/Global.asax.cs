@@ -34,8 +34,9 @@ namespace PlantMonitoringSystem.WebApi
         {
             var request = Context.Request;
             if (request.HttpMethod == "OPTIONS" || 
-                request.Path.StartsWith("/api/user/authenticate") || 
-                request.Path.StartsWith("/api/user/create"))
+                request.Path.Contains("api/user/authenticate") || 
+                request.Path.Contains("api/user/create") ||
+                request.Path.Contains("api/healthcheck"))
             {
                 return;
             }
@@ -43,8 +44,16 @@ namespace PlantMonitoringSystem.WebApi
             var header = request.Headers["X-Auth-Token"];
             if (string.IsNullOrWhiteSpace(header) || ApplicationContext.GetAuthenticatedUser(header) == null)
             {
+                Dictionary<string, string> dic = new Dictionary<string,string>()
+                {
+                    {"method", request.HttpMethod},
+                    {"path", request.Path},
+                    {"X-Auth-Token", header}
+                };
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                Response.End();
+                Response.ContentType = "application/json";
+                Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
+                Response.Flush();
             }
             
         }
