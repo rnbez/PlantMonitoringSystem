@@ -43,6 +43,15 @@
           <Property Name="reading_date" Type="datetime" Precision="6" Nullable="false" />
           <Property Name="sensor_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="systemUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="node_behavior_id_6cc5183d_fk_behavior_id">
           <End Role="behavior" Type="Self.behavior" Multiplicity="1" />
           <End Role="node" Type="Self.node" Multiplicity="*" />
@@ -84,6 +93,7 @@
           <EntitySet Name="node" EntityType="Self.node" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <EntitySet Name="sensor" EntityType="Self.sensor" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <EntitySet Name="sensorreading" EntityType="Self.sensorreading" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <EntitySet Name="systemUser" EntityType="Self.systemUser" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <AssociationSet Name="node_behavior_id_6cc5183d_fk_behavior_id" Association="Self.node_behavior_id_6cc5183d_fk_behavior_id">
             <End Role="behavior" EntitySet="behavior" />
             <End Role="node" EntitySet="node" />
@@ -198,7 +208,17 @@
             <End Role="sensor" EntitySet="sensors" />
             <End Role="sensorreading" EntitySet="sensorreadings" />
           </AssociationSet>
+          <EntitySet Name="systemUsers" EntityType="Model.systemUser" />
         </EntityContainer>
+        <EntityType Name="systemUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -244,6 +264,16 @@
                 <ScalarProperty Name="reading" ColumnName="reading" />
                 <ScalarProperty Name="reading_date" ColumnName="reading_date" />
                 <ScalarProperty Name="sensor_id" ColumnName="sensor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="systemUsers">
+            <EntityTypeMapping TypeName="Model.systemUser">
+              <MappingFragment StoreEntitySet="systemUser">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

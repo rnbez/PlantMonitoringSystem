@@ -82,6 +82,9 @@
     <Compile Include="sensorreading.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="systemUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

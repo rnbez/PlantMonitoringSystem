@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PlantMonitoringSystem.Core;
+using PlantMonitoringSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,61 +10,29 @@ using System.Web.Http;
 
 namespace PlantMonitoringSystem.WebApi.Controllers
 {
-    [System.Runtime.Serialization.DataContract]
-    public class SystemUser
-    {
-        [System.Runtime.Serialization.DataMember(Name = "id", EmitDefaultValue = false)]
-        public int Id { get; set; }
-
-        [System.Runtime.Serialization.DataMember(Name = "username")]
-        public string Username { get; set; }
-
-        [System.Runtime.Serialization.DataMember(Name = "token", EmitDefaultValue=false)]
-        public string AuthToken { get; set; }
-
-        [System.Runtime.Serialization.DataMember(Name = "email", EmitDefaultValue = false)]
-        public string Email { get; set; }
-
-        [System.Runtime.Serialization.DataMember(Name = "pass", EmitDefaultValue = false)]
-        public string Password { get; set; }
-
-        public static string Base64Encode(string plainText)
-        {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
-        }
-
-        public static string Base64Decode(string base64EncodedData)
-        {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-    }
-
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         [HttpPost]
         [Route("authenticate")]
         public HttpResponseMessage Authenticate([FromBody] SystemUser user)
-        {            
+        {
             if (user == null)
             {
                 var ex = new ArgumentNullException("user");
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
-            
-            if (!string.IsNullOrWhiteSpace(user.Username) && !string.IsNullOrWhiteSpace(user.Password) &&
-                user.Username == "root" && user.Password == "admin")
+
+            if ((user = SystemUser.Authenticate(user.Username, user.Password)) != null)
             {
                 var authUser = new SystemUser
                 {
                     Id = 1,
-                    Email = "rafael@mail.edu",
                     Username = user.Username,
-                    Password = user.Password,
-                    AuthToken = SystemUser.Base64Encode(user.Username + DateTime.Now.ToString())
                 };
+                authUser.GenerateAuthToken();
+                ApplicationContext.AddAuthenticatedUser(authUser);
+
                 return Request.CreateResponse(HttpStatusCode.OK, authUser);
             }
             else
@@ -72,18 +42,83 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         }
 
 
+        [HttpPost]
+        [Route("authenticate/remove")]
+        public HttpResponseMessage RevemoAuthenticatedUser([FromBody] SystemUser user)
+        {
+            if (user == null)
+            {
+                var ex = new ArgumentNullException("user");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            
+            ApplicationContext.RemoveAuthenticatedUser(user.AuthToken);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        // GET api/<controller>/5
         [HttpGet]
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-            var user = new SystemUser
-            {
-                Id = id,
-                Email = "rafael@mail.edu",
-                Password = "abc123",
-                Username = "rafa"
-            };
-            return Request.CreateResponse(HttpStatusCode.OK, user);
+            return Request.CreateResponse(HttpStatusCode.OK, Model.SystemUser.Get(id));
         }
+
+        // POST api/<controller>/create
+        [HttpPost]
+        [Route("create")]
+        public async Task<HttpResponseMessage> Post([FromBody]SystemUser user)
+        {
+            try
+            {
+                if (SystemUser.UserExists(user.Username))
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, new { message = "Username already used" });
+                }
+
+                user.Password = SystemUser.Base64Encode(user.Password);
+                var result = await Model.SystemUser.Insert(user);
+                result.GenerateAuthToken();
+                ApplicationContext.AddAuthenticatedUser(result);
+                return Request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut]
+        [Route("")]
+        public async Task<HttpResponseMessage> Put([FromBody]SystemUser user)
+        {
+            try
+            {
+                var result = await Model.SystemUser.Update(user);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete]
+        [Route("")]
+        public async Task<HttpResponseMessage> Delete(int id)
+        {
+            try
+            {
+                var result = await Model.SystemUser.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.Created, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
     }
 }

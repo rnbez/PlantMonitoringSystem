@@ -48,13 +48,13 @@ namespace PlantMonitoringSystem.Model
 
         public static Sensor Get(int id)
         {
-            var result = Context.GetInstance().sensors.FirstOrDefault(x => x.id == id);
+            var result = ModelContext.GetInstance().sensors.FirstOrDefault(x => x.id == id);
             return (Sensor)result;
         }
 
         public static async Task<Sensor> Insert(Sensor data)
         {
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetInstance();
 
             ctx.sensors.Add(toRaw(data));
 
@@ -64,7 +64,7 @@ namespace PlantMonitoringSystem.Model
 
         public static async Task<Sensor> Update(Sensor data)
         {
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetInstance();
 
             var raw = toRaw(data);
             ctx.sensors.Attach(raw);
@@ -78,7 +78,7 @@ namespace PlantMonitoringSystem.Model
 
         public static async Task<List<Sensor>> Update(List<Sensor> list)
         {
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetInstance();
 
             foreach (var data in list)
             {
@@ -100,7 +100,7 @@ namespace PlantMonitoringSystem.Model
 
         public static List<Sensor> List()
         {
-            var result = Context.GetInstance().sensors
+            var result = ModelContext.GetInstance().sensors
                 .Take(100)
                 .ToList();
             return result.Select(x => (Sensor)x).ToList();
@@ -108,7 +108,7 @@ namespace PlantMonitoringSystem.Model
 
         public static SensorReading LastReading(int id)
         {
-            var result = Context.GetInstance().sensorreadings
+            var result = ModelContext.GetInstance().sensorreadings
                 .Where(x => x.sensor_id == id)
                 .OrderByDescending(x => x.reading_date)
                 .FirstOrDefault();
@@ -117,7 +117,7 @@ namespace PlantMonitoringSystem.Model
 
         public static List<SensorReading> ListReadings(int id)
         {
-            var result = Context.GetInstance().sensorreadings
+            var result = ModelContext.GetInstance().sensorreadings
                 .Where(x => x.sensor_id == id)
                 .OrderByDescending(x => x.reading_date)
                 .Take(1000)
@@ -127,7 +127,7 @@ namespace PlantMonitoringSystem.Model
 
         public static List<SensorReading> ListReadings(int id, DateTime startDate, DateTime endDate)
         {
-            var result = Context.GetInstance().sensorreadings
+            var result = ModelContext.GetInstance().sensorreadings
                 .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate)
                 .OrderBy(x => x.reading_date)
                 .Take(1000)
@@ -137,7 +137,7 @@ namespace PlantMonitoringSystem.Model
 
         public static decimal AverageReadings(int id, DateTime startDate, DateTime endDate)
         {
-            return Context.GetInstance().sensorreadings
+            return ModelContext.GetInstance().sensorreadings
                 .Where(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate)
                 .Select(x => x.reading)
                 .DefaultIfEmpty(0)
@@ -147,7 +147,7 @@ namespace PlantMonitoringSystem.Model
         {
             DateTime startDate = DateTime.Now.AddMinutes(-5);
             DateTime endDate = DateTime.Now;
-            var result = Context.GetInstance().sensorreadings
+            var result = ModelContext.GetInstance().sensorreadings
                 .Count(x => x.sensor_id == id && x.reading_date > startDate && x.reading_date < endDate);
             return result > 0;
         }

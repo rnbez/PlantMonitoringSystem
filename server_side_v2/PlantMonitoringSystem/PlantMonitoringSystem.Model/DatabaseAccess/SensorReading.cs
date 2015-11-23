@@ -53,13 +53,13 @@ namespace PlantMonitoringSystem.Model
 
         public static SensorReading Get(int id)
         {
-            var result = Context.GetInstance().sensorreadings.FirstOrDefault(x => x.id == id);
+            var result = ModelContext.GetInstance().sensorreadings.FirstOrDefault(x => x.id == id);
             return (SensorReading)result;
         }
 
         public static async Task<SensorReading> Insert(SensorReading data)
         {
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetInstance();
 
             ctx.sensorreadings.Add(toRaw(data));
 
