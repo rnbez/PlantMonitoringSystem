@@ -1,6 +1,6 @@
 from sensors import *
 from datetime import datetime, timedelta
-import sys, time, httpclient, node, api, json, log, actions
+import sys, time, httpclient, node, api, json, log, actions, auth
 
 
 def sendReadings(nextRun):
@@ -54,6 +54,16 @@ def doActions():
 
 if __name__ == '__main__':
 
+    # authentication
+    try:
+        auth.authenticate()
+    except:
+        error_msg = "authentication fail"
+        e = sys.exc_info()[0]
+        print error_msg
+        error_msg = "\n" + error_msg + "\n" + str(e)
+        log.log_error(error_msg)
+
     #handshake
 
     try:
@@ -67,7 +77,7 @@ if __name__ == '__main__':
         error_msg = "handshake fail"
         e = sys.exc_info()[0]
         print error_msg
-        error_msg = error_msg + "\n" + str(e)
+        error_msg = "\n" + error_msg + "\n" + str(e)
         log.log_error(error_msg)
 
     print "\n----------------------\n"
