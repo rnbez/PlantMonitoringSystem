@@ -5,7 +5,7 @@ def get(path):
                "Accept": "application/json",
                "X-Auth-Token": api.AUTH_TOKEN}
     conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=2)
-    conn.request("GET", path)
+    conn.request("GET", path, headers=headers)
     response = conn.getresponse()
     response.body = response.read()
     conn.close()
@@ -21,7 +21,7 @@ def post(path, data):
     #print host, ":", str(port), path
     #print body
     conn = httplib.HTTPConnection(api.__host__, api.__port__, timeout=4)
-    conn.request("POST", path, body, headers)
+    conn.request("POST", path, body=body, headers=headers)
     response = conn.getresponse()
     #print response.status, response.reason
     response.body = response.read()
