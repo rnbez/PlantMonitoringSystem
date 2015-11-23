@@ -78,7 +78,7 @@ namespace PlantMonitoringSystem.Model
                 await Sensor.Update(data.Sensors);
             }
 
-            var ctx = ModelContext.GetInstance();
+            var ctx = ModelContext.GetNewInstance();
 
             var raw = toRaw(data);
             ctx.nodes.Attach(raw);

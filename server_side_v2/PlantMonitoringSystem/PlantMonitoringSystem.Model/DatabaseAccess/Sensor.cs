@@ -64,7 +64,7 @@ namespace PlantMonitoringSystem.Model
 
         public static async Task<Sensor> Update(Sensor data)
         {
-            var ctx = ModelContext.GetInstance();
+            var ctx = ModelContext.GetNewInstance();
 
             var raw = toRaw(data);
             ctx.sensors.Attach(raw);
@@ -78,7 +78,7 @@ namespace PlantMonitoringSystem.Model
 
         public static async Task<List<Sensor>> Update(List<Sensor> list)
         {
-            var ctx = ModelContext.GetInstance();
+            var ctx = ModelContext.GetNewInstance();
 
             foreach (var data in list)
             {

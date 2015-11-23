@@ -61,7 +61,7 @@ namespace PlantMonitoringSystem.Model
 
         public static async Task<SystemUser> Update(SystemUser data)
         {
-            var ctx = ModelContext.GetInstance();
+            var ctx = ModelContext.GetNewInstance();
 
             var raw = toRaw(data);
             ctx.systemUsers.Attach(raw);
