@@ -96,6 +96,7 @@
     <Compile Include="Controllers\NodeController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
     <Compile Include="Controllers\SensorReadingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

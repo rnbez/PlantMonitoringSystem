@@ -17,9 +17,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, Model.Sensor.Get(id));
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return response;
+            return Request.CreateResponse(HttpStatusCode.OK, Model.Sensor.Get(id));
         }
 
         // POST api/<controller>

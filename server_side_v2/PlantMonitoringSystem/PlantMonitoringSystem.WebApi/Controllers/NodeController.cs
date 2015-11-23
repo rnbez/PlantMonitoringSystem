@@ -30,14 +30,10 @@ namespace PlantMonitoringSystem.WebApi.Controllers
                 if (light) dic.Add("lightOn", result.IsLightOn);
                 if (water) dic.Add("waterOn", result.IsWaterOn);
 
-                var r = Request.CreateResponse(HttpStatusCode.OK, dic);
-                r.Headers.Add("Access-Control-Allow-Origin", "*");
-                return r;
+                return Request.CreateResponse(HttpStatusCode.OK, dic);;
             }
 
-            var response = Request.CreateResponse(HttpStatusCode.OK, result);
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return response;
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST api/<controller>
@@ -61,19 +57,15 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("")]
         public async Task<HttpResponseMessage> Put([FromBody]Node node)
         {
-            HttpResponseMessage response = null;
             try
             {
                 var result = await Model.Node.Update(node);
-                response = Request.CreateResponse(HttpStatusCode.OK, result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
-
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return response;
         }
 
         // DELETE api/<controller>/5
@@ -108,7 +100,6 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("{id}/water/{status}")]
         public async Task<HttpResponseMessage> SetWater(int id, bool status)
         {
-            HttpResponseMessage response = null;
             try
             {
                 var node = Model.Node.Get(id);
@@ -116,20 +107,18 @@ namespace PlantMonitoringSystem.WebApi.Controllers
                 {
                     node.IsWaterOn = status;
                     var result = await Model.Node.Update(node);
-                    response = Request.CreateResponse(HttpStatusCode.OK, result);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
                 else
                 {
-                    response = Request.CreateResponse(HttpStatusCode.NotModified, node);
+                    return Request.CreateResponse(HttpStatusCode.NotModified, node);
                 }
             }
             catch (Exception ex)
             {
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
 
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return response;
         }
 
 
@@ -138,7 +127,6 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("{id}/light/{status}")]
         public async Task<HttpResponseMessage> SetLight(int id, bool status)
         {
-            HttpResponseMessage response = null;
             try
             {
                 var node = Model.Node.Get(id);
@@ -146,20 +134,17 @@ namespace PlantMonitoringSystem.WebApi.Controllers
                 {
                     node.IsLightOn = status;
                     var result = await Model.Node.Update(node);
-                    response = Request.CreateResponse(HttpStatusCode.OK, result);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
                 else
                 {
-                    response = Request.CreateResponse(HttpStatusCode.NotModified, node);
+                    return Request.CreateResponse(HttpStatusCode.NotModified, node);
                 }
             }
             catch (Exception ex)
             {
-                response = Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
-
-            response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return response;
         }
 
     }
