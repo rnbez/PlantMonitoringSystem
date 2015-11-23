@@ -3,6 +3,7 @@ dependencies = [
   'chart.js'
   'starter.controllers'
   'starter.services'
+  'starter.constants'
   'starter.routes'
 ]
 

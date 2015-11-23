@@ -24,6 +24,10 @@
         <ion-item menu-close href="#">
           Behaviors
         </ion-item>
+        <ion-item menu-close href="#" ng-show="isAuthenticated" ng-click="doLogout()">
+          Logout
+        </ion-item>
+
         <!--
         <ion-item menu-close ng-click="login()">
           Login

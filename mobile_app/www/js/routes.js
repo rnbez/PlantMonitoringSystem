@@ -26,6 +26,14 @@ angular.module('starter.routes', []).config(function($stateProvider, $urlRouterP
         templateUrl: 'templates/browse.html'
       }
     }
+  }).state('app.login', {
+    url: '/login',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/login.html',
+        controller: 'LoginController'
+      }
+    }
   }).state('app.nodes', {
     url: '/nodes',
     views: {

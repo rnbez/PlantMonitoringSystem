@@ -22,6 +22,12 @@ angular.module('starter.routes', [])
       views: 'menuContent':
         templateUrl: 'templates/browse.html'
 
+    .state 'app.login',
+      url: '/login'
+      views: 'menuContent':
+        templateUrl: 'templates/login.html'
+        controller: 'LoginController'
+
     .state 'app.nodes',
       url: '/nodes'
       views: 'menuContent':
@@ -50,7 +56,6 @@ angular.module('starter.routes', [])
         resolve:
           node: (NodeService, $stateParams) ->
             NodeService.getNodeDetails($stateParams)
-
 
     .state 'app.node_edit',
       url: '/node/:nodeId/edit'
