@@ -1,5 +1,5 @@
 angular.module('starter.services', [])
-.service "UserService", ($http) ->
+.service "UserService", ($http, $rootScope, EVENTS) ->
   LOCAL_TOKEN_KEY = "TEST_LOCAL_KEY"
   currentUser =
     isAuthenticated = false
@@ -7,6 +7,8 @@ angular.module('starter.services', [])
     #host: 'http://ec2-52-10-29-10.us-west-2.compute.amazonaws.com'
     host: 'http://localhost:85'
     authenticate: () -> "#{endpoints.host}/api/user/authenticate"
+    removeAuthenticatedUser: () -> "#{endpoints.host}/api/user/authenticate/remove"
+    create: () -> "#{endpoints.host}/api/user/create"
 
   #API
   @authenticate = (username, pass) ->
@@ -19,16 +21,42 @@ angular.module('starter.services', [])
       window.localStorage.setItem(LOCAL_TOKEN_KEY, authUser.token)
       $http.defaults.headers.common['X-Auth-Token'] = authUser.token
       currentUser.isAuthenticated = true
+      $rootScope.$broadcast(EVENTS.auth.authenticated);
       result.data
 
   @logout = () ->
-    currentUser.isAuthenticated = false
-    $http.defaults.headers.common['X-Auth-Token'] = undefined
-    window.localStorage.removeItem(LOCAL_TOKEN_KEY)
+    user =
+      token: window.localStorage.getItem(LOCAL_TOKEN_KEY)
+    console.log user
+    req = $http.post(endpoints.removeAuthenticatedUser(), user)
+    req.then ((result) ->
+      console.log "token removed from server"
+      currentUser.isAuthenticated = false
+      $http.defaults.headers.common['X-Auth-Token'] = undefined
+      window.localStorage.removeItem(LOCAL_TOKEN_KEY)
+    ), ((response) ->
+      currentUser.isAuthenticated = false
+      $http.defaults.headers.common['X-Auth-Token'] = undefined
+      window.localStorage.removeItem(LOCAL_TOKEN_KEY)
+    )
+
+  @create = (username, pass, email) ->
+    user =
+      username: username
+      pass: pass
+      email: email
+    req = $http.post(endpoints.create(), user)
+    req.then (result) ->
+      authUser = result.data
+      window.localStorage.setItem(LOCAL_TOKEN_KEY, authUser.token)
+      $http.defaults.headers.common['X-Auth-Token'] = authUser.token
+      currentUser.isAuthenticated = true
+      $rootScope.$broadcast(EVENTS.auth.authenticated);
+      result.data
 
   @isCurrentUserAuthenticated = () ->
     console.log window.localStorage.getItem(LOCAL_TOKEN_KEY)
-    return true
+    return window.localStorage.getItem(LOCAL_TOKEN_KEY) != null
 
   @getUser = (userId) ->
     req = $http.get("http://localhost:85/api/user/1")
@@ -88,16 +116,19 @@ angular.module('starter.services', [])
 
   return this
 
-.factory "AuthInspector", ($rootScope, $q, AUTH_EVENTS) ->
+.factory "AuthInspector", ($rootScope, $q, EVENTS) ->
   responseError: (response) ->
-    $rootScope.$broadcast(
-      {
-      401: AUTH_EVENTS.notAuthenticated
-      403: AUTH_EVENTS.notAuthorized
-      }
-      [response.status]
-      response
-    )
+    if response.status == 403
+      $rootScope.$broadcast(EVENTS.auth.notAuthenticated)
+
+  # $rootScope.$broadcast(
+  #   {
+  #     401: EVENTS.auth.notAuthenticated
+  #     403: EVENTS.auth.notAuthorized
+  #   }
+  #   [response.status]
+  #   response
+  # )
     return $q.reject(response)
 
 .config ($httpProvider) ->

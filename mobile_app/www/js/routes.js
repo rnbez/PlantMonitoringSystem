@@ -5,6 +5,14 @@ angular.module('starter.routes', []).config(function($stateProvider, $urlRouterP
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
+  }).state('app.start', {
+    url: '/monitor',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/startpage.html',
+        controller: 'AppCtrl'
+      }
+    }
   }).state('app.error', {
     url: '/error',
     views: {
@@ -26,25 +34,12 @@ angular.module('starter.routes', []).config(function($stateProvider, $urlRouterP
         templateUrl: 'templates/browse.html'
       }
     }
-  }).state('app.login', {
-    url: '/login',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/login.html',
-        controller: 'LoginController'
-      }
-    }
   }).state('app.nodes', {
     url: '/nodes',
     views: {
       'menuContent': {
         templateUrl: 'templates/nodes.html',
-        controller: 'NodesController',
-        resolve: {
-          nodes: function(NodeService) {
-            return NodeService.getNodes();
-          }
-        }
+        controller: 'NodesController'
       }
     }
   }).state('app.node_sensor', {

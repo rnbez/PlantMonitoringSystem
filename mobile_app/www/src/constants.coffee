@@ -1,5 +1,8 @@
 angular.module('starter.constants', [])
-.constant 'AUTH_EVENTS',
-  notAuthenticated: 'auth-not-authenticated'
-  notAuthorized:  'auth-not-authorized'
-  
+.constant 'EVENTS',
+  auth:
+    authenticated: 'auth-authenticated'
+    notAuthenticated: 'auth-not-authenticated'
+    notAuthorized:  'auth-not-authorized'
+  login:
+    close: 'close-login-modal'

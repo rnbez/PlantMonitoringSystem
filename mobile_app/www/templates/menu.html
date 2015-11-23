@@ -4,6 +4,7 @@
       <ion-nav-back-button>
       </ion-nav-back-button>
 
+
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
@@ -18,13 +19,34 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/nodes">
+        <ion-item class="item item-icon-left"
+                  menu-close
+                  href="#"
+                  ng-hide="isAuthenticated"
+                  ng-click="login()">
+          <i class="icon ion-log-in"></i>
+          Login
+        </ion-item>
+        <ion-item class="item item-icon-left"
+                  menu-close
+                  href="#/app/nodes"
+                  ng-show="isAuthenticated">
+          <i class="icon ion-ios-list-outline"></i>
           Nodes
         </ion-item>
-        <ion-item menu-close href="#">
+        <ion-item class="item item-icon-left"
+                  menu-close
+                  href="#"
+                  ng-show="isAuthenticated">
+          <i class="icon ion-ios-settings-strong"></i>
           Behaviors
         </ion-item>
-        <ion-item menu-close href="#" ng-show="isAuthenticated" ng-click="doLogout()">
+        <ion-item class="item item-icon-left"
+                  menu-close
+                  href="#"
+                  ng-show="isAuthenticated"
+                  ng-click="doLogout()">
+          <i class="icon ion-log-out"></i>
           Logout
         </ion-item>
 

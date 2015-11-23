@@ -1,11 +1,18 @@
 angular.module('starter.routes', [])
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
-    .state('app',
+    .state 'app',
       url: '/app'
       abstract: true
       templateUrl: 'templates/menu.html'
-      controller: 'AppCtrl')
+      controller: 'AppCtrl'
+
+    .state 'app.start',
+      url: '/monitor'
+      views: 'menuContent':
+        templateUrl: 'templates/startpage.html'
+        controller: 'AppCtrl'
+
 
     .state 'app.error',
       url: '/error'
@@ -22,20 +29,11 @@ angular.module('starter.routes', [])
       views: 'menuContent':
         templateUrl: 'templates/browse.html'
 
-    .state 'app.login',
-      url: '/login'
-      views: 'menuContent':
-        templateUrl: 'templates/login.html'
-        controller: 'LoginController'
-
     .state 'app.nodes',
       url: '/nodes'
       views: 'menuContent':
         templateUrl: 'templates/nodes.html'
         controller: 'NodesController'
-        resolve:
-          nodes: (NodeService) ->
-            NodeService.getNodes()
 
     .state 'app.node_sensor',
       url: '/sensor/:sensorId'
