@@ -1,5 +1,6 @@
 import datetime
 
+current_state = ''
 log_file = 'sys.log'
 def log_error(msg):
     global log_file
