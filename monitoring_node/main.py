@@ -117,11 +117,11 @@ if __name__ == '__main__':
         try:
             nextSensorReading = sendReadings(nextSensorReading)
             doActions()
-	        time.sleep(delay)
+	    time.sleep(delay)
 
             nextNodeUpdate = updateNode(nextNodeUpdate)
             doActions()
-	        time.sleep(delay)
+	    time.sleep(delay)
         except KeyboardInterrupt:
             actions.clean()
             log.log_info("GPIO CleanUp")
