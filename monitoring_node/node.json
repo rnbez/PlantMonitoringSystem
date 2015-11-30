@@ -38,5 +38,6 @@
             "sensorType": "ds18b20"
         }
     ],
-    "waterOn": false
+    "waterOn": false,
+    "userId": 5
 }
