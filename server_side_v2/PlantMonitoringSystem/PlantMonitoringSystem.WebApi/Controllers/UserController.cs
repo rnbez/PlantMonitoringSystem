@@ -27,7 +27,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             {
                 var authUser = new SystemUser
                 {
-                    Id = 1,
+                    Id = user.Id,
                     Username = user.Username,
                 };
                 authUser.GenerateAuthToken();
@@ -107,17 +107,18 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         // DELETE api/<controller>/5
         [HttpDelete]
         [Route("")]
-        public async Task<HttpResponseMessage> Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
-            try
-            {
-                var result = await Model.SystemUser.Delete(id);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
-            }
+            throw new NotImplementedException();
+            //try
+            //{
+            //    var result = await Model.SystemUser.Delete(id);
+            //    return Request.CreateResponse(HttpStatusCode.Created, result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            //}
         }
 
     }

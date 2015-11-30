@@ -18,7 +18,8 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("{id}")]
         public HttpResponseMessage Get(int id, bool includeSensors = false, bool light = false, bool water = false)
         {
-            var result = Model.Node.Get(id);
+            var userId = (int)Core.ApplicationContext.CurrentUser.Id;
+            var result = Model.Node.Get(id, userId);
             if (includeSensors)
             {
                 result.Sensors = Model.Node.ListSensors(id);
@@ -71,17 +72,18 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         // DELETE api/<controller>/5
         [HttpDelete]
         [Route("")]
-        public async Task<HttpResponseMessage> Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
-            try
-            {
-                var result = await Model.Node.Delete(id);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
-            }
+            throw new NotImplementedException();
+            //try
+            //{
+            //    var result = await Model.Node.Delete(id);
+            //    return Request.CreateResponse(HttpStatusCode.Created, result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            //}
         }
 
 
@@ -102,7 +104,8 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         {
             try
             {
-                var node = Model.Node.Get(id);
+                var userId = (int)Core.ApplicationContext.CurrentUser.Id;
+                var node = Model.Node.Get(id, userId);
                 if (node.IsWaterOn != status)
                 {
                     node.IsWaterOn = status;
@@ -129,7 +132,8 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         {
             try
             {
-                var node = Model.Node.Get(id);
+                var userId = (int)Core.ApplicationContext.CurrentUser.Id;
+                var node = Model.Node.Get(id, userId);
                 if (node.IsLightOn != status)
                 {
                     node.IsLightOn = status;

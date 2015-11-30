@@ -12,7 +12,7 @@ namespace PlantMonitoringSystem.Core
         public static List<ViewNode> GetNodeList()
         {
             var viewList = new List<ViewNode>();
-            var modelNodes = Model.Node.List();
+            var modelNodes = Model.Node.List((int)Core.ApplicationContext.CurrentUser.Id);
             
             foreach (var modelNode in modelNodes)
             {
