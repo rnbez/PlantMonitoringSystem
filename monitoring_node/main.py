@@ -110,6 +110,7 @@ if __name__ == '__main__':
                     new_node = True
                 else:
                     new_node = False
+		break
 
         log.current_state = "Ready to do the handshake"
         response = httpclient.post(api.__handshake__, node.get(new_node), auth.checkResponse)
