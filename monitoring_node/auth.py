@@ -19,7 +19,7 @@ def authenticate():
     if response.status == 200:
         usr = json.loads(response.body)
         api.AUTH_TOKEN = usr['token']
-        __user_id__ =  usr['userId']
+        __user_id__ =  usr['id']
     return response
 
 def checkResponse(response):
