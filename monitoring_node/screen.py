@@ -18,7 +18,7 @@ info += "Current Time: {}\n"
 info += "Env: Temp.: {}C  Humidity: {}%  &  Luminosity:{}%\n"
 info += "Soil: Temp.: {}C  &  Moisture: {}%\n\n"
 info += "Node Update: {}\n"
-info += "Last Server Responses: {}\n"
+info += "Last Server Response: {}\n"
 info += "Last Error: {}\n"
 info += prev_line
 
@@ -45,4 +45,4 @@ def update(reload = True, env_temp = None, env_hum = None, env_lum = None, soil_
 
     if reload:
         __time_now__ = datetime.datetime.now().isoformat()
-        print(info.format(__time_now__, __env_temp__, __env_hum__, __env_lum__, __soil_temp__, __soil_moist__, __server_resp__, __node_updating__, __last_error__))
+        print(info.format(__time_now__, __env_temp__, __env_hum__, __env_lum__, __soil_temp__, __soil_moist__, __node_updating__, __server_resp__, __last_error__))
