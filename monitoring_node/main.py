@@ -11,25 +11,25 @@ def sendReadings(nextRun):
         air_temp = DHT11TemperatureSensor.read()
         log.current_state = "Posting Air Temperature"
         httpclient.post(api.__send_readings__, air_temp)
-        scn.update(env_temp=str(air_temp))
+        scn.update(env_temp=str(air_temp['reading']))
 
         log.current_state = "Reading Air Humidity"
         air_hum = DHT11HumiditySensor.read()
         log.current_state = "Posting Air Humidity"
         httpclient.post(api.__send_readings__, air_hum)
-        scn.update(env_hum=str(air_hum))
+        scn.update(env_hum=str(air_hum['reading']))
 
         log.current_state = "Reading Luminosity"
         air_lum = LDR.read()
         log.current_state = "Posting Luminosity"
         httpclient.post(api.__send_readings__, air_lum)
-        scn.update(env_lum=str(air_lum))
+        scn.update(env_lum=str(air_lum['reading']))
 
         log.current_state = "Reading Soil Temperature"
         soil_temp = DS18B20TemperatureSensor.read()
         log.current_state = "Reading Soil Temperature"
         httpclient.post(api.__send_readings__, soil_temp)
-        scn.update(soil_temp=str(soil_temp))
+        scn.update(soil_temp=str(soil_temp['reading']))
 
         #print air_lum["date"]
         #print "Env: Temp.: {0:0.2f}C  Humidity: {1:0.2f}%  &  Luminosity:{2:0.2f}%".format(air_temp['reading'], air_hum['reading'], air_lum['reading'])
