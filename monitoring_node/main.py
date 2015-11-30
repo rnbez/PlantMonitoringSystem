@@ -137,6 +137,7 @@ if __name__ == '__main__':
             nextSensorReading = sendReadings(nextSensorReading)
             nextNodeUpdate = updateNode(nextNodeUpdate)
             doActions()
+	    scn.update()
             time.sleep(delay)
         except KeyboardInterrupt:
             actions.clean()
