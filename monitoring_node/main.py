@@ -171,4 +171,11 @@ if __name__ == '__main__':
             error_msg = error_msg + str(e)
             log.log_error(error_msg)
             scn.update(last_error="Unexpected Error - at " + datetime.now().isoformat())
-            time.sleep(15)
+            try:
+                time.sleep(15)
+            except KeyboardInterrupt:
+                scn.end()
+                actions.clean()
+                log.log_info("GPIO CleanUp")
+                log.log_info("User Interrupt")
+                exit()
