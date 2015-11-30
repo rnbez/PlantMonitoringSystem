@@ -158,6 +158,7 @@ if __name__ == '__main__':
             scn.update()
             time.sleep(delay)
         except KeyboardInterrupt:
+            scn.end()
             actions.clean()
             log.log_info("GPIO CleanUp")
             log.log_info("User Interrupt")
