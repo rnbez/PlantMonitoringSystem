@@ -47,4 +47,5 @@ def update(reload = True, env_temp = None, env_hum = None, env_lum = None, soil_
         __time_now__ = datetime.datetime.now().isoformat()
         print(info.format(__time_now__, __env_temp__, __env_hum__, __env_lum__, __soil_temp__, __soil_moist__, __node_updating__, __server_resp__, __last_error__))
 def end():
-    print "\n\n\n\n\n\n\n\n\n"
+    print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    print "Bye Bye"
