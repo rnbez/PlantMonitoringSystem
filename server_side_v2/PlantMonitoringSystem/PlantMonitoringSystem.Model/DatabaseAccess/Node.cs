@@ -102,10 +102,18 @@ namespace PlantMonitoringSystem.Model
             var result = ModelContext.GetInstance().nodes
                 .Where(x => x.user_id == userId)
                 .ToList();
-            return result
+            if (result != null && result.Count > 0)
+            {
+                return result
                     .Select(x => (Node)x)
                     .DefaultIfEmpty(new Node())
                     .ToList();
+            }
+            else
+            {
+                return new List<Node>();
+            }
+            
         }
 
         public static List<Sensor> ListSensors(int id)
