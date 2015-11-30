@@ -113,7 +113,7 @@ if __name__ == '__main__':
                 break
 
         log.current_state = "Ready to do the handshake"
-        response = httpclient.post(api.__handshake__, node.get(new_node), auth.checkResponse)
+        response = httpclient.post(api.__handshake__, node.get(new_node, auth.__user_id__), auth.checkResponse)
         print response.status, response.reason
         if response.status == 200:
             #print response.body
