@@ -16,7 +16,7 @@ def getMacAddress():
                 break
     return mac
 
-def get():
+def get(new_node = False):
     global physical_addess
     global node_info
     if not physical_addess:
@@ -27,6 +27,9 @@ def get():
     f.close()
 
     node_info['physicalAddress'] = physical_addess
+
+    if new_node:
+        node_info.pop("id", None)
 
     return node_info
 

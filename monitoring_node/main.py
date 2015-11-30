@@ -98,11 +98,21 @@ if __name__ == '__main__':
         log.log_error(error_msg)
 
     #handshake
-
     try:
+        new_node = False;
+        while True:
+            user_input = raw_input("Is this a new node[y/N]?")
+            if user_input is "":
+                user_input = "n"
+            user_input = user_input.lower()
+            if user_input == "y" or user_input == "n":
+                if user_input == "y":
+                    new_node = True
+                else:
+                    new_node = False
 
         log.current_state = "Ready to do the handshake"
-        response = httpclient.post(api.__handshake__, node.get(), auth.checkResponse)
+        response = httpclient.post(api.__handshake__, node.get(new_node), auth.checkResponse)
         print response.status, response.reason
         if response.status == 200:
             #print response.body
