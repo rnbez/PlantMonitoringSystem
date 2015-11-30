@@ -118,12 +118,20 @@ if __name__ == '__main__':
         error_msg = "\n" + error_msg + "\n" + str(e)
         log.log_error(error_msg)
 
-    print "\n----------------------\n"
-    log.current_state = "Ready to setup the GPIO pins"
-    actions.setup()
-    print "GPIO Setup"
-    log.current_state = "GPIO pins set"
-    print "\n----------------------\n"
+    try:
+        print "\n----------------------\n"
+        log.current_state = "Ready to setup the GPIO pins"
+        actions.setup()
+        print "GPIO Setup Succeeded"
+        log.current_state = "GPIO pins set"
+        print "\n----------------------\n"
+    except Exception as e:
+        print "GPIO Setup Error"
+        print "GPIO Clean"
+        actions.clean()
+        print "GPIO Setup Succeeded"
+        actions.setup()
+
 
     scn.update()
     scn.update(soil_moist = str(0)) # remove later

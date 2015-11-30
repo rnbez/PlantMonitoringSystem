@@ -17,9 +17,9 @@ info = "\n=================================\n"
 info += "Current Time: {}                   \n"
 info += "Env: Temp.: {}C  Humidity: {}%  &  Luminosity:{}%\n"
 info += "Soil: Temp.: {}C  &  Moisture: {}%\n\n"
-info += "Node Update: {}                    \n"
-info += "Last Server Response: {}           \n"
-info += "Last Error: {}                     \n"
+info += "Node Update: {}         \n"
+info += "Last Server Response: {}\n"
+info += "Last Error: {}          \n"
 info += prev_line
 
 
