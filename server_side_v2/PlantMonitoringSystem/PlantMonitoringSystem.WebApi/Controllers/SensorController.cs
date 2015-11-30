@@ -17,9 +17,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-            var resposne = Request.CreateResponse(HttpStatusCode.OK, Model.Sensor.Get(id));
-            resposne.Headers.Add("Access-Control-Allow-Origin", "*");
-            return resposne;
+            return Request.CreateResponse(HttpStatusCode.OK, Model.Sensor.Get(id));
         }
 
         // POST api/<controller>
@@ -46,7 +44,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             try
             {
                 var result = await Model.Sensor.Update(sensor);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {

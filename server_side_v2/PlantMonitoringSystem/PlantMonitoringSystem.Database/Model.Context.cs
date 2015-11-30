@@ -29,5 +29,6 @@ namespace PlantMonitoringSystem.Database
         public virtual DbSet<node> nodes { get; set; }
         public virtual DbSet<sensor> sensors { get; set; }
         public virtual DbSet<sensorreading> sensorreadings { get; set; }
+        public virtual DbSet<systemUser> systemUsers { get; set; }
     }
 }

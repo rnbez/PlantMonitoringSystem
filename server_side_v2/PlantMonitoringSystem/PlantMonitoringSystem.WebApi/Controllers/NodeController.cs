@@ -16,13 +16,23 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         // GET api/<controller>/5
         [HttpGet]
         [Route("{id}")]
-        public HttpResponseMessage Get(int id, bool includeSensors = false)
+        public HttpResponseMessage Get(int id, bool includeSensors = false, bool light = false, bool water = false)
         {
             var result = Model.Node.Get(id);
             if (includeSensors)
             {
                 result.Sensors = Model.Node.ListSensors(id);
             }
+
+            if (light || water)
+            {
+                Dictionary<string, bool> dic = new Dictionary<string, bool>();
+                if (light) dic.Add("lightOn", result.IsLightOn);
+                if (water) dic.Add("waterOn", result.IsWaterOn);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dic);;
+            }
+
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -42,7 +52,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             }
         }
 
-        // PUT api/<controller>/5
+        // PUT api/<controller>/
         [HttpPut]
         [Route("")]
         public async Task<HttpResponseMessage> Put([FromBody]Node node)
@@ -50,7 +60,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             try
             {
                 var result = await Model.Node.Update(node);
-                return Request.CreateResponse(HttpStatusCode.Created, result);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
@@ -74,7 +84,7 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             }
         }
 
-        
+
         // GET api/<controller>/5/sensors
         [HttpGet]
         [Route("{id}/sensors")]
@@ -83,5 +93,59 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             var result = Model.Node.ListSensors(id);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+
+        // POST api/<controller>/5/water
+        [HttpPost]
+        [Route("{id}/water/{status}")]
+        public async Task<HttpResponseMessage> SetWater(int id, bool status)
+        {
+            try
+            {
+                var node = Model.Node.Get(id);
+                if (node.IsWaterOn != status)
+                {
+                    node.IsWaterOn = status;
+                    var result = await Model.Node.Update(node);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotModified, node);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+        }
+
+
+        // POST api/<controller>/5/water
+        [HttpPost]
+        [Route("{id}/light/{status}")]
+        public async Task<HttpResponseMessage> SetLight(int id, bool status)
+        {
+            try
+            {
+                var node = Model.Node.Get(id);
+                if (node.IsLightOn != status)
+                {
+                    node.IsLightOn = status;
+                    var result = await Model.Node.Update(node);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotModified, node);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
     }
 }

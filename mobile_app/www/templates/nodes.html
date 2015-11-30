@@ -1,46 +1,49 @@
 <ion-view view-title="Monitoring Nodes">
+    <div class="overlay" ng-show="isLoading">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
   <ion-content>
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="onRefresh()">
     </ion-refresher>
-    <!--
-    <div class="item item-checkbox">
-       <label class="checkbox">
-         <input type="checkbox" ng-model="q">
-       </label>
-       Display Only Online Nodes
-    </div>
-  -->
     <div class="item item-toggle">
       Display Only Online Nodes
      <label class="toggle toggle-balanced">
-       <input type="checkbox" ng-model="q">
+       <input type="checkbox" ng-model="onlyOnlineNodes">
        <div class="track">
          <div class="handle"></div>
        </div>
      </label>
    </div>
-    <div class="list card node-list" ng-repeat="node in nodes | filter:q as online">
+    <div class="list card node-list" ng-repeat="node in nodes | filter:onlyOnlineNodes as online">
 
       <div class="item item-divider">
         <h2>{{node.friendlyName}}</h2>
-        <p>{{node.physicalAddress}} -
-          <span class="node-status-{{node.online ? 'online' : 'offline'}}">
-            {{node.online ? "online" : "offline"}}
+        <p>
+          {{node.physicalAddress}}
+          <span class="item-note padding-right">
+            <!--{{node.online ? "online" : "offline"}}-->
+            <i class="padding-right icon ion-power"
+               ng-class="{'node-status-on': node.online}"></i>
+            <i class="padding-right icon ion-lightbulb"
+               ng-class="{'node-light-on': node.lightOn}"></i>
+            <i class="icon ion-waterdrop"
+               ng-class="{'node-water-on': node.waterOn}"></i>
           </span>
         </p>
+
       </div>
 
       <div class="item item-body">
 
-        <div ng-show="node.sensors == null || node.sensors.length < 0">
+        <div ng-show="node.sensors == null || node.sensors.length <= 0">
           <h2>No Sensor Detected</h2>
         </div>
 
         <div class="list">
           <a class="item item-icon-right"  ng-repeat="sensor in node.sensors" href="#/app/sensor/{{sensor.id}}">
-            <i class="icon ion-chevron-right"></i>
+            <i class="icon ion-ios-arrow-forward"></i>
             {{sensor.friendlyName}}
             <span class="item-note">
               {{sensor.lastReading}}{{sensor.measurementUnit}}
@@ -50,8 +53,8 @@
       </div>
 
       <div class="item item-divider tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" href="#">
-          <i class="icon ion-android-options"></i>
+        <a class="tab-item" href="#/app/node/{{node.id}}">
+          <i class="icon ion-more"></i>
         </a>
       </div>
 

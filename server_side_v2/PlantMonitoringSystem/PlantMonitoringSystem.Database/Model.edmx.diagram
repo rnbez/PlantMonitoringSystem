@@ -12,6 +12,7 @@
         <AssociationConnector Association="Model.node_behavior_id_6cc5183d_fk_behavior_id" ManuallyRouted="false" />
         <AssociationConnector Association="Model.sensor_node_id_114bea95_fk_node_id" ManuallyRouted="false" />
         <AssociationConnector Association="Model.sensorreading_sensor_id_4413c3ee_fk_sensor_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.systemUser" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,20 +18,27 @@ namespace PlantMonitoringSystem.WebApi.Controllers
         [Route("")]
         public async Task<HttpResponseMessage> Handshake(Node node)
         {
-            if (node == null) throw new ArgumentException("node");
-
-            if (node.Id == null)
+            try
             {
-                node = await Model.Node.Insert(node);
+                if (node == null) throw new ArgumentException("node");
+
+                if (node.Id == null)
+                {
+                    node = await Model.Node.Insert(node);
+                }
+                else
+                {
+                    node = await Model.Node.Update(node);
+                }
+
+                node.Sensors = Node.ListSensors((int)node.Id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, node);
             }
-            else
+            catch (Exception ex)
             {
-                node = await Model.Node.Update(node);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
-
-            node.Sensors = Node.ListSensors((int)node.Id);
-
-            return Request.CreateResponse(HttpStatusCode.OK, node);
         }
     }
 }

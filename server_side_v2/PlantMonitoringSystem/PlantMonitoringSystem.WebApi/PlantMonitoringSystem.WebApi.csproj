@@ -96,6 +96,7 @@
     <Compile Include="Controllers\NodeController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
     <Compile Include="Controllers\SensorReadingController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -104,7 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include=".ebextension\setup.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -120,6 +120,10 @@
     <ProjectReference Include="..\PlantMonitoringSystem.Core\PlantMonitoringSystem.Core.csproj">
       <Project>{968c7890-9b36-43a1-9060-351311d64b31}</Project>
       <Name>PlantMonitoringSystem.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlantMonitoringSystem.Database\PlantMonitoringSystem.Database.csproj">
+      <Project>{cf4abb28-3a96-4cf2-bbd0-0dc1054289bb}</Project>
+      <Name>PlantMonitoringSystem.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\PlantMonitoringSystem.Model\PlantMonitoringSystem.Model.csproj">
       <Project>{2e372274-d5a6-4a7c-8537-ac80e6fc7be2}</Project>

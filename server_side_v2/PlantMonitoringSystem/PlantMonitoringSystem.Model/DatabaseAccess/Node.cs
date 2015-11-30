@@ -17,6 +17,8 @@ namespace PlantMonitoringSystem.Model
                     Id = raw.id,
                     PhysicalAddress = raw.physical_address,
                     FriendlyName = raw.friendly_name,
+                    IsWaterOn = (bool)raw.water_on,
+                    IsLightOn = (bool)raw.light_on,
                     BehaviorId = raw.behavior_id,
                 };
             }
@@ -31,6 +33,8 @@ namespace PlantMonitoringSystem.Model
             {
                 physical_address = data.PhysicalAddress,
                 friendly_name = data.FriendlyName,
+                water_on = data.IsWaterOn,
+                light_on = data.IsLightOn,
                 behavior_id = data.BehaviorId,
             };
 
@@ -52,13 +56,13 @@ namespace PlantMonitoringSystem.Model
 
         public static Node Get(int id)
         {
-            var result = Context.GetInstance().nodes.FirstOrDefault(x => x.id == id);
+            var result = ModelContext.GetInstance().nodes.FirstOrDefault(x => x.id == id);
             return (Node)result;
         }
 
         public static async Task<Node> Insert(Node data)
         {
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetInstance();
                         
             ctx.nodes.Add(toRaw(data));
 
@@ -74,7 +78,7 @@ namespace PlantMonitoringSystem.Model
                 await Sensor.Update(data.Sensors);
             }
 
-            var ctx = Context.GetInstance();
+            var ctx = ModelContext.GetNewInstance();
 
             var raw = toRaw(data);
             ctx.nodes.Attach(raw);
@@ -93,7 +97,7 @@ namespace PlantMonitoringSystem.Model
         
         public static List<Node> List()
         {
-            var result = Context.GetInstance().nodes
+            var result = ModelContext.GetInstance().nodes
                 .ToList();
             return result
                     .Select(x => (Node)x)
@@ -103,7 +107,7 @@ namespace PlantMonitoringSystem.Model
 
         public static List<Sensor> ListSensors(int id)
         {
-            var result = Context.GetInstance().sensors
+            var result = ModelContext.GetInstance().sensors
                 .Where(x => x.node_id == id)
                 .Take(100)
                 .ToList();
