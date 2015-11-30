@@ -10,25 +10,25 @@ def sendReadings(nextRun):
         log.current_state = "Reading Air Temperature"
         air_temp = DHT11TemperatureSensor.read()
         log.current_state = "Posting Air Temperature"
-        httpclient.post(api.__send_readings__, air_temp)
+        httpclient.post(api.__send_readings__, air_temp, auth.checkResponse)
         scn.update(env_temp=str(air_temp['reading']))
 
         log.current_state = "Reading Air Humidity"
         air_hum = DHT11HumiditySensor.read()
         log.current_state = "Posting Air Humidity"
-        httpclient.post(api.__send_readings__, air_hum)
+        httpclient.post(api.__send_readings__, air_hum, auth.checkResponse)
         scn.update(env_hum=str(air_hum['reading']))
 
         log.current_state = "Reading Luminosity"
         air_lum = LDR.read()
         log.current_state = "Posting Luminosity"
-        httpclient.post(api.__send_readings__, air_lum)
+        httpclient.post(api.__send_readings__, air_lum, auth.checkResponse)
         scn.update(env_lum=str(air_lum['reading']))
 
         log.current_state = "Reading Soil Temperature"
         soil_temp = DS18B20TemperatureSensor.read()
         log.current_state = "Reading Soil Temperature"
-        httpclient.post(api.__send_readings__, soil_temp)
+        httpclient.post(api.__send_readings__, soil_temp, auth.checkResponse)
         scn.update(soil_temp=str(soil_temp['reading']))
 
         #print air_lum["date"]
@@ -47,7 +47,7 @@ def updateNode(nextRun):
         log.current_state = "Getting node info from server"
         scn.update(node_updating="Updating node info [Calling Server]")
 
-        response = httpclient.get(api.__get_node__(node.node_info['id']))
+        response = httpclient.get(api.__get_node__(node.node_info['id']), auth.checkResponse)
         scn.update(server_resp="{} {}".format(response.status, response.reason))
 
         log.current_state = "Deserializing node info"
@@ -66,7 +66,7 @@ def updateNode(nextRun):
 def doActions():
     try:
         log.current_state = "Getting light and water info from server"
-        response = httpclient.get(api.__get_lightwater__(node.node_info['id']))
+        response = httpclient.get(api.__get_lightwater__(node.node_info['id']), auth.checkResponse)
         scn.update(server_resp="{} {}".format(response.status, response.reason))
         log.current_state = "Deserializing light and water info from server"
         _node = json.loads(response.body)
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     try:
 
         log.current_state = "Ready to do the handshake"
-        response = httpclient.post(api.__handshake__, node.get())
+        response = httpclient.post(api.__handshake__, node.get(), auth.checkResponse)
         print response.status, response.reason
         if response.status == 200:
             #print response.body
@@ -146,7 +146,7 @@ if __name__ == '__main__':
         except:
             error_msg = "Unexpected error"
             e = sys.exc_info()[0]
-            print error_msg
+            #print error_msg
             error_msg = error_msg + str(e)
             log.log_error(error_msg)
             scn.update(last_error="Unexpected Error - at " + datetime.now().isoformat())
