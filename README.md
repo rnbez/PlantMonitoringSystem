@@ -9,7 +9,7 @@ The Plant Monitoring System consists of an web application that continuously rec
 This project was create by [Rafael Nascimento Bezerra](https://github.com/rafaelbezerra-dev).
 
 ## IoT level
-![IoT level Level 3](doc/iot_level.svg)
+![IoT level Level 3](https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/iot_level.svg)
 
 ## Hardware: 
 
