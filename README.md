@@ -2,16 +2,15 @@
 
 The Plant Monitoring System consists of an web application that continuously receive data from a monitoring node. The web app should also display the data received and secure the access to the information. All the automated tasks should have a manual mode, in which the user himself start the task.
 
-![Project Overview](https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/project.min.jpg)
 
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/project.min.jpg" /></div>
 
 
 ## Contributor
 This project was create by [Rafael Nascimento Bezerra](https://github.com/rafaelbezerra-dev).
 
 ## IoT level
-
-![IoT level Level 3](https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/iot_level.min.jpg)
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/iot_level.min.jpg" /></div>
 
 ## Hardware: 
 
