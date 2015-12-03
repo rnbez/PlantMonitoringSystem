@@ -93,7 +93,7 @@ namespace PlantMonitoringSystem.Model
             return List();
         }
 
-        public static async Task<Sensor> Delete(int id)
+        public static Sensor Delete(int id)
         {
             throw new NotImplementedException();
         }

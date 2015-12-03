@@ -22,6 +22,7 @@
           <Property Name="behavior_id" Type="int" Nullable="false" />
           <Property Name="water_on" Type="bool" />
           <Property Name="light_on" Type="bool" />
+          <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sensor">
           <Key>
@@ -64,6 +65,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="node_ibfk_1">
+          <End Role="systemUser" Type="Self.systemUser" Multiplicity="1" />
+          <End Role="node" Type="Self.node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systemUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="node">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="sensor_node_id_114bea95_fk_node_id">
           <End Role="node" Type="Self.node" Multiplicity="1" />
           <End Role="sensor" Type="Self.sensor" Multiplicity="*" />
@@ -96,6 +109,10 @@
           <EntitySet Name="systemUser" EntityType="Self.systemUser" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <AssociationSet Name="node_behavior_id_6cc5183d_fk_behavior_id" Association="Self.node_behavior_id_6cc5183d_fk_behavior_id">
             <End Role="behavior" EntitySet="behavior" />
+            <End Role="node" EntitySet="node" />
+          </AssociationSet>
+          <AssociationSet Name="node_ibfk_1" Association="Self.node_ibfk_1">
+            <End Role="systemUser" EntitySet="systemUser" />
             <End Role="node" EntitySet="node" />
           </AssociationSet>
           <AssociationSet Name="sensor_node_id_114bea95_fk_node_id" Association="Self.sensor_node_id_114bea95_fk_node_id">
@@ -131,6 +148,8 @@
           <NavigationProperty Name="sensors" Relationship="Self.sensor_node_id_114bea95_fk_node_id" FromRole="node" ToRole="sensor" />
           <Property Name="water_on" Type="Boolean" />
           <Property Name="light_on" Type="Boolean" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="systemUser" Relationship="Model.node_ibfk_1" FromRole="node" ToRole="systemUser" />
         </EntityType>
         <EntityType Name="sensor">
           <Key>
@@ -209,6 +228,10 @@
             <End Role="sensorreading" EntitySet="sensorreadings" />
           </AssociationSet>
           <EntitySet Name="systemUsers" EntityType="Model.systemUser" />
+          <AssociationSet Name="node_ibfk_1" Association="Model.node_ibfk_1">
+            <End Role="systemUser" EntitySet="systemUsers" />
+            <End Role="node" EntitySet="nodes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="systemUser">
           <Key>
@@ -218,7 +241,20 @@
           <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="nodes" Relationship="Model.node_ibfk_1" FromRole="systemUser" ToRole="node" />
         </EntityType>
+        <Association Name="node_ibfk_1">
+          <End Type="Model.systemUser" Role="systemUser" Multiplicity="1" />
+          <End Type="Model.node" Role="node" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systemUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="node">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -236,6 +272,7 @@
           <EntitySetMapping Name="nodes">
             <EntityTypeMapping TypeName="Model.node">
               <MappingFragment StoreEntitySet="node">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="light_on" ColumnName="light_on" />
                 <ScalarProperty Name="water_on" ColumnName="water_on" />
                 <ScalarProperty Name="id" ColumnName="id" />

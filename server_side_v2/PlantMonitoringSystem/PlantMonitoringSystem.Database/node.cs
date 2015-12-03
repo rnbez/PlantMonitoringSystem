@@ -26,9 +26,11 @@ namespace PlantMonitoringSystem.Database
         public int behavior_id { get; set; }
         public Nullable<bool> water_on { get; set; }
         public Nullable<bool> light_on { get; set; }
+        public int user_id { get; set; }
     
         public virtual behavior behavior { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sensor> sensors { get; set; }
+        public virtual systemUser systemUser { get; set; }
     }
 }

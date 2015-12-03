@@ -17,7 +17,7 @@ namespace PlantMonitoringSystem.WebApi
 
             //if (/*IsDebug*/)
             //{
-                System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);
+            //    System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);
             //}
         }
 
@@ -33,29 +33,33 @@ namespace PlantMonitoringSystem.WebApi
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
             var request = Context.Request;
-            if (request.HttpMethod == "OPTIONS" || 
-                request.Path.Contains("api/user/authenticate") || 
+            if (request.HttpMethod == "OPTIONS" ||
+                request.Path.Contains("api/user/authenticate") ||
                 request.Path.Contains("api/user/create") ||
                 request.Path.Contains("api/healthcheck"))
             {
                 return;
             }
 
-            var header = request.Headers["X-Auth-Token"];
-            if (string.IsNullOrWhiteSpace(header) || ApplicationContext.GetAuthenticatedUser(header) == null)
+            var authToken = request.Headers["X-Auth-Token"];
+            if (string.IsNullOrWhiteSpace(authToken) || ApplicationContext.GetAuthenticatedUser(authToken) == null)
             {
-                Dictionary<string, string> dic = new Dictionary<string,string>()
+                Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
                     {"method", request.HttpMethod},
                     {"path", request.Path},
-                    {"X-Auth-Token", header}
+                    {"X-Auth-Token", authToken}
                 };
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 Response.ContentType = "application/json";
                 Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
                 Response.Flush();
             }
-            
+            else
+            {
+                ApplicationContext.CurrentUser = ApplicationContext.GetAuthenticatedUser(authToken);
+            }
+
         }
 
         protected void Application_EndRequest()
@@ -63,6 +67,12 @@ namespace PlantMonitoringSystem.WebApi
             if (PlantMonitoringSystem.Model.ModelContext.DataBaseContext != null)
             {
                 PlantMonitoringSystem.Model.ModelContext.DataBaseContext.Dispose();
+            }
+
+            if (ApplicationContext.CurrentUser != null)
+            {
+                ApplicationContext.CurrentUser = null;
+
             }
         }
     }

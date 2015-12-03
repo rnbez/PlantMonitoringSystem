@@ -98,11 +98,22 @@ if __name__ == '__main__':
         log.log_error(error_msg)
 
     #handshake
-
     try:
+        new_node = False;
+        while True:
+            user_input = raw_input("Is this a new node[y/N]?")
+            if user_input is "":
+                user_input = "n"
+            user_input = user_input.lower()
+            if user_input == "y" or user_input == "n":
+                if user_input == "y":
+                    new_node = True
+                else:
+                    new_node = False
+                break
 
         log.current_state = "Ready to do the handshake"
-        response = httpclient.post(api.__handshake__, node.get(), auth.checkResponse)
+        response = httpclient.post(api.__handshake__, node.get(new_node, auth.__user_id__), auth.checkResponse)
         print response.status, response.reason
         if response.status == 200:
             #print response.body
@@ -118,12 +129,20 @@ if __name__ == '__main__':
         error_msg = "\n" + error_msg + "\n" + str(e)
         log.log_error(error_msg)
 
-    print "\n----------------------\n"
-    log.current_state = "Ready to setup the GPIO pins"
-    actions.setup()
-    print "GPIO Setup"
-    log.current_state = "GPIO pins set"
-    print "\n----------------------\n"
+    try:
+        print "\n----------------------\n"
+        log.current_state = "Ready to setup the GPIO pins"
+        actions.setup()
+        print "GPIO Setup Succeeded"
+        log.current_state = "GPIO pins set"
+        print "\n----------------------\n"
+    except Exception as e:
+        print "GPIO Setup Error"
+        print "GPIO Clean"
+        actions.clean()
+        print "GPIO Setup Succeeded"
+        actions.setup()
+
 
     scn.update()
     scn.update(soil_moist = str(0)) # remove later
@@ -137,9 +156,10 @@ if __name__ == '__main__':
             nextSensorReading = sendReadings(nextSensorReading)
             nextNodeUpdate = updateNode(nextNodeUpdate)
             doActions()
-	    scn.update()
+            scn.update()
             time.sleep(delay)
         except KeyboardInterrupt:
+            scn.end()
             actions.clean()
             log.log_info("GPIO CleanUp")
             log.log_info("User Interrupt")
@@ -151,4 +171,11 @@ if __name__ == '__main__':
             error_msg = error_msg + str(e)
             log.log_error(error_msg)
             scn.update(last_error="Unexpected Error - at " + datetime.now().isoformat())
-            time.sleep(15)
+            try:
+                time.sleep(15)
+            except KeyboardInterrupt:
+                scn.end()
+                actions.clean()
+                log.log_info("GPIO CleanUp")
+                log.log_info("User Interrupt")
+                exit()

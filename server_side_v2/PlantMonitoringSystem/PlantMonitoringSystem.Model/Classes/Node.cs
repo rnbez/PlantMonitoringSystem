@@ -19,6 +19,9 @@ namespace PlantMonitoringSystem.Model
         [DataMember(Name = "friendlyName")]
         public string FriendlyName { get; set; }
 
+        [DataMember(Name = "userId")]
+        public int UserId { get; set; }
+
         [DataMember(Name = "behaviorId")]
         public int BehaviorId { get; set; }
 

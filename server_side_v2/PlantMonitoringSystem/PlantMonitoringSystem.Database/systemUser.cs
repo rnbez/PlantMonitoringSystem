@@ -14,9 +14,18 @@ namespace PlantMonitoringSystem.Database
     
     public partial class systemUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public systemUser()
+        {
+            this.nodes = new HashSet<node>();
+        }
+    
         public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string email { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<node> nodes { get; set; }
     }
 }

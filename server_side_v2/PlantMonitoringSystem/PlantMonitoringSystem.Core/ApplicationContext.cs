@@ -26,6 +26,18 @@ namespace PlantMonitoringSystem.Core
             }
         }
 
+        public static SystemUser CurrentUser
+        {
+            get
+            {
+                return HttpContext.Current.Items["CurrentUser"] as SystemUser;
+            }
+            set
+            {
+                HttpContext.Current.Items["CurrentUser"] = value;
+            }
+        }
+
         public static bool AddAuthenticatedUser(SystemUser user)
         {
             return LoggedUsersDic.TryAdd(user.AuthToken, user);

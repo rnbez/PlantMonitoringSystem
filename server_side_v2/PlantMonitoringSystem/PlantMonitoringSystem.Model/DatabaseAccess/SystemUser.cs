@@ -73,7 +73,7 @@ namespace PlantMonitoringSystem.Model
             return Get((int)data.Id);
         }
 
-        public static async Task<Node> Delete(int id)
+        public static Node Delete(int id)
         {
             throw new NotImplementedException();
         }

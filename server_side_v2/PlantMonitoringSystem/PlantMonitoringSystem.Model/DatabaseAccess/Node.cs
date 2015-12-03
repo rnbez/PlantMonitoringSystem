@@ -20,6 +20,7 @@ namespace PlantMonitoringSystem.Model
                     IsWaterOn = (bool)raw.water_on,
                     IsLightOn = (bool)raw.light_on,
                     BehaviorId = raw.behavior_id,
+                    UserId = raw.user_id,
                 };
             }
             else
@@ -36,6 +37,7 @@ namespace PlantMonitoringSystem.Model
                 water_on = data.IsWaterOn,
                 light_on = data.IsLightOn,
                 behavior_id = data.BehaviorId,
+                user_id = data.UserId,
             };
 
             if (data.Id != null)
@@ -54,9 +56,9 @@ namespace PlantMonitoringSystem.Model
             return raw;
         }
 
-        public static Node Get(int id)
+        public static Node Get(int id, int userId)
         {
-            var result = ModelContext.GetInstance().nodes.FirstOrDefault(x => x.id == id);
+            var result = ModelContext.GetInstance().nodes.FirstOrDefault(x => x.id == id && x.user_id == userId);
             return (Node)result;
         }
 
@@ -87,22 +89,31 @@ namespace PlantMonitoringSystem.Model
             
             await ctx.SaveChangesAsync();
                         
-            return Get((int)data.Id);
+            return Get((int)data.Id, data.UserId);
         }
 
-        public static async Task<Node> Delete(int id)
+        public static Node Delete(int id)
         {
             throw new NotImplementedException();
         }
         
-        public static List<Node> List()
+        public static List<Node> List(int userId)
         {
             var result = ModelContext.GetInstance().nodes
+                .Where(x => x.user_id == userId)
                 .ToList();
-            return result
+            if (result != null && result.Count > 0)
+            {
+                return result
                     .Select(x => (Node)x)
                     .DefaultIfEmpty(new Node())
                     .ToList();
+            }
+            else
+            {
+                return new List<Node>();
+            }
+            
         }
 
         public static List<Sensor> ListSensors(int id)
