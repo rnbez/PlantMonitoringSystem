@@ -5,13 +5,16 @@ The Plant Monitoring System consists of an web application that continuously rec
 
 
 
-##Contributor
+## Contributor
 This project was create by [Rafael Nascimento Bezerra](https://github.com/rafaelbezerra-dev).
 
 ## IoT level
+![](doc/iot_level.jpg)
 
-Hardware: 
-Input/output: (CSI, DSI, GPIO, I2C, SPI, serial, UART, etc.)
+## Hardware: 
+
+## Input/output: (CSI, DSI, GPIO, I2C, SPI, serial, UART, etc.)
+
 Network: (WAN, LAN, PAN, or BAN)
 Software: 
 Communication model: (request/respond or pub/sub)
