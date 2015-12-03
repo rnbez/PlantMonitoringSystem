@@ -29,8 +29,18 @@ Raspberry Pi Model 2
 ### Communication model: (request/respond or pub/sub)
 The communication is based on requests and responses using REST architecture. The web server acts most of the time as a proxy for the database. The is no direct access to the database. Instead of this, every app (mobile, web or local) must perform requests to the server.
 ### Data
-(gesture, humidity, light level, motion, soil moisture, temperature, etc.)
+The Monitoring Node code supports the following measurements:
+* 
+Humidity
+* 
+Light Level
+* 
+Soil Moisture
+* 
+Temperature (of the air and soil)
+
 ### Storage
+
 ### Analysis 
 
 
@@ -49,6 +59,8 @@ The communication is based on requests and responses using REST architecture. Th
 [Apache Cordova](https://cordova.apache.org/)
 * 
 [Python 2.7](https://www.python.org/download/releases/2.7/)
+* 
+[C# and .NET Framework](https://msdn.microsoft.com/pt-br/library/z1zx9t92.aspx)
 
 ### Documentation
 * 
