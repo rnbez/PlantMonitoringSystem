@@ -13,6 +13,9 @@ This project was create by [Rafael Nascimento Bezerra](https://github.com/rafael
 
 ## Hardware: 
 
+The hardware used to make this project possible was:
+
+
 ## Input/output: (CSI, DSI, GPIO, I2C, SPI, serial, UART, etc.)
 
 Network: (WAN, LAN, PAN, or BAN)
