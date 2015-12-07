@@ -28,10 +28,11 @@ def getBehavior():
     return __current_behavior__
 
 def getReadings():
-    response = httpclient.get(api.__get_behavior__(node.node_info['id']), auth.checkResponse)
+    global __readings__
+    response = httpclient.get(api.__get_node_view__(node.node_info['id']), auth.checkResponse)
     if response.status == 200:
         #print response.body
-        __current_behavior__ = json.loads(response.body)
+        __readings__ = json.loads(response.body)
 
 def runBehavior():
     global __current_behavior__, __send_readings__
