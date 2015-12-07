@@ -16,7 +16,7 @@ def get(path, forbiddenErrorCallback = None):
     conn.close()
     return response
 
-def post(path, data, forbiddenErrorCallback = None):
+def post(path, data = "", forbiddenErrorCallback = None):
     reading = str(data)
     body = json.dumps(data)
     headers = {"Content-type": "application/json",

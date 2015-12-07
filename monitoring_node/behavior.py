@@ -1,51 +1,68 @@
 from datetime import datetime, timedelta
 import sys, time, json
 import screen as scn
-import httpclient, api, auth, log#, sys_gpio
+import httpclient, api, auth, log, sys_gpio, node
 
 __current_behavior__ = {}
+__readings__ = {}
 
 def getBehavior():
     global __current_behavior__
 
-    __current_behavior__ = {"id":1,
-            "name": "Default",
-            "waterAuto": True,
-            "waterTimeEvery": 5,
-            "waterHumLevel": 35.0,
-            "humidityAverage": 32.8,
-            "lightAuto": True,
-            "lightStartHour": 5,
-            "lightStopHour": 5,
-            "lightLumLevel": 50.0,
-            "luminosityAverage": 51.8
-
-            }
+    response = httpclient.get(api.__get_behavior__(node.node_info['id']), auth.checkResponse)
+    if response.status == 200:
+        #print response.body
+        __current_behavior__ = json.loads(response.body)
+    #{"id":1,
+    #        "name": "Default",
+    #        "waterAuto": True,
+    #        "waterTimeEvery": 5,
+    #        "waterHumLevel": 35.0,
+    #        "humidityAverage": 32.8,
+    #        "lightAuto": True,
+    #        "lightStartHour": 5,
+    #        "lightStopHour": 5,
+    #        "lightLumLevel": 50.0,
+    #        "luminosityAverage": 51.8
+    #        }
     return __current_behavior__
 
+def getReadings():
+    response = httpclient.get(api.__get_behavior__(node.node_info['id']), auth.checkResponse)
+    if response.status == 200:
+        #print response.body
+        __current_behavior__ = json.loads(response.body)
+
 def runBehavior():
-    global __current_behavior__
+    global __current_behavior__, __send_readings__
 
     bhr = __current_behavior__
+    readings = __readings__
 
     if bhr["lightAuto"]:
         current_hour = datetime.now().hour
         if bhr["lightStartHour"] <= current_hour and bhr["lightStopHour"] > current_hour:
             sys_gpio.setRelay(sys_gpio.__light_pin__, True)
+            route = api.__toggle_light__(node.node_info['id'], True)
+            httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
             #print "Ligth On"
         else:
             sys_gpio.setRelay(sys_gpio.__light_pin__, False)
+            route = api.__toggle_light__(node.node_info['id'], False)
+            httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
             #print "Ligth Off"
-
-
 
     if bhr["waterAuto"]:
         if bhr["waterHumLevel"] not 0:
             if bhr["humidityAverage"] < bhr["waterHumLevel"]:
                 sys_gpio.setRelay(sys_gpio.__water_pin__, True)
+                route = api.__toggle_water__(node.node_info['id'], True)
+                httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
                 #print "Water On"
             else:
                 sys_gpio.setRelay(sys_gpio.__water_pin__, False)
+                route = api.__toggle_water__(node.node_info['id'], False)
+                httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
                 #print "Water Off"
 
 
