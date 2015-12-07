@@ -77,8 +77,8 @@ The system is capable of generating an overview of the reading for some periods 
 
 
 <div style="text-align:center">
-<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_2.png" />
-<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_1.png" />
+<img src="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_2.png" width="100" />
+<img src="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_1.png" width="100" />
 </div>
 
 
