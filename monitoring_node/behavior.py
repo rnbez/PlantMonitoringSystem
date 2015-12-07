@@ -1,3 +1,4 @@
+from sensors import *
 from datetime import datetime, timedelta
 import sys, time, json
 import screen as scn
@@ -13,26 +14,9 @@ def getBehavior():
     if response.status == 200:
         #print response.body
         __current_behavior__ = json.loads(response.body)
-    #{"id":1,
-    #        "name": "Default",
-    #        "waterAuto": True,
-    #        "waterTimeEvery": 5,
-    #        "waterHumLevel": 35.0,
-    #        "humidityAverage": 32.8,
-    #        "lightAuto": True,
-    #        "lightStartHour": 5,
-    #        "lightStopHour": 5,
-    #        "lightLumLevel": 50.0,
-    #        "luminosityAverage": 51.8
-    #        }
+
     return __current_behavior__
 
-def getReadings():
-    global __readings__
-    response = httpclient.get(api.__get_node_view__(node.node_info['id']), auth.checkResponse)
-    if response.status == 200:
-        #print response.body
-        __readings__ = json.loads(response.body)
 
 def runBehavior():
     global __current_behavior__, __send_readings__
@@ -53,18 +37,19 @@ def runBehavior():
             httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
             #print "Ligth Off"
 
-    if bhr["waterAuto"]:
-        if bhr["waterHumLevel"] != 0:
-            if bhr["humidityAverage"] < bhr["waterHumLevel"]:
-                sys_gpio.setRelay(sys_gpio.__water_pin__, True)
-                route = api.__toggle_water__(node.node_info['id'], True)
-                httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
-                #print "Water On"
-            else:
-                sys_gpio.setRelay(sys_gpio.__water_pin__, False)
-                route = api.__toggle_water__(node.node_info['id'], False)
-                httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
-                #print "Water Off"
+    #f bhr["waterAuto"]:
+    #    if bhr["waterHumLevel"] != 0:
+    #        air_hum = DHT11HumiditySensor.read()
+    #        if air_hum['reading'] < bhr["waterHumLevel"]:
+    #            sys_gpio.setRelay(sys_gpio.__water_pin__, True)
+    #            route = api.__toggle_water__(node.node_info['id'], True)
+    #            httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
+    #            #print "Water On"
+    #        else:
+    #            sys_gpio.setRelay(sys_gpio.__water_pin__, False)
+    #            route = api.__toggle_water__(node.node_info['id'], False)
+    #            httpclient.post(path=route, forbiddenErrorCallback=auth.checkResponse)
+    #            #print "Water Off"
 
 
 

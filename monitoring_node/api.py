@@ -17,10 +17,10 @@ def __get_node_view__(nodeId):
     return '/api/view/node/' + str(nodeId)
 
 def __toggle_light__(nodeId, status):
-    return '/api/node/#{id}' + str(nodeId) + '/light/' + str(status).lower()
+    return '/api/node/' + str(nodeId) + '/light/' + str(status).lower()
 
 def __toggle_light__(nodeId, status):
-    return '/api/node/#{id}' + str(nodeId) + '/water/' + str(status).lower()
+    return '/api/node/' + str(nodeId) + '/water/' + str(status).lower()
 
 def __get_lightwater__(nodeId):
     return '/api/node/' + str(nodeId) + '?light=true&water=true'
