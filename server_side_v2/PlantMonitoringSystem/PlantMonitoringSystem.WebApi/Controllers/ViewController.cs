@@ -20,6 +20,12 @@ namespace PlantMonitoringSystem.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, NodesView.GetNodeList());
         }
 
+        [HttpGet]
+        [Route("node/{id}")]
+        public HttpResponseMessage ViewNodes(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, NodesView.GetNode(id));
+        }
 
         [HttpGet]
         [Route("sensor/{id}/readings")]
