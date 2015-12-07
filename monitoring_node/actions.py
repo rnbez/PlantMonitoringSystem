@@ -12,8 +12,8 @@ def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(__light_pin__, GPIO.OUT)
     GPIO.setup(__water_pin__, GPIO.OUT)
-    __pin_status__[__light_pin__] = False
-    __pin_status__[__water_pin__] = False
+    __pin_status__[__light_pin__] = True
+    __pin_status__[__water_pin__] = True
     GPIO.output(__light_pin__, __pin_status__[__light_pin__])
     GPIO.output(__water_pin__, __pin_status__[__water_pin__])
     return
@@ -22,7 +22,9 @@ def setPin(pin, value):
     global __pin_status__
 
     #if pin in __pin_status__ and __pin_status__[pin] != value:
-    GPIO.output(pin, value)
+    # the next line used the not to change the 'value' parameter
+    # this happens becauses the pins are connected to a relay
+    GPIO.output(pin, (not value))
 
     return
 
