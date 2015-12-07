@@ -5,6 +5,7 @@ The Plant Monitoring System consists of an web application that continuously rec
 
 <div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/project.min.jpg" /></div>
 
+The system is separated 4 parts: the **Server**, the **Database**, the **Mobile App** and the **Monitoring Node**.
 
 ## Contributor
 This project was create by [Rafael Nascimento Bezerra](https://github.com/rafaelbezerra-dev).
@@ -14,35 +15,71 @@ This project was create by [Rafael Nascimento Bezerra](https://github.com/rafael
 
 ## Hardware: 
 
-The hardware used to make this project possible was:
+The system is physically separated in 4 parts. These parts are:
+* 
+Server ― AWS EC2 Instance (t2-micro) running Windows Server 2012
+* 
+Database ― AWS RDS Instance (db.t2.micro) running MySQL 5.6.23
+* 
+Mobile App ― Any Android 4.X.X Smartphone
+* 
+Monitoring Node ― Raspberry Pi 2 running Raspbian
 
-Raspberry Pi Model 2
+The components connected to the monitoring node are:
+* 
+Adafruit MCP3008 - 8-Channel 10-Bit ADC With SPI Interface
+* 
+DIYmall DHT11 Temperature Relative Humidity Sensor Module
+* 
+Waterproof Probe with DS18B20 Temperature Sensor
+* 
+Arrela® Soil Hygrometer Detection Module (Soil Moisture Sensor)
+* 
+Light Dependent Resistor (LDR)
+* 
+Water Pump
+* 
+5W Lamp
+* 
+2-Channel Relay Module
 
+Besides this components, a GPIO Extension Board was used to connect the Raspberry Pi to an 800-points breadboard and additional resistors and jumpers were used to wire the components together.
 
-
-### Input/output
-(CSI, DSI, GPIO, I2C, SPI, serial, UART, etc.)
+### Input and Output
+* 
+GPIO (for the DHT11 sensor and Relay Module control)
+* 
+I2C (for the DS18B20 sensor)
+* 
+SPI (for the ADC MCP3008)
 
 ### Network
-(WAN, LAN, PAN, or BAN)
+The Monitoring Node uses a WIFI dongle to post data to the server through WAN, but it can work through LAN if an Ethernet cable is connected to it. The project also has a mobile app, which make it possible for the user to also use his mobile network to access information from the server.
 
 ## Software
-### Communication model: (request/respond or pub/sub)
-The communication is based on requests and responses using REST architecture. The web server acts most of the time as a proxy for the database. The is no direct access to the database. Instead of this, every app (mobile, web or local) must perform requests to the server.
-### Data
-The Monitoring Node code supports the following measurements:
-* 
-Humidity
-* 
-Light Level
-* 
-Soil Moisture
-* 
-Temperature (of the air and soil)
 
-### Storage
+### Communication model
+The communication is based on requests and responses using REST architecture. The web server acts most of the time as a proxy for the database, making sure that only authenticated users can access the system information. There is no direct access to the database. Instead, every app (mobile, web or local) must perform authenticated requests to the server.
 
-### Analysis 
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" /></div>
+
+
+An authenticated request is a HTTP Request containing a X-Auth-Token header with a valid authentication token, a GUID given by the server after the authentication URI is called if the parameters (username and password) are correct. The following image shows how the Monitoring Node acts as it is initialized, asking for credentials and storing the authentication token for future requests.
+
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/activity_diagram.jpg" /></div>
+
+
+### Data and Storage
+The Monitoring Node code supports readings the measurements: Humidity, Light Level, Soil Moisture and Temperature (of the air and soil). All the readings are stored in a RDS machine on Amazon Web Service. The machine runs MySQL and has 20Gb of SSD storage.
+
+### Analysis
+The system is capable of generating an overview of the reading for some periods of time. When using the mobile app, the user can see 3 charts. The first contains average readings from the last hour. The second shows the last 24 hours and the third shows the last 7 days.
+
+
+<div style="text-align:center">
+<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" />
+<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" />
+</div>
 
 
 ## Links and Credits 
