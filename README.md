@@ -61,12 +61,12 @@ The Monitoring Node uses a WIFI dongle to post data to the server through WAN, b
 ### Communication model
 The communication is based on requests and responses using REST architecture. The web server acts most of the time as a proxy for the database, making sure that only authenticated users can access the system information. There is no direct access to the database. Instead, every app (mobile, web or local) must perform authenticated requests to the server.
 
-<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" /></div>
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" width="500" /></div>
 
 
 An authenticated request is a HTTP Request containing a X-Auth-Token header with a valid authentication token, a GUID given by the server after the authentication URI is called if the parameters (username and password) are correct. The following image shows how the Monitoring Node acts as it is initialized, asking for credentials and storing the authentication token for future requests.
 
-<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/activity_diagram.jpg" /></div>
+<div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/activity_diagram.jpg" width="600"/></div>
 
 
 ### Data and Storage
@@ -77,8 +77,8 @@ The system is capable of generating an overview of the reading for some periods 
 
 
 <div style="text-align:center">
-<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" />
-<img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/server_communication.png" />
+<img src="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_2.png" width="300" />
+<img src="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/charts_screenshot_1.png" width="300" />
 </div>
 
 
