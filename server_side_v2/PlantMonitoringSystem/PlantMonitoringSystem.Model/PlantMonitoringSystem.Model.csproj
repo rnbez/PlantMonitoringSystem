@@ -59,6 +59,7 @@
     <Compile Include="Classes\Behavior.cs" />
     <Compile Include="Classes\Node.cs" />
     <Compile Include="Classes\SystemUser.cs" />
+    <Compile Include="DatabaseAccess\Behavior.cs" />
     <Compile Include="DatabaseAccess\SystemUser.cs" />
     <Compile Include="ModelContext.cs" />
     <Compile Include="DatabaseAccess\Node.cs" />

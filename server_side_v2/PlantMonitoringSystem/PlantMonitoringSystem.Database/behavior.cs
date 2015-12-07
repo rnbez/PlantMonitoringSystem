@@ -22,8 +22,15 @@ namespace PlantMonitoringSystem.Database
     
         public int id { get; set; }
         public string name { get; set; }
+        public bool waterAuto { get; set; }
+        public bool lightAuto { get; set; }
+        public decimal lightStartHour { get; set; }
+        public decimal lightStopHour { get; set; }
+        public decimal waterHumLevel { get; set; }
+        public int user_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<node> nodes { get; set; }
+        public virtual systemUser systemUser { get; set; }
     }
 }

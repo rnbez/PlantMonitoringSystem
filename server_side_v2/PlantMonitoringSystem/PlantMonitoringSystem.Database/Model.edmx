@@ -11,6 +11,12 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="waterAuto" Type="bool" Nullable="false" />
+          <Property Name="lightAuto" Type="bool" Nullable="false" />
+          <Property Name="lightStartHour" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="lightStopHour" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="waterHumLevel" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="node">
           <Key>
@@ -53,6 +59,18 @@
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="behavior_ibfk_1">
+          <End Role="systemUser" Type="Self.systemUser" Multiplicity="1" />
+          <End Role="behavior" Type="Self.behavior" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systemUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="behavior">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="node_behavior_id_6cc5183d_fk_behavior_id">
           <End Role="behavior" Type="Self.behavior" Multiplicity="1" />
           <End Role="node" Type="Self.node" Multiplicity="*" />
@@ -107,6 +125,10 @@
           <EntitySet Name="sensor" EntityType="Self.sensor" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <EntitySet Name="sensorreading" EntityType="Self.sensorreading" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
           <EntitySet Name="systemUser" EntityType="Self.systemUser" Schema="dotnet_plantmonitor_beta" store:Type="Tables" />
+          <AssociationSet Name="behavior_ibfk_1" Association="Self.behavior_ibfk_1">
+            <End Role="systemUser" EntitySet="systemUser" />
+            <End Role="behavior" EntitySet="behavior" />
+          </AssociationSet>
           <AssociationSet Name="node_behavior_id_6cc5183d_fk_behavior_id" Association="Self.node_behavior_id_6cc5183d_fk_behavior_id">
             <End Role="behavior" EntitySet="behavior" />
             <End Role="node" EntitySet="node" />
@@ -135,6 +157,13 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="nodes" Relationship="Self.node_behavior_id_6cc5183d_fk_behavior_id" FromRole="behavior" ToRole="node" />
+          <Property Name="waterAuto" Type="Boolean" Nullable="false" />
+          <Property Name="lightAuto" Type="Boolean" Nullable="false" />
+          <Property Name="lightStartHour" Type="Decimal" Nullable="false" />
+          <Property Name="lightStopHour" Type="Decimal" Nullable="false" />
+          <Property Name="waterHumLevel" Type="Decimal" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="systemUser" Relationship="Model.behavior_ibfk_1" FromRole="behavior" ToRole="systemUser" />
         </EntityType>
         <EntityType Name="node">
           <Key>
@@ -232,6 +261,10 @@
             <End Role="systemUser" EntitySet="systemUsers" />
             <End Role="node" EntitySet="nodes" />
           </AssociationSet>
+          <AssociationSet Name="behavior_ibfk_1" Association="Model.behavior_ibfk_1">
+            <End Role="systemUser" EntitySet="systemUsers" />
+            <End Role="behavior" EntitySet="behaviors" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="systemUser">
           <Key>
@@ -242,6 +275,7 @@
           <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="nodes" Relationship="Model.node_ibfk_1" FromRole="systemUser" ToRole="node" />
+          <NavigationProperty Name="behaviors" Relationship="Model.behavior_ibfk_1" FromRole="systemUser" ToRole="behavior" />
         </EntityType>
         <Association Name="node_ibfk_1">
           <End Type="Model.systemUser" Role="systemUser" Multiplicity="1" />
@@ -255,6 +289,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="behavior_ibfk_1">
+          <End Type="Model.systemUser" Role="systemUser" Multiplicity="1" />
+          <End Type="Model.behavior" Role="behavior" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="systemUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="behavior">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -264,6 +310,12 @@
           <EntitySetMapping Name="behaviors">
             <EntityTypeMapping TypeName="Model.behavior">
               <MappingFragment StoreEntitySet="behavior">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="waterHumLevel" ColumnName="waterHumLevel" />
+                <ScalarProperty Name="lightStopHour" ColumnName="lightStopHour" />
+                <ScalarProperty Name="lightStartHour" ColumnName="lightStartHour" />
+                <ScalarProperty Name="lightAuto" ColumnName="lightAuto" />
+                <ScalarProperty Name="waterAuto" ColumnName="waterAuto" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>

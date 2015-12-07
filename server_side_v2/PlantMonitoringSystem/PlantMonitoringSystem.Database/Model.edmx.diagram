@@ -14,6 +14,7 @@
         <AssociationConnector Association="Model.sensorreading_sensor_id_4413c3ee_fk_sensor_id" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model.systemUser" Width="1.5" PointX="0.75" PointY="4.75" />
         <AssociationConnector Association="Model.node_ibfk_1" />
+        <AssociationConnector Association="Model.behavior_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

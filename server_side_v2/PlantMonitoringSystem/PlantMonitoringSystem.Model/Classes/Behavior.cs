@@ -15,5 +15,25 @@ namespace PlantMonitoringSystem.Model
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
+
+        [DataMember(Name = "waterAuto")]
+        public bool WaterAuto { get; set; }
+
+        [DataMember(Name = "lightAuto")]
+        public bool LightAuto { get; set; }
+
+        [DataMember(Name = "lightStartHour")]
+        public decimal LightStartHour { get; set; }
+
+        [DataMember(Name = "lightStopHour")]
+        public decimal LightStopHour { get; set; }
+
+        [DataMember(Name = "waterHumLevel")]
+        public decimal WaterHumLevel { get; set; }
+
+        [DataMember(Name = "userId")]
+        public int UserId { get; set; }
+
+
     }
 }

@@ -18,6 +18,7 @@ namespace PlantMonitoringSystem.Database
         public systemUser()
         {
             this.nodes = new HashSet<node>();
+            this.behaviors = new HashSet<behavior>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace PlantMonitoringSystem.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<node> nodes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<behavior> behaviors { get; set; }
     }
 }
