@@ -1,12 +1,17 @@
 from sensors import *
 from datetime import datetime, timedelta
 import screen as scn
-import sys, time, httpclient, node, api, json, log, actions, auth
+import sys, time, httpclient, node, api, json, log, sys_gpio, auth
 
 
 def sendReadings(nextRun):
 
     if datetime.now() >= nextRun:
+
+        #turn on the sensors
+        # the transisotr enable the sensors to be powered
+        sys_gpio.setTransistor(True)
+
         log.current_state = "Reading Air Temperature"
         air_temp = DHT11TemperatureSensor.read()
         log.current_state = "Posting Air Temperature"
@@ -30,6 +35,8 @@ def sendReadings(nextRun):
         log.current_state = "Reading Soil Temperature"
         httpclient.post(api.__send_readings__, soil_temp, auth.checkResponse)
         scn.update(soil_temp=str(soil_temp['reading']))
+
+        sys_gpio.setTransistor(False)
 
         #print air_lum["date"]
         #print "Env: Temp.: {0:0.2f}C  Humidity: {1:0.2f}%  &  Luminosity:{2:0.2f}%".format(air_temp['reading'], air_hum['reading'], air_lum['reading'])
@@ -71,9 +78,9 @@ def doActions():
         log.current_state = "Deserializing light and water info from server"
         _node = json.loads(response.body)
         log.current_state = "Setting light pin"
-        actions.setPin(actions.__light_pin__, _node['lightOn'])
+        sys_gpio.setRelay(sys_gpio.__light_pin__, _node['lightOn'])
         log.current_state = "Setting water pin"
-        actions.setPin(actions.__water_pin__, _node['waterOn'])
+        sys_gpio.setRelay(sys_gpio.__water_pin__, _node['waterOn'])
     except TimeoutError:
     	error_msg = "HTTP Timeout - main.py @ doActions()"
     	#print error_msg, "\n"
@@ -132,16 +139,16 @@ if __name__ == '__main__':
     try:
         print "\n----------------------\n"
         log.current_state = "Ready to setup the GPIO pins"
-        actions.setup()
+        sys_gpio.setup()
         print "GPIO Setup Succeeded"
         log.current_state = "GPIO pins set"
         print "\n----------------------\n"
     except Exception as e:
         print "GPIO Setup Error"
         print "GPIO Clean"
-        actions.clean()
+        sys_gpio.clean()
         print "GPIO Setup Succeeded"
-        actions.setup()
+        sys_gpio.setup()
 
 
     scn.update()
@@ -160,7 +167,7 @@ if __name__ == '__main__':
             time.sleep(delay)
         except KeyboardInterrupt:
             scn.end()
-            actions.clean()
+            sys_gpio.clean()
             log.log_info("GPIO CleanUp")
             log.log_info("User Interrupt")
             exit()
@@ -175,7 +182,7 @@ if __name__ == '__main__':
                 time.sleep(15)
             except KeyboardInterrupt:
                 scn.end()
-                actions.clean()
+                sys_gpio.clean()
                 log.log_info("GPIO CleanUp")
                 log.log_info("User Interrupt")
                 exit()

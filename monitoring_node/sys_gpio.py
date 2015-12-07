@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 
+__transitor_pin__ = 23
 __light_pin__ = 24
 __water_pin__ = 25
 __pin_status__ = {}
@@ -16,9 +17,13 @@ def setup():
     __pin_status__[__water_pin__] = True
     GPIO.output(__light_pin__, __pin_status__[__light_pin__])
     GPIO.output(__water_pin__, __pin_status__[__water_pin__])
+
+    # setting transistor
+    GPIO.setup(__transitor_pin__, GPIO.OUT)
+    GPIO.output(__transitor_pin__, False)
     return
 
-def setPin(pin, value):
+def setRelay(pin, value):
     global __pin_status__
 
     #if pin in __pin_status__ and __pin_status__[pin] != value:
@@ -27,6 +32,10 @@ def setPin(pin, value):
     GPIO.output(pin, (not value))
 
     return
+
+def setTransistor(value)
+    global __transitor_pin__
+    GPIO.output(__transitor_pin__, value)
 
 def clean():
     GPIO.cleanup()
