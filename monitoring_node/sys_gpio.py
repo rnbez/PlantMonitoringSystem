@@ -33,7 +33,7 @@ def setRelay(pin, value):
 
     return
 
-def setTransistor(value)
+def setTransistor(value):
     global __transitor_pin__
     GPIO.output(__transitor_pin__, value)
 
