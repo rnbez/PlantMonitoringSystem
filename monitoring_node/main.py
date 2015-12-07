@@ -28,13 +28,13 @@ def sendReadings(nextRun):
         air_lum = LDR.read()
         log.current_state = "Posting Luminosity"
         httpclient.post(api.__send_readings__, air_lum, auth.checkResponse)
-        scn.update(env_lum=str(air_lum['reading']))
+        scn.update(env_lum="{0:0.2f}".format(air_lum['reading']))
 
         log.current_state = "Reading Soil Temperature"
         soil_temp = DS18B20TemperatureSensor.read()
         log.current_state = "Reading Soil Temperature"
         httpclient.post(api.__send_readings__, soil_temp, auth.checkResponse)
-        scn.update(soil_temp=str(soil_temp['reading']))
+        scn.update(soil_temp="{0:0.2f}".format(soil_temp['reading']))
 
         sys_gpio.setTransistor(False)
 
