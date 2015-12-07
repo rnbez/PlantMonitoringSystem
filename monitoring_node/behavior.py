@@ -9,7 +9,7 @@ __readings__ = {}
 def getBehavior():
     global __current_behavior__
 
-    response = httpclient.get(api.__get_behavior__(node.node_info['id']), auth.checkResponse)
+    response = httpclient.get(api.__get_behavior__(node.node_info['behaviorId']), auth.checkResponse)
     if response.status == 200:
         #print response.body
         __current_behavior__ = json.loads(response.body)
@@ -53,7 +53,7 @@ def runBehavior():
             #print "Ligth Off"
 
     if bhr["waterAuto"]:
-        if bhr["waterHumLevel"] not 0:
+        if bhr["waterHumLevel"] != 0:
             if bhr["humidityAverage"] < bhr["waterHumLevel"]:
                 sys_gpio.setRelay(sys_gpio.__water_pin__, True)
                 route = api.__toggle_water__(node.node_info['id'], True)
