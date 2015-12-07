@@ -7,9 +7,6 @@ The Plant Monitoring System consists of an web application that continuously rec
 
 The system is separated 4 parts: the **Server**, the **Database**, the **Mobile App** and the **Monitoring Node**.
 
-## Contributor
-This project was create by [Rafael Nascimento Bezerra](https://github.com/rafaelbezerra-dev).
-
 ## IoT level
 <div style="text-align:center"><img src ="https://github.com/rafaelbezerra-dev/PlantMonitoringSystem/blob/master/doc/iot_level.min.jpg" /></div>
 
